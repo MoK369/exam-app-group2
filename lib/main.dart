@@ -4,7 +4,9 @@ import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
   runApp(const MyApp());
 }
 
@@ -18,13 +20,15 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: AppThemes.lightTheme,
-        themeMode: ThemeMode.light,
-        onGenerateRoute: GenerateRoute.onGenerateRoute,
-        initialRoute: DefinedRoutes.signUpRouteName,
-      ),
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: AppThemes.lightTheme,
+          themeMode: ThemeMode.light,
+          onGenerateRoute: GenerateRoute.onGenerateRoute,
+          initialRoute: DefinedRoutes.signUpRouteName,
+        );
+      },
     );
   }
 }

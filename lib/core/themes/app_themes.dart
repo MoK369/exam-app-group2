@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
   static const Color blueAppColor = Color(0xFF02369C);
-  static const Color grayAppColor = Color(0xFF878787);
+  static const Color grayAppColor30 = Color(0xFF878787);
+  static const Color lightPrimaryColor = Color(0xFFF9F9F9);
   static ThemeData lightTheme = ThemeData(
-      scaffoldBackgroundColor: Colors.white,
-      appBarTheme: AppBarTheme(
-        backgroundColor: Colors.white,
+      useMaterial3: true,
+      scaffoldBackgroundColor: lightPrimaryColor,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: lightPrimaryColor,
       ),
       textTheme: TextTheme(
-        labelSmall: GoogleFonts.inter(color: Colors.black, fontSize: 12),
+        labelSmall: GoogleFonts.inter(color: Colors.black, fontSize: 12.sp),
         labelMedium: GoogleFonts.inter(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
-        labelLarge: GoogleFonts.inter(color: Colors.black, fontSize: 20),
-      ));
+            color: Colors.black, fontSize: 16.sp, fontWeight: FontWeight.w500),
+        labelLarge: GoogleFonts.inter(color: Colors.black, fontSize: 20.sp),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+          border: const OutlineInputBorder(),
+          hintStyle: TextStyle(fontSize: 14.sp, color: const Color(0xFFA6A6A6)),
+          labelStyle:
+              TextStyle(fontSize: 12.sp, color: const Color(0xFF535353))),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: blueAppColor,
+              padding: EdgeInsets.symmetric(vertical: 14.h))));
 }
