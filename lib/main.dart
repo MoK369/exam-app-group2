@@ -19,10 +19,11 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: AppThemes.lightTheme,
         themeMode: ThemeMode.light,
         onGenerateRoute: GenerateRoute.onGenerateRoute,
-        initialRoute: DefinedRoutes.homeRouteName,
+        initialRoute: DefinedRoutes.signUpRouteName,
       ),
     );
   }
