@@ -11,7 +11,7 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   @override
   Widget customBuild(BuildContext context, ThemeData theme) {
     return AppBar(
-      forceMaterialTransparency: false,
+      forceMaterialTransparency: true,
       leadingWidth: 35,
       titleSpacing: 0,
       leading: !showLeadingIcon

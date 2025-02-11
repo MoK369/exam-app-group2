@@ -6,6 +6,8 @@ class AppThemes {
   static const Color blueAppColor = Color(0xFF02369C);
   static const Color grayAppColor30 = Color(0xFF878787);
   static const Color lightPrimaryColor = Color(0xFFF9F9F9);
+  static const Color errorAppColor = Color(0xFFCC1010);
+
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: lightPrimaryColor,
@@ -22,7 +24,11 @@ class AppThemes {
           border: const OutlineInputBorder(),
           hintStyle: TextStyle(fontSize: 14.sp, color: const Color(0xFFA6A6A6)),
           labelStyle:
-              TextStyle(fontSize: 12.sp, color: const Color(0xFF535353))),
+              TextStyle(fontSize: 12.sp, color: const Color(0xFF535353)),
+          errorMaxLines: 4,
+          errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: errorAppColor)),
+          errorStyle: TextStyle(color: errorAppColor, fontSize: 12.sp)),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
               backgroundColor: blueAppColor,

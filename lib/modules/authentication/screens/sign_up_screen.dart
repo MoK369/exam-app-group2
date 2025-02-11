@@ -1,5 +1,6 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
+import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +13,15 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
-  GlobalKey<FormState> formKey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey();
+  final TextEditingController userNameController = TextEditingController(),
+      firstNameController = TextEditingController(),
+      lastNameController = TextEditingController(),
+      emailController = TextEditingController(),
+      passwordController = TextEditingController(),
+      confirmPasswordController = TextEditingController(),
+      phoneNumberController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -33,6 +42,11 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     height: 6.h,
                   ),
                   TextFormField(
+                    controller: userNameController,
+                    validator: (inputText) {
+                      return ValidateFunctions.validationOfUserName(inputText);
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
                       labelText: "User name",
                       hintText: "Enter your user name",
@@ -44,6 +58,13 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       children: [
                         Expanded(
                           child: TextFormField(
+                            controller: firstNameController,
+                            validator: (inputText) {
+                              return ValidateFunctions
+                                  .validationOfFirstOrLastName(inputText);
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             decoration: const InputDecoration(
                               labelText: "First name",
                               hintText: "Enter first name",
@@ -55,6 +76,14 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
+                            controller: lastNameController,
+                            validator: (inputText) {
+                              return ValidateFunctions
+                                  .validationOfFirstOrLastName(inputText,
+                                      isFirstName: false);
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             decoration: const InputDecoration(
                               labelText: "Last name",
                               hintText: "Enter last name",
@@ -65,6 +94,11 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     ),
                   ),
                   TextFormField(
+                    controller: emailController,
+                    validator: (inputText) {
+                      return ValidateFunctions.validationOfEmail(inputText);
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
                       labelText: "Email",
                       hintText: "Enter your email",
@@ -76,6 +110,13 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       children: [
                         Expanded(
                           child: TextFormField(
+                            controller: passwordController,
+                            validator: (inputText) {
+                              return ValidateFunctions.validationOfPassword(
+                                  inputText);
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             decoration: const InputDecoration(
                               labelText: "Password",
                               hintText: "Enter password",
@@ -87,6 +128,14 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
+                            controller: confirmPasswordController,
+                            validator: (inputText) {
+                              return ValidateFunctions
+                                  .validationOfConfirmPassword(
+                                      inputText, passwordController);
+                            },
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
                             decoration: const InputDecoration(
                               labelText: "Confirm password",
                               hintText: "Confirm password",
@@ -97,6 +146,12 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     ),
                   ),
                   TextFormField(
+                    controller: phoneNumberController,
+                    validator: (inputText) {
+                      return ValidateFunctions.validationOfPhoneNumber(
+                          inputText);
+                    },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(
                       labelText: "Phone number",
                       hintText: "Enter phone number",
@@ -106,7 +161,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     height: 48.h,
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        onSignUpButtonClick();
+                      },
                       child: Text(
                         "Signup",
                         style: theme.textTheme.labelMedium!
@@ -143,5 +200,10 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void onSignUpButtonClick() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (formKey.currentState?.validate() == true) {}
   }
 }
