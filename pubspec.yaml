@@ -39,6 +39,10 @@ dependencies:
   google_fonts: ^6.2.1
   # screen util
   flutter_screenutil: ^5.9.3
+  # native splash
+  flutter_native_splash: ^2.4.4
+  # app icon
+  flutter_launcher_icons: ^0.14.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
