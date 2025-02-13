@@ -13,6 +13,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
+  bool isPasswordObscure = true, isConfirmPasswordObscure = true;
   final GlobalKey<FormState> formKey = GlobalKey();
   final TextEditingController userNameController = TextEditingController(),
       firstNameController = TextEditingController(),
@@ -22,6 +23,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
       confirmPasswordController = TextEditingController(),
       phoneNumberController = TextEditingController();
 
+  //Todo: don't forget to use focus node.
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -47,6 +49,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       return ValidateFunctions.validationOfUserName(inputText);
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.name,
                     decoration: const InputDecoration(
                       labelText: "User name",
                       hintText: "Enter your user name",
@@ -65,6 +68,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.name,
                             decoration: const InputDecoration(
                               labelText: "First name",
                               hintText: "Enter first name",
@@ -84,6 +88,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.name,
                             decoration: const InputDecoration(
                               labelText: "Last name",
                               hintText: "Enter last name",
@@ -99,6 +104,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       return ValidateFunctions.validationOfEmail(inputText);
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: "Email",
                       hintText: "Enter your email",
@@ -117,10 +123,19 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            decoration: const InputDecoration(
-                              labelText: "Password",
-                              hintText: "Enter password",
-                            ),
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: isPasswordObscure,
+                            obscuringCharacter: "*",
+                            decoration: InputDecoration(
+                                labelText: "Password",
+                                hintText: "Enter password",
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      onPasswordVisibilityIconClick();
+                                    },
+                                    icon: Icon(isPasswordObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility))),
                           ),
                         ),
                         SizedBox(
@@ -136,10 +151,19 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            decoration: const InputDecoration(
-                              labelText: "Confirm password",
-                              hintText: "Confirm password",
-                            ),
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: isConfirmPasswordObscure,
+                            obscuringCharacter: "*",
+                            decoration: InputDecoration(
+                                labelText: "Confirm password",
+                                hintText: "Confirm password",
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      onConfirmPasswordVisibilityIconClick();
+                                    },
+                                    icon: Icon(isConfirmPasswordObscure
+                                        ? Icons.visibility_off
+                                        : Icons.visibility))),
                           ),
                         ),
                       ],
@@ -152,6 +176,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                           inputText);
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.phone,
                     decoration: const InputDecoration(
                       labelText: "Phone number",
                       hintText: "Enter phone number",
@@ -205,5 +230,15 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
   void onSignUpButtonClick() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (formKey.currentState?.validate() == true) {}
+  }
+  void onPasswordVisibilityIconClick(){
+    setState(() {
+      isPasswordObscure = !isPasswordObscure;
+    });
+  }
+  void onConfirmPasswordVisibilityIconClick(){
+    setState(() {
+      isConfirmPasswordObscure = !isConfirmPasswordObscure;
+    });
   }
 }

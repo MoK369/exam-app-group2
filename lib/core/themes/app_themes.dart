@@ -21,6 +21,7 @@ class AppThemes {
         labelLarge: GoogleFonts.inter(color: Colors.black, fontSize: 20.sp),
       ),
       inputDecorationTheme: InputDecorationTheme(
+          floatingLabelBehavior: FloatingLabelBehavior.always,
           border: const OutlineInputBorder(),
           hintStyle: TextStyle(fontSize: 14.sp, color: const Color(0xFFA6A6A6)),
           labelStyle:
