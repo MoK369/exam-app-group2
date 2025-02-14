@@ -58,7 +58,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     keyboardType: TextInputType.name,
                     focusNode: userNameFocusNode,
                     onFieldSubmitted: (value) =>
-                        passFocusTo(firstNameFocusNode),
+                        firstNameFocusNode.requestFocus(),
                     decoration: const InputDecoration(
                       labelText: "User name",
                       hintText: "Enter your user name",
@@ -80,7 +80,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             keyboardType: TextInputType.name,
                             focusNode: firstNameFocusNode,
                             onFieldSubmitted: (value) =>
-                                passFocusTo(lastNameFocusNode),
+                                lastNameFocusNode.requestFocus(),
                             decoration: const InputDecoration(
                               labelText: "First name",
                               hintText: "Enter first name",
@@ -103,7 +103,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             keyboardType: TextInputType.name,
                             focusNode: lastNameFocusNode,
                             onFieldSubmitted: (value) =>
-                                passFocusTo(emailFocusNode),
+                                emailFocusNode.requestFocus(),
                             decoration: const InputDecoration(
                               labelText: "Last name",
                               hintText: "Enter last name",
@@ -121,7 +121,8 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     keyboardType: TextInputType.emailAddress,
                     focusNode: emailFocusNode,
-                    onFieldSubmitted: (value) => passFocusTo(passwordFocusNode),
+                    onFieldSubmitted: (value) =>
+                        passwordFocusNode.requestFocus(),
                     decoration: const InputDecoration(
                       labelText: "Email",
                       hintText: "Enter your email",
@@ -145,7 +146,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             obscuringCharacter: "*",
                             focusNode: passwordFocusNode,
                             onFieldSubmitted: (value) =>
-                                passFocusTo(confirmPasswordFocusNode),
+                                confirmPasswordFocusNode.requestFocus(),
                             decoration: InputDecoration(
                                 labelText: "Password",
                                 hintText: "Enter password",
@@ -176,7 +177,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             obscuringCharacter: "*",
                             focusNode: confirmPasswordFocusNode,
                             onFieldSubmitted: (value) =>
-                                passFocusTo(phoneNumberFocusNode),
+                                phoneNumberFocusNode.requestFocus(),
                             decoration: InputDecoration(
                                 labelText: "Confirm password",
                                 hintText: "Confirm password",
@@ -201,8 +202,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     keyboardType: TextInputType.phone,
                     focusNode: phoneNumberFocusNode,
-                    onFieldSubmitted: (value) =>
-                        FocusManager.instance.primaryFocus?.unfocus(),
+                    onFieldSubmitted: (value) => phoneNumberFocusNode.unfocus(),
                     decoration: const InputDecoration(
                       labelText: "Phone number",
                       hintText: "Enter phone number",
@@ -266,9 +266,5 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
     setState(() {
       isConfirmPasswordObscure = !isConfirmPasswordObscure;
     });
-  }
-
-  void passFocusTo(FocusNode focusNode) {
-    FocusScope.of(context).requestFocus(focusNode);
   }
 }

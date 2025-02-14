@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     extends State<T> {
-  late final ThemeData theme;
+  late ThemeData theme;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
