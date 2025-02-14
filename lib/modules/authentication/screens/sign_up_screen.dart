@@ -212,9 +212,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     height: 48.h,
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        onSignUpButtonClick();
-                      },
+                      onPressed: () => onSignUpButtonClick(),
                       child: Text(
                         "Signup",
                         style: theme.textTheme.labelMedium!
