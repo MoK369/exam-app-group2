@@ -18,12 +18,24 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
+<<<<<<< Updated upstream
       child: MaterialApp(
         theme: AppThemes.lightTheme,
         themeMode: ThemeMode.light,
         onGenerateRoute: GenerateRoute.onGenerateRoute,
         initialRoute: DefinedRoutes.homeRouteName,
       ),
+=======
+      builder: (context, child) {
+        return MaterialApp( 
+          debugShowCheckedModeBanner: false,
+          theme: AppThemes.lightTheme,
+          themeMode: ThemeMode.light,
+          onGenerateRoute: GenerateRoute.onGenerateRoute,
+          initialRoute: DefinedRoutes.confirmPasswordName,
+        );
+      },
+>>>>>>> Stashed changes
     );
   }
 }
