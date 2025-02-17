@@ -3,6 +3,7 @@ import 'package:exam_app_group2/core/routes/defined_routes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/loading_widget.dart';
+import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
 import 'package:exam_app_group2/modules/authentication/screens/login/viewModel/login_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,8 @@ class _LoginViewState extends State<LoginView> {
     passwordController.dispose();
   }
 
+  var cubit = getIt<LoginCubit>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +48,7 @@ class _LoginViewState extends State<LoginView> {
         title: 'Login',
       ),
       body: BlocProvider(
-        create: (context) => getIt<LoginCubit>(),
+        create: (context) => cubit,
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state.isError) {
@@ -90,6 +93,7 @@ class _LoginViewState extends State<LoginView> {
                         height: 24.h,
                       ),
                       TextFormField(
+                        obscureText: true,
                         controller: passwordController,
                         validator: (inputText) {
                           return ValidateFunctions.validationOfPassword(
@@ -138,10 +142,12 @@ class _LoginViewState extends State<LoginView> {
                       ElevatedButton(
                         onPressed: () {
                           if (!formKey.currentState!.validate()) return;
-                          BlocProvider.of<LoginCubit>(context).doIntent(
+                         cubit.doIntent(
                             OnLoginButtonClicked(
-                              password: passwordController.text,
-                              email: emailController.text,
+                              loginRequest: LoginRequest(
+                                password: passwordController.text,
+                                email: emailController.text,
+                              ),
                             ),
                           );
                         },

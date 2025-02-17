@@ -5,9 +5,10 @@ import 'package:exam_app_group2/modules/authentication/domain/usecases/login_use
 import 'package:injectable/injectable.dart';
 
 import '../../../data/model/api_error_model.dart';
+import '../../../data/model/login/login_request.dart';
 
 part 'login_state.dart';
-
+@preResolve
 @injectable
 class LoginCubit extends Cubit<LoginState> {
   @factoryMethod
@@ -18,22 +19,19 @@ class LoginCubit extends Cubit<LoginState> {
     switch (intent) {
       case OnLoginButtonClicked():
         _login(
-          email: intent.email,
-          password: intent.password,
+          loginRequest: intent.loginRequest,
         );
     }
   }
 
   void _login({
-    required String email,
-    required String password,
+    required LoginRequest loginRequest,
   }) async {
     emit(state.copyWith(
       state: LoginStatus.loading,
     ));
     var result = await loginUseCase.execute(
-      email: email,
-      password: password,
+      loginRequest: loginRequest,
     );
     switch (result) {
       case Success<void>():
@@ -52,11 +50,9 @@ class LoginCubit extends Cubit<LoginState> {
 sealed class LoginIntent {}
 
 class OnLoginButtonClicked extends LoginIntent {
-  String email;
-  String password;
+  LoginRequest loginRequest;
 
   OnLoginButtonClicked({
-    required this.password,
-    required this.email,
+    required this.loginRequest,
   });
 }

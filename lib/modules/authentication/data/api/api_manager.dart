@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:exam_app_group2/modules/authentication/data/model/login/User_dm.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
+import 'package:exam_app_group2/modules/authentication/data/model/login/login_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/app_constants.dart';
@@ -24,16 +28,14 @@ class ApiManager {
       error: true, // Log errors
     ));
 
-  Future<void> login({
-    required String email,
-    required String password,
+  Future<LoginResponse> login({
+    required LoginRequest loginRequest,
   }) async {
-    await dio.post(
+    var result = await dio.post(
       AppConstants.loginEndPoint,
-      data: LoginRequest(
-        email: email,
-        password: password,
-      ).toJson(),
+      data: loginRequest.toJson(),
     );
+
+    return LoginResponse.fromJson(result.data);
   }
 }

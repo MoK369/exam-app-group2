@@ -1,14 +1,15 @@
 class UserDM {
   UserDM({
-      this.id, 
-      this.username, 
-      this.firstName, 
-      this.lastName, 
-      this.email, 
-      this.phone, 
-      this.role, 
-      this.isVerified, 
-      this.createdAt,});
+    this.id,
+    this.username,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.role,
+    this.isVerified,
+    this.createdAt,
+  });
 
   UserDM.fromJson(dynamic json) {
     id = json['_id'];
@@ -21,6 +22,7 @@ class UserDM {
     isVerified = json['isVerified'];
     createdAt = json['createdAt'];
   }
+
   String? id;
   String? username;
   String? firstName;
@@ -44,5 +46,4 @@ class UserDM {
     map['createdAt'] = createdAt;
     return map;
   }
-
 }

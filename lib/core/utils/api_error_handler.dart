@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import '../../modules/authentication/data/model/api_error_model.dart';
@@ -23,13 +25,13 @@ class ApiErrorHandler {
         case DioExceptionType.unknown:
           return ApiErrorModel(
               message:
-              'Connection to server failed due to internet connection');
-
+                  'Connection to server failed due to internet connection');
         default:
           return ApiErrorModel(message: 'something went wrong');
       }
     } else {
-      return ApiErrorModel(message: 'unknown error occurred');
+      log(error.toString());
+      return ApiErrorModel(message: error.toString());
     }
   }
 

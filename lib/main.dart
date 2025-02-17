@@ -1,13 +1,23 @@
+import 'dart:developer';
+
 import 'package:exam_app_group2/core/di/di.dart';
 import 'package:exam_app_group2/core/routes/defined_routes.dart';
 import 'package:exam_app_group2/core/routes/generate_route.dart';
+import 'package:exam_app_group2/core/service/cash_service.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
+import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_local_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/data/datasource_impl/auth_local_datasource_impl.dart';
+import 'package:exam_app_group2/modules/authentication/data/repo_impl/auth_repo_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'core/service/shared_pref_service.dart';
 
 void main() async {
-  configureDependencies();
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();

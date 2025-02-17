@@ -2,6 +2,7 @@ import 'package:exam_app_group2/modules/authentication/domain/repo_contract/auth
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/utils/result.dart';
+import '../../data/model/login/login_request.dart';
 
 @injectable
 class LoginUseCase {
@@ -11,12 +12,10 @@ class LoginUseCase {
   LoginUseCase({required this.repo});
 
   Future<Result<void>> execute({
-    required String email,
-    required String password,
+    required LoginRequest loginRequest,
   }) {
     return repo.login(
-      email: email,
-      password: password,
+      loginRequest: loginRequest,
     );
   }
 }

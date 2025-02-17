@@ -1,25 +1,41 @@
+import 'dart:developer';
+
 import 'package:exam_app_group2/core/utils/result.dart';
-import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_local_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_remote_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
 import 'package:exam_app_group2/modules/authentication/domain/repo_contract/auth_repo.dart';
 import 'package:injectable/injectable.dart';
+import '../model/login/login_response.dart';
 
 @Injectable(as: AuthRepo)
 class AuthRepoImpl implements AuthRepo {
-  AuthDataSource authDataSource;
+  AuthRemoteDataSource authRemoteDataSource;
+  AuthLocalDataSource authLocalDataSource;
 
   @factoryMethod
   AuthRepoImpl({
-    required this.authDataSource,
+    required this.authRemoteDataSource,
+    required this.authLocalDataSource,
   });
 
   @override
   Future<Result<void>> login({
-    required String email,
-    required String password,
-  }) {
-    return authDataSource.login(
-      email: email,
-      password: password,
+    required LoginRequest loginRequest,
+  }) async {
+    var result = await authRemoteDataSource.login(
+      loginRequest: loginRequest,
+    );
+    switch (result) {
+      case Success<LoginResponse>():
+        authLocalDataSource.cashUser(
+          user: result.data.user,
+          token: result.data.token,
+        );
+      case Error<LoginResponse>():
+    }
+    return authRemoteDataSource.login(
+      loginRequest: loginRequest,
     );
   }
 }
