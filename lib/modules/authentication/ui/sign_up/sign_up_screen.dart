@@ -37,7 +37,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(title: "Sign Up"),
+        appBar: CustomAppBar(title: appLocalizations.signUp),
         body: RPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           child: SingleChildScrollView(
@@ -59,9 +59,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     focusNode: userNameFocusNode,
                     onFieldSubmitted: (value) =>
                         firstNameFocusNode.requestFocus(),
-                    decoration: const InputDecoration(
-                      labelText: "User name",
-                      hintText: "Enter your user name",
+                    decoration: InputDecoration(
+                      labelText: appLocalizations.userName,
+                      hintText: appLocalizations.enterUserName,
                     ),
                   ),
                   RPadding(
@@ -81,9 +81,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             focusNode: firstNameFocusNode,
                             onFieldSubmitted: (value) =>
                                 lastNameFocusNode.requestFocus(),
-                            decoration: const InputDecoration(
-                              labelText: "First name",
-                              hintText: "Enter first name",
+                            decoration: InputDecoration(
+                              labelText: appLocalizations.firstName,
+                              hintText: appLocalizations.enterFirstName,
                             ),
                           ),
                         ),
@@ -104,9 +104,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             focusNode: lastNameFocusNode,
                             onFieldSubmitted: (value) =>
                                 emailFocusNode.requestFocus(),
-                            decoration: const InputDecoration(
-                              labelText: "Last name",
-                              hintText: "Enter last name",
+                            decoration: InputDecoration(
+                              labelText: appLocalizations.lastName,
+                              hintText: appLocalizations.enterLastName,
                             ),
                           ),
                         ),
@@ -123,9 +123,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     focusNode: emailFocusNode,
                     onFieldSubmitted: (value) =>
                         passwordFocusNode.requestFocus(),
-                    decoration: const InputDecoration(
-                      labelText: "Email",
-                      hintText: "Enter your email",
+                    decoration: InputDecoration(
+                      labelText: appLocalizations.email,
+                      hintText: appLocalizations.enterYourEmail,
                     ),
                   ),
                   RPadding(
@@ -148,8 +148,8 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             onFieldSubmitted: (value) =>
                                 confirmPasswordFocusNode.requestFocus(),
                             decoration: InputDecoration(
-                                labelText: "Password",
-                                hintText: "Enter password",
+                                labelText: appLocalizations.password,
+                                hintText: appLocalizations.enterPassword,
                                 suffixIcon: IconButton(
                                     onPressed: () {
                                       onPasswordVisibilityIconClick();
@@ -179,8 +179,8 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             onFieldSubmitted: (value) =>
                                 phoneNumberFocusNode.requestFocus(),
                             decoration: InputDecoration(
-                                labelText: "Confirm password",
-                                hintText: "Confirm password",
+                                labelText: appLocalizations.confirmPassword,
+                                hintText: appLocalizations.confirmPassword,
                                 suffixIcon: IconButton(
                                     onPressed: () {
                                       onConfirmPasswordVisibilityIconClick();
@@ -203,9 +203,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     keyboardType: TextInputType.phone,
                     focusNode: phoneNumberFocusNode,
                     onFieldSubmitted: (value) => phoneNumberFocusNode.unfocus(),
-                    decoration: const InputDecoration(
-                      labelText: "Phone number",
-                      hintText: "Enter phone number",
+                    decoration: InputDecoration(
+                      labelText: appLocalizations.phoneNumber,
+                      hintText: appLocalizations.enterPhoneNumber,
                     ),
                   ),
                   SizedBox(
@@ -214,7 +214,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                   ElevatedButton(
                       onPressed: () => onSignUpButtonClick(),
                       child: Text(
-                        "Signup",
+                        appLocalizations.signUp,
                         style: theme.textTheme.labelMedium!
                             .copyWith(color: Colors.white),
                       )),
@@ -225,7 +225,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     child: RichText(
                         text: TextSpan(children: [
                       TextSpan(
-                          text: "Already have an account? ",
+                          text: appLocalizations.alreadyHaveAccount,
                           style: theme.textTheme.labelSmall!
                               .copyWith(fontSize: 14.sp)),
                       WidgetSpan(
@@ -234,13 +234,34 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                           child: InkWell(
                               onTap: () {},
                               child: Text(
-                                "Login",
+                                appLocalizations.login,
                                 style: theme.textTheme.labelSmall!.copyWith(
                                   color: AppThemes.blueAppColor,
                                   fontSize: 14.sp,
                                 ),
                               )))
                     ])),
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () => localizationUseCase
+                              .changeLocale(LanguagesCodes.english),
+                          child: Text(
+                            "English",
+                            style: theme.textTheme.labelMedium!
+                                .copyWith(color: Colors.white),
+                          )),
+                      const Spacer(),
+                      ElevatedButton(
+                          onPressed: () => localizationUseCase
+                              .changeLocale(LanguagesCodes.arabic),
+                          child: Text(
+                            "العربية",
+                            style: theme.textTheme.labelMedium!
+                                .copyWith(color: Colors.white),
+                          )),
+                    ],
                   )
                 ],
               ),
@@ -268,3 +289,4 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
     });
   }
 }
+

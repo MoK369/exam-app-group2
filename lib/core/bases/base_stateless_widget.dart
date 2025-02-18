@@ -1,13 +1,22 @@
+import 'package:exam_app_group2/di/injectable_initializer.dart';
+import 'package:exam_app_group2/modules/authentication/domain/use_cases/localization/localization_use_case.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 abstract class BaseStatelessWidget extends StatelessWidget {
-  const BaseStatelessWidget({super.key});
+  BaseStatelessWidget({super.key});
+
+  final LocalizationUseCase localizationUseCase =
+      getIt.get<LocalizationUseCase>();
+  late final ThemeData theme;
+  late final AppLocalizations appLocalizations;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return customBuild(context, theme);
+    theme = Theme.of(context);
+    appLocalizations = localizationUseCase.get(context);
+    return customBuild(context);
   }
 
-  Widget customBuild(BuildContext context, ThemeData theme);
+  Widget customBuild(BuildContext context);
 }
