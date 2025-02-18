@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
@@ -15,13 +16,16 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
   bool isPasswordObscure = true, isConfirmPasswordObscure = true;
   final GlobalKey<FormState> formKey = GlobalKey();
-  final TextEditingController userNameController = TextEditingController(),
-      firstNameController = TextEditingController(),
-      lastNameController = TextEditingController(),
-      emailController = TextEditingController(),
-      passwordController = TextEditingController(),
-      confirmPasswordController = TextEditingController(),
-      phoneNumberController = TextEditingController();
+  final String userName = "UserName",
+      firstName = "FirstName",
+      lastName = "LastName",
+      email = "Email",
+      password = "Password",
+      confirmPassword = "ConfirmPassword",
+      phoneNumber = "PhoneNumber";
+
+  late final Map<String, TextEditingController> signUpFieldsControllers;
+  late final Map<String, FocusNode> signUpFieldsFocusNodes;
   final FocusNode userNameFocusNode = FocusNode(),
       firstNameFocusNode = FocusNode(),
       lastNameFocusNode = FocusNode(),
@@ -29,6 +33,29 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
       passwordFocusNode = FocusNode(),
       confirmPasswordFocusNode = FocusNode(),
       phoneNumberFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    signUpFieldsControllers = {
+      userName: TextEditingController(),
+      firstName: TextEditingController(),
+      lastName: TextEditingController(),
+      email: TextEditingController(),
+      password: TextEditingController(),
+      confirmPassword: TextEditingController(),
+      phoneNumber: TextEditingController()
+    };
+    signUpFieldsFocusNodes = {
+      userName: FocusNode(),
+      firstName: FocusNode(),
+      lastName: FocusNode(),
+      email: FocusNode(),
+      password: FocusNode(),
+      confirmPassword: FocusNode(),
+      phoneNumber: FocusNode()
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +77,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     height: 6.h,
                   ),
                   TextFormField(
-                    controller: userNameController,
+                    controller: signUpFieldsControllers[userName],
                     validator: (inputText) {
                       return ValidateFunctions.validationOfUserName(inputText);
                     },
@@ -70,7 +97,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: firstNameController,
+                            controller: signUpFieldsControllers[firstName],
                             validator: (inputText) {
                               return ValidateFunctions
                                   .validationOfFirstOrLastName(inputText);
@@ -92,7 +119,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            controller: lastNameController,
+                            controller: signUpFieldsControllers[lastName],
                             validator: (inputText) {
                               return ValidateFunctions
                                   .validationOfFirstOrLastName(inputText,
@@ -114,7 +141,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     ),
                   ),
                   TextFormField(
-                    controller: emailController,
+                    controller: signUpFieldsControllers[email],
                     validator: (inputText) {
                       return ValidateFunctions.validationOfEmail(inputText);
                     },
@@ -134,7 +161,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       children: [
                         Expanded(
                           child: TextFormField(
-                            controller: passwordController,
+                            controller: signUpFieldsControllers[password],
                             validator: (inputText) {
                               return ValidateFunctions.validationOfPassword(
                                   inputText);
@@ -164,11 +191,12 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         ),
                         Expanded(
                           child: TextFormField(
-                            controller: confirmPasswordController,
+                            controller:
+                                signUpFieldsControllers[confirmPassword],
                             validator: (inputText) {
                               return ValidateFunctions
-                                  .validationOfConfirmPassword(
-                                      inputText, passwordController);
+                                  .validationOfConfirmPassword(inputText,
+                                      signUpFieldsControllers[password]!);
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
@@ -194,7 +222,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     ),
                   ),
                   TextFormField(
-                    controller: phoneNumberController,
+                    controller: signUpFieldsControllers[phoneNumber],
                     validator: (inputText) {
                       return ValidateFunctions.validationOfPhoneNumber(
                           inputText);
@@ -288,5 +316,15 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
       isConfirmPasswordObscure = !isConfirmPasswordObscure;
     });
   }
-}
 
+  @override
+  void dispose() {
+    super.dispose();
+    signUpFieldsControllers.forEach(
+      (key, controller) => controller.dispose(),
+    );
+    signUpFieldsFocusNodes.forEach(
+      (key, focusNode) => focusNode.dispose,
+    );
+  }
+}
