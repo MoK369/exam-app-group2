@@ -14,9 +14,4 @@ class LocaleState extends Equatable {
   @override
   List<Object?> get props => [state, languageCode];
 
-  LocaleState copyWith(
-      {LocaleStatus state = LocaleStatus.english,
-      String languageCode = LanguagesCodes.english}) {
-    return LocaleState(state: state, languageCode: languageCode);
-  }
 }

@@ -229,3 +229,4 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
     if (formKey.currentState?.validate() == true) {}
   }
 }
+

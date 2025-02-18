@@ -2,8 +2,8 @@ import 'package:exam_app_group2/core/routes/defined_routes.dart';
 import 'package:exam_app_group2/core/routes/generate_route.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/di/injectable_initializer.dart';
-import 'package:exam_app_group2/modules/localization/l10n_manager/local_state.dart';
-import 'package:exam_app_group2/modules/localization/l10n_manager/localization_manager.dart';
+import 'package:exam_app_group2/localization/l10n_manager/local_state.dart';
+import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -59,12 +59,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  // Locale getCurrentLocal(LocaleState state) {
-  //   switch (state.state) {
-  //     case LocaleStatus.english:
-  //       return Locale(LanguagesCodes.english);
-  //     case LocaleStatus.arabic:
-  //       return Locale(LanguagesCodes.arabic);
-  //   }
-  // }
 }
