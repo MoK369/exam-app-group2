@@ -1,0 +1,21 @@
+{
+  "signUpScreen_______________": "$$$ Comment $$$",
+  "signUp": "Sign Up",
+  "userName": "User name",
+  "enterUserName": "Enter your user name",
+  "firstName": "First name",
+  "enterFirstName": "Enter first name",
+  "lastName": "Last name",
+  "enterLastName": "Enter last name",
+  "email": "Email",
+  "enterYourEmail": "Enter your email",
+  "password": "Password",
+  "enterPassword": "Enter password",
+  "confirmPassword": "Confirm password",
+  "phoneNumber": "Phone number",
+  "enterPhoneNumber": "Enter phone number",
+  "alreadyHaveAccount": "Already have an account? ",
+  "login": "Login"
+
+
+}

@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
@@ -29,7 +30,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        appBar: const CustomAppBar(title: "Sign Up"),
+        appBar: CustomAppBar(title: appLocalizations.signUp),
         body: RPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
           child: SingleChildScrollView(
@@ -47,9 +48,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       return ValidateFunctions.validationOfUserName(inputText);
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: const InputDecoration(
-                      labelText: "User name",
-                      hintText: "Enter your user name",
+                    decoration: InputDecoration(
+                      labelText: appLocalizations.userName,
+                      hintText: appLocalizations.enterUserName,
                     ),
                   ),
                   RPadding(
@@ -65,9 +66,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            decoration: const InputDecoration(
-                              labelText: "First name",
-                              hintText: "Enter first name",
+                            decoration: InputDecoration(
+                              labelText: appLocalizations.firstName,
+                              hintText: appLocalizations.enterFirstName,
                             ),
                           ),
                         ),
@@ -84,9 +85,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            decoration: const InputDecoration(
-                              labelText: "Last name",
-                              hintText: "Enter last name",
+                            decoration: InputDecoration(
+                              labelText: appLocalizations.lastName,
+                              hintText: appLocalizations.enterLastName,
                             ),
                           ),
                         ),
@@ -99,9 +100,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       return ValidateFunctions.validationOfEmail(inputText);
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: const InputDecoration(
-                      labelText: "Email",
-                      hintText: "Enter your email",
+                    decoration: InputDecoration(
+                      labelText: appLocalizations.email,
+                      hintText: appLocalizations.enterYourEmail,
                     ),
                   ),
                   RPadding(
@@ -117,9 +118,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            decoration: const InputDecoration(
-                              labelText: "Password",
-                              hintText: "Enter password",
+                            decoration: InputDecoration(
+                              labelText: appLocalizations.password,
+                              hintText: appLocalizations.enterPassword,
                             ),
                           ),
                         ),
@@ -136,9 +137,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             },
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            decoration: const InputDecoration(
-                              labelText: "Confirm password",
-                              hintText: "Confirm password",
+                            decoration: InputDecoration(
+                              labelText: appLocalizations.confirmPassword,
+                              hintText: appLocalizations.confirmPassword,
                             ),
                           ),
                         ),
@@ -152,9 +153,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                           inputText);
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: const InputDecoration(
-                      labelText: "Phone number",
-                      hintText: "Enter phone number",
+                    decoration: InputDecoration(
+                      labelText: appLocalizations.phoneNumber,
+                      hintText: appLocalizations.enterPhoneNumber,
                     ),
                   ),
                   SizedBox(
@@ -165,7 +166,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         onSignUpButtonClick();
                       },
                       child: Text(
-                        "Signup",
+                        appLocalizations.signUp,
                         style: theme.textTheme.labelMedium!
                             .copyWith(color: Colors.white),
                       )),
@@ -176,7 +177,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                     child: RichText(
                         text: TextSpan(children: [
                       TextSpan(
-                          text: "Already have an account? ",
+                          text: appLocalizations.alreadyHaveAccount,
                           style: theme.textTheme.labelSmall!
                               .copyWith(fontSize: 14.sp)),
                       WidgetSpan(
@@ -185,13 +186,34 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                           child: InkWell(
                               onTap: () {},
                               child: Text(
-                                "Login",
+                                appLocalizations.login,
                                 style: theme.textTheme.labelSmall!.copyWith(
                                   color: AppThemes.blueAppColor,
                                   fontSize: 14.sp,
                                 ),
                               )))
                     ])),
+                  ),
+                  Row(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () => localizationUseCase
+                              .changeLocale(LanguagesCodes.english),
+                          child: Text(
+                            "English",
+                            style: theme.textTheme.labelMedium!
+                                .copyWith(color: Colors.white),
+                          )),
+                      const Spacer(),
+                      ElevatedButton(
+                          onPressed: () => localizationUseCase
+                              .changeLocale(LanguagesCodes.arabic),
+                          child: Text(
+                            "العربية",
+                            style: theme.textTheme.labelMedium!
+                                .copyWith(color: Colors.white),
+                          )),
+                    ],
                   )
                 ],
               ),

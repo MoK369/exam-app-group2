@@ -30,6 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,9 +46,21 @@ dependencies:
   flutter_native_splash: ^2.4.4
   # app icon
   flutter_launcher_icons: ^0.14.3
+  # state management
+  flutter_bloc: ^9.0.0
+  # injection
+  injectable: ^2.5.0
+  get_it: ^8.0.3
+  # comparing objects
+  equatable: ^2.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # add the generator to your dev_dependencies
+  injectable_generator: 2.6.2
+  # add build runner if not already added
+  build_runner: 2.4.13
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -59,7 +74,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
