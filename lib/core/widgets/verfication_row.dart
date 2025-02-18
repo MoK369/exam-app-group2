@@ -23,9 +23,13 @@ class VerificationCodeRow extends StatelessWidget {
             child: NumberTextField(
               controller: controllers[index],
               focusNode: focusNodes[index],
-              onNext: index < controllers.length - 1
-                  ? () => FocusScope.of(context).requestFocus(focusNodes[index + 1])
-                  : () {}, 
+              onNext: (value) {
+                if (index < controllers.length-1) {
+                  if (value.length == 1) {
+                    FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                  }
+                }
+              },
             ),
           ),
         );

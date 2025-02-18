@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 
-
 class NumberTextField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
-  final VoidCallback onNext;
+  final void Function(String value) onNext;
 
   const NumberTextField({
     super.key,
@@ -28,11 +27,11 @@ class NumberTextField extends StatelessWidget {
       ],
       decoration: InputDecoration(
         filled: true,
-        fillColor:  AppThemes.verficationFieldColor,
+        fillColor: AppThemes.verficationFieldColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: const BorderSide(
-            color:  AppThemes.verficationFieldColor,
+            color: AppThemes.verficationFieldColor,
             width: 1.5,
           ),
         ),
@@ -55,11 +54,7 @@ class NumberTextField extends StatelessWidget {
       // style: Styles.styles17w500NormalBlack,
       focusNode: focusNode,
       textAlign: TextAlign.center, // Center the text
-      onChanged: (value) {
-        if (value.length == 1) {
-          onNext();
-        }
-      },
+      onChanged: onNext,
     );
   }
 }

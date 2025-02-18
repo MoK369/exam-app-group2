@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
           theme: AppThemes.lightTheme,
           themeMode: ThemeMode.light,
           onGenerateRoute: GenerateRoute.onGenerateRoute,
-          initialRoute: DefinedRoutes.confirmPasswordName,
+          initialRoute: DefinedRoutes.forgetPasswordName,
         );
       },
     );

@@ -65,7 +65,7 @@ class _EmialVerficationScreenState extends State<EmialVerficationScreen> {
                 _focusNode4,
               ],
             ),
-            
+
             SizedBox(height: 25.h),
             CustomRichText(
               text: "Didn't receive code?",
