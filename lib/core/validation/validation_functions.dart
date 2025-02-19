@@ -59,23 +59,20 @@ class ValidateFunctions {
   }
 
   static String? validationOfPassword(String? inputText) {
-    // RegExp passValid = RegExp(
-    //     r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$');
-    // if (inputText?.trim().isEmpty == true || inputText == null) {
-    //   return "Please enter your password.";
-    // } else if (!passValid.hasMatch(inputText)) {
-    //   return "Please, write at least 6 characters\ncontains at least one digit,\none letter and one\nspecial character";
-    // }
+    RegExp passValid = RegExp(
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@\$%^&*-]).{8,}\$');
     if (inputText?.trim().isEmpty == true || inputText == null) {
       return "Please enter your password.";
-    } else if (inputText.length < 6) {
+    } else if (inputText.length < 8) {
       return 'Password must be at least 6 characters long.';
-    } else if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(inputText)) {
-      return 'At least one alphabetic character must be found.';
-    } else if (!RegExp(r'(?=.*\d)').hasMatch(inputText)) {
+    } else if (!RegExp(r'(?=.*?[A-Z])').hasMatch(inputText)) {
+      return 'At least one one uppercase letter.';
+    } else if (!RegExp(r'(?=.*?[a-z])').hasMatch(inputText)) {
+      return 'At least one one lowercase letter.';
+    } else if (!RegExp(r'(?=.*?[0-9])').hasMatch(inputText)) {
       return 'At least one digit must be there.';
-    } else if (!RegExp(r'(?=.*[!@#$%^&*(),.?":{}|<>])').hasMatch(inputText)) {
-      return 'At least one special character(e.g., !@#\$%^&*) must be included.';
+    } else if (!RegExp(r'(?=.*?[#?!@$%^&*-])').hasMatch(inputText)) {
+      return 'At least one special character(e.g., #?!@\$%^&*-) must be included.';
     }
     return null;
   }
