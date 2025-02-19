@@ -5,7 +5,7 @@ import 'package:exam_app_group2/modules/forget%20password/screens/confirm_passwo
 import 'package:exam_app_group2/modules/forget%20password/screens/emial_verfication_screen.dart';
 import 'package:exam_app_group2/modules/forget%20password/screens/forget_password.dart';
 
-import 'package:exam_app_group2/modules/authentication/screens/sign_up_screen.dart';
+import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/home/home_screen.dart';
 import 'package:flutter/material.dart';
 

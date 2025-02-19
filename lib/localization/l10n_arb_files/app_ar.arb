@@ -1,0 +1,21 @@
+{
+  "signUpScreen_______________": "$$$ تعليق $$$",
+  "signUp": "تسجيل حساب",
+  "userName": "اسم المستخدم",
+  "enterUserName": "أدخل اسم المستخدم",
+  "firstName": "الاسم الأول",
+  "enterFirstName": "أدخل الاسم الأول",
+  "lastName": "الاسم الأخير",
+  "enterLastName": "أدخل الاسم الأخير",
+  "email": "البريد الإلكتروني",
+  "enterYourEmail": "أدخل بريدك الإلكتروني",
+  "password": "كلمة المرور",
+  "enterPassword": "أدخل كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "phoneNumber": "رقم الهاتف",
+  "enterPhoneNumber": "أدخل رقم الهاتف",
+  "alreadyHaveAccount": "هل لديك حساب؟ ",
+  "login": "تسجيل الدخول"
+
+
+}
