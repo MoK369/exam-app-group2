@@ -3,17 +3,38 @@ import 'package:exam_app_group2/modules/authentication/domain/use_cases/localiza
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
 abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     extends State<T> {
   late ThemeData theme;
   late AppLocalizations appLocalizations;
   final LocalizationUseCase localizationUseCase =
       getIt.get<LocalizationUseCase>();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     theme = Theme.of(context);
     appLocalizations = localizationUseCase.get(context);
+  }
+
+  void displayAlertDialog({required Widget title, bool showOkButton = false}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: title,
+          actions: !showOkButton
+              ? null
+              : [
+                  ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "OK",
+                        style: theme.textTheme.labelMedium,
+                      ))
+                ],
+        );
+      },
+    );
   }
 }
