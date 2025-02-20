@@ -8,12 +8,12 @@ import '../../../../../core/api/api_result/api_result.dart';
 import '../../../data/model/login/login_request.dart';
 
 part 'login_state.dart';
-
 @preResolve
 @injectable
 class LoginCubit extends Cubit<LoginState> {
-  @factoryMethod
-  LoginCubit({required this.loginUseCase}) : super(LoginState());
+  LoginCubit({
+    required this.loginUseCase,
+  }) : super(LoginState());
   LoginUseCase loginUseCase;
 
   void doIntent(LoginIntent intent) {

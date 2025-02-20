@@ -34,7 +34,6 @@ import '../../modules/authentication/domain/usecases/login_use_case.dart'
 import '../../modules/authentication/ui/login/viewModel/login_cubit.dart'
     as _i270;
 import '../service/cash_service.dart' as _i115;
-import '../service/shared_pref_service.dart' as _i811;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -48,12 +47,10 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    final sharedPrefServiceModule = _$SharedPrefServiceModule();
     final registerModule = _$RegisterModule();
-    gh.factoryAsync<_i460.SharedPreferences>(
-        () => sharedPrefServiceModule.prefs);
     gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingletonAsync<_i460.SharedPreferences>(() => registerModule.prefs);
     gh.factoryAsync<_i115.CashService>(() async => _i115.CashServiceImpl(
         sharedPreferences: await getAsync<_i460.SharedPreferences>()));
     gh.singleton<_i920.ApiManager>(
@@ -79,7 +76,5 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
-
-class _$SharedPrefServiceModule extends _i811.SharedPrefServiceModule {}
 
 class _$RegisterModule extends _i291.RegisterModule {}

@@ -41,7 +41,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
     passwordController.dispose();
   }
 
-  var cubit = getIt<LoginCubit>();
+  LoginCubit cubit = getIt<LoginCubit>();
 
   @override
   Widget build(BuildContext context) {
