@@ -1,12 +1,10 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
-import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
+import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/di/injectable_initializer.dart';
-import 'package:exam_app_group2/modules/authentication/data/models/sign_up/request/sign_up_request_parameters.dart';
-import 'package:exam_app_group2/modules/authentication/ui/sign_up/constants/sign_up_fields_names.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_state.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
@@ -20,41 +18,15 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
-  bool isPasswordObscure = true, isConfirmPasswordObscure = true;
-  final GlobalKey<FormState> formKey = GlobalKey();
-  late final Map<String, TextEditingController> signUpFieldsControllers;
-  late final Map<String, FocusNode> signUpFieldsFocusNodes;
-  final FocusNode userNameFocusNode = FocusNode(),
-      firstNameFocusNode = FocusNode(),
-      lastNameFocusNode = FocusNode(),
-      emailFocusNode = FocusNode(),
-      passwordFocusNode = FocusNode(),
-      confirmPasswordFocusNode = FocusNode(),
-      phoneNumberFocusNode = FocusNode();
+class _SignUpScreenState
+    extends BaseStatefulWidgetState<SignUpScreen> {
   final SignUpViewModel signUpViewModel = getIt.get<SignUpViewModel>();
+  late ValidateFunctions validateFunctions;
 
   @override
-  void initState() {
-    super.initState();
-    signUpFieldsControllers = {
-      SignUpFieldsKeys.userName: TextEditingController(),
-      SignUpFieldsKeys.firstName: TextEditingController(),
-      SignUpFieldsKeys.lastName: TextEditingController(),
-      SignUpFieldsKeys.email: TextEditingController(),
-      SignUpFieldsKeys.password: TextEditingController(),
-      SignUpFieldsKeys.confirmPassword: TextEditingController(),
-      SignUpFieldsKeys.phoneNumber: TextEditingController()
-    };
-    signUpFieldsFocusNodes = {
-      SignUpFieldsKeys.userName: FocusNode(),
-      SignUpFieldsKeys.firstName: FocusNode(),
-      SignUpFieldsKeys.lastName: FocusNode(),
-      SignUpFieldsKeys.email: FocusNode(),
-      SignUpFieldsKeys.password: FocusNode(),
-      SignUpFieldsKeys.confirmPassword: FocusNode(),
-      SignUpFieldsKeys.phoneNumber: FocusNode()
-    };
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    validateFunctions = ValidateFunctions.getInstance(appLocalizations);
   }
 
   @override
@@ -62,9 +34,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
     return BlocProvider(
       create: (context) => signUpViewModel,
       child: GestureDetector(
-        onTap: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
+        onTap: () => signUpViewModel.getKeyboardUnfocused(),
         child: BlocListener<SignUpViewModel, SignUpState>(
           listenWhen: (previous, current) {
             if (current.signUpStatus == SignUpStatus.initial) return false;
@@ -75,28 +45,43 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
               case SignUpStatus.loading:
                 displayAlertDialog(title: const LoadingStateWidget());
               case SignUpStatus.success:
+                hideAlertDialog();
                 displayAlertDialog(
+                    showOkButton: true,
                     title: Text(
-                  "Successfully Registered!",
-                  style: theme.textTheme.labelMedium,
-                ));
+                      appLocalizations.successfullyRegistered,
+                      style: theme.textTheme.labelMedium,
+                    ));
               case SignUpStatus.error:
+                hideAlertDialog();
                 displayAlertDialog(
-                    title: Text(
-                  signUpState.signUpErrorMessage!,
-                  style: theme.textTheme.labelMedium,
-                ));
+                    showOkButton: true,
+                    title: ErrorStateWidget(error: signUpState.signUpError!));
               default:
                 const Placeholder();
             }
           },
           child: Scaffold(
-            appBar: CustomAppBar(title: appLocalizations.signUp),
+            appBar: CustomAppBar(
+              title: appLocalizations.signUp,
+              showLocaleButton: true,
+              onChangeLocaleButtonClick: () {
+                if (signUpViewModel.state.signUpFormStatus ==
+                    SignUpFormStatus.unValid) {
+                  WidgetsBinding.instance.addPostFrameCallback(
+                    (timeStamp) {
+                      signUpViewModel.validateForm();
+                    },
+                  );
+                }
+              },
+            ),
             body: RPadding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
               child: SingleChildScrollView(
                 child: Form(
-                  key: formKey,
+                  key: signUpViewModel.formKey,
+                  onChanged: signUpViewModel.validateForm,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -104,17 +89,18 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         height: 6.h,
                       ),
                       TextFormField(
-                        controller:
-                            signUpFieldsControllers[SignUpFieldsKeys.userName],
+                        controller: signUpViewModel.userNameController,
+                        //signUpFieldsControllers[SignUpFieldsKeys.userName],
                         validator: (inputText) {
-                          return ValidateFunctions.validationOfUserName(
-                              inputText);
+                          return validateFunctions
+                              .validationOfUserName(inputText);
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.name,
-                        focusNode: userNameFocusNode,
+                        focusNode: signUpViewModel.userNameFocusNode,
+                        //signUpFieldsFocusNodes[SignUpFieldsKeys.userName],
                         onFieldSubmitted: (value) =>
-                            firstNameFocusNode.requestFocus(),
+                            signUpViewModel.firstNameFocusNode.requestFocus(),
                         decoration: InputDecoration(
                           labelText: appLocalizations.userName,
                           hintText: appLocalizations.enterUserName,
@@ -126,18 +112,17 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                controller: signUpFieldsControllers[
-                                    SignUpFieldsKeys.firstName],
+                                controller: signUpViewModel.firstNameController,
                                 validator: (inputText) {
-                                  return ValidateFunctions
+                                  return validateFunctions
                                       .validationOfFirstOrLastName(inputText);
                                 },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 keyboardType: TextInputType.name,
-                                focusNode: firstNameFocusNode,
+                                focusNode: signUpViewModel.firstNameFocusNode,
                                 onFieldSubmitted: (value) =>
-                                    lastNameFocusNode.requestFocus(),
+                                    signUpViewModel.lastNameFocusNode.requestFocus(),
                                 decoration: InputDecoration(
                                   labelText: appLocalizations.firstName,
                                   hintText: appLocalizations.enterFirstName,
@@ -149,19 +134,18 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             ),
                             Expanded(
                               child: TextFormField(
-                                controller: signUpFieldsControllers[
-                                    SignUpFieldsKeys.lastName],
+                                controller: signUpViewModel.lastNameController,
                                 validator: (inputText) {
-                                  return ValidateFunctions
+                                  return validateFunctions
                                       .validationOfFirstOrLastName(inputText,
                                           isFirstName: false);
                                 },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 keyboardType: TextInputType.name,
-                                focusNode: lastNameFocusNode,
+                                focusNode: signUpViewModel.lastNameFocusNode,
                                 onFieldSubmitted: (value) =>
-                                    emailFocusNode.requestFocus(),
+                                    signUpViewModel.emailFocusNode.requestFocus(),
                                 decoration: InputDecoration(
                                   labelText: appLocalizations.lastName,
                                   hintText: appLocalizations.enterLastName,
@@ -172,16 +156,15 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                         ),
                       ),
                       TextFormField(
-                        controller:
-                            signUpFieldsControllers[SignUpFieldsKeys.email],
+                        controller: signUpViewModel.emailController,
                         validator: (inputText) {
-                          return ValidateFunctions.validationOfEmail(inputText);
+                          return validateFunctions.validationOfEmail(inputText);
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.emailAddress,
-                        focusNode: emailFocusNode,
+                        focusNode: signUpViewModel.emailFocusNode,
                         onFieldSubmitted: (value) =>
-                            passwordFocusNode.requestFocus(),
+                            signUpViewModel.passwordFocusNode.requestFocus(),
                         decoration: InputDecoration(
                           labelText: appLocalizations.email,
                           hintText: appLocalizations.enterYourEmail,
@@ -193,28 +176,31 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                           children: [
                             Expanded(
                               child: TextFormField(
-                                controller: signUpFieldsControllers[
-                                    SignUpFieldsKeys.password],
+                                controller: signUpViewModel.passwordController,
                                 validator: (inputText) {
-                                  return ValidateFunctions.validationOfPassword(
-                                      inputText);
+                                  return validateFunctions
+                                      .validationOfPassword(inputText);
                                 },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 keyboardType: TextInputType.visiblePassword,
-                                obscureText: isPasswordObscure,
+                                obscureText: signUpViewModel.isPasswordObscure,
                                 obscuringCharacter: "*",
-                                focusNode: passwordFocusNode,
-                                onFieldSubmitted: (value) =>
-                                    confirmPasswordFocusNode.requestFocus(),
+                                focusNode: signUpViewModel.passwordFocusNode,
+                                onFieldSubmitted: (value) => signUpViewModel
+                                    .confirmPasswordFocusNode
+                                    .requestFocus(),
                                 decoration: InputDecoration(
                                     labelText: appLocalizations.password,
                                     hintText: appLocalizations.enterPassword,
                                     suffixIcon: IconButton(
                                         onPressed: () {
-                                          onPasswordVisibilityIconClick();
+                                          setState(() {
+                                            signUpViewModel
+                                                .onPasswordVisibilityIconClick();
+                                          });
                                         },
-                                        icon: Icon(isPasswordObscure
+                                        icon: Icon(signUpViewModel.isPasswordObscure
                                             ? Icons.visibility_off
                                             : Icons.visibility))),
                               ),
@@ -224,50 +210,51 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                             ),
                             Expanded(
                               child: TextFormField(
-                                controller: signUpFieldsControllers[
-                                    SignUpFieldsKeys.confirmPassword],
+                                controller: signUpViewModel.confirmPasswordController,
                                 validator: (inputText) {
-                                  return ValidateFunctions
-                                      .validationOfConfirmPassword(
-                                          inputText,
-                                          signUpFieldsControllers[
-                                              SignUpFieldsKeys.password]!);
+                                  return validateFunctions
+                                      .validationOfConfirmPassword(inputText,
+                                          signUpViewModel.passwordController);
                                 },
                                 autovalidateMode:
                                     AutovalidateMode.onUserInteraction,
                                 keyboardType: TextInputType.visiblePassword,
-                                obscureText: isConfirmPasswordObscure,
+                                obscureText: signUpViewModel.isConfirmPasswordObscure,
                                 obscuringCharacter: "*",
-                                focusNode: confirmPasswordFocusNode,
-                                onFieldSubmitted: (value) =>
-                                    phoneNumberFocusNode.requestFocus(),
+                                focusNode: signUpViewModel.confirmPasswordFocusNode,
+                                onFieldSubmitted: (value) => signUpViewModel
+                                    .phoneNumberFocusNode
+                                    .requestFocus(),
                                 decoration: InputDecoration(
                                     labelText: appLocalizations.confirmPassword,
                                     hintText: appLocalizations.confirmPassword,
                                     suffixIcon: IconButton(
                                         onPressed: () {
-                                          onConfirmPasswordVisibilityIconClick();
+                                          setState(() {
+                                            signUpViewModel
+                                                .onConfirmPasswordVisibilityIconClick();
+                                          });
                                         },
-                                        icon: Icon(isConfirmPasswordObscure
-                                            ? Icons.visibility_off
-                                            : Icons.visibility))),
+                                        icon: Icon(
+                                            signUpViewModel.isConfirmPasswordObscure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility))),
                               ),
                             ),
                           ],
                         ),
                       ),
                       TextFormField(
-                        controller: signUpFieldsControllers[
-                            SignUpFieldsKeys.phoneNumber],
+                        controller: signUpViewModel.phoneNumberController,
                         validator: (inputText) {
-                          return ValidateFunctions.validationOfPhoneNumber(
-                              inputText);
+                          return validateFunctions
+                              .validationOfPhoneNumber(inputText);
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         keyboardType: TextInputType.phone,
-                        focusNode: phoneNumberFocusNode,
+                        focusNode: signUpViewModel.phoneNumberFocusNode,
                         onFieldSubmitted: (value) =>
-                            phoneNumberFocusNode.unfocus(),
+                            signUpViewModel.phoneNumberFocusNode.unfocus(),
                         decoration: InputDecoration(
                           labelText: appLocalizations.phoneNumber,
                           hintText: appLocalizations.enterPhoneNumber,
@@ -276,13 +263,33 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                       SizedBox(
                         height: 48.h,
                       ),
-                      ElevatedButton(
-                          onPressed: () => onSignUpButtonClick(),
-                          child: Text(
-                            appLocalizations.signUp,
-                            style: theme.textTheme.labelMedium!
-                                .copyWith(color: Colors.white),
-                          )),
+                      BlocBuilder<SignUpViewModel, SignUpState>(
+                        builder: (context, state) {
+                          //debugPrint("BlocBuilder executing");
+                          ButtonStyle? signUpButtonStyle;
+                          switch (state.signUpFormStatus) {
+                            case SignUpFormStatus.valid:
+                              signUpButtonStyle = null;
+                            case SignUpFormStatus.unValid:
+                              signUpButtonStyle =
+                                  theme.elevatedButtonTheme.style!.copyWith(
+                                      backgroundColor:
+                                          const WidgetStatePropertyAll(
+                                              AppThemes.grayAppColor30));
+                          }
+                          return ElevatedButton(
+                              onPressed: state.signUpFormStatus ==
+                                      SignUpFormStatus.unValid
+                                  ? null
+                                  : () => signUpViewModel.onSignUpButtonClick(),
+                              style: signUpButtonStyle,
+                              child: Text(
+                                appLocalizations.signUp,
+                                style: theme.textTheme.labelMedium!
+                                    .copyWith(color: Colors.white),
+                              ));
+                        },
+                      ),
                       SizedBox(
                         height: 16.h,
                       ),
@@ -307,27 +314,6 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                                   )))
                         ])),
                       ),
-                      Row(
-                        children: [
-                          ElevatedButton(
-                              onPressed: () => localizationUseCase
-                                  .changeLocale(LanguagesCodes.english),
-                              child: Text(
-                                "English",
-                                style: theme.textTheme.labelMedium!
-                                    .copyWith(color: Colors.white),
-                              )),
-                          const Spacer(),
-                          ElevatedButton(
-                              onPressed: () => localizationUseCase
-                                  .changeLocale(LanguagesCodes.arabic),
-                              child: Text(
-                                "العربية",
-                                style: theme.textTheme.labelMedium!
-                                    .copyWith(color: Colors.white),
-                              )),
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -339,43 +325,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
     );
   }
 
-  void onSignUpButtonClick() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    if (formKey.currentState?.validate() == true) {
-      signUpViewModel.signUp(
-          signUpParameters: SignUpRequestParameters(
-        username: signUpFieldsControllers[SignUpFieldsKeys.userName]?.text,
-        firstName: signUpFieldsControllers[SignUpFieldsKeys.firstName]?.text,
-        lastName: signUpFieldsControllers[SignUpFieldsKeys.lastName]?.text,
-        email: signUpFieldsControllers[SignUpFieldsKeys.email]?.text,
-        password: signUpFieldsControllers[SignUpFieldsKeys.password]?.text,
-        rePassword:
-            signUpFieldsControllers[SignUpFieldsKeys.confirmPassword]?.text,
-        phone: signUpFieldsControllers[SignUpFieldsKeys.phoneNumber]?.text,
-      ));
-    }
-  }
-
-  void onPasswordVisibilityIconClick() {
-    setState(() {
-      isPasswordObscure = !isPasswordObscure;
-    });
-  }
-
-  void onConfirmPasswordVisibilityIconClick() {
-    setState(() {
-      isConfirmPasswordObscure = !isConfirmPasswordObscure;
-    });
-  }
-
   @override
   void dispose() {
     super.dispose();
-    signUpFieldsControllers.forEach(
-      (key, controller) => controller.dispose(),
-    );
-    signUpFieldsFocusNodes.forEach(
-      (key, focusNode) => focusNode.dispose,
-    );
+    signUpViewModel.disposeControllersAndFocusNodes();
   }
 }

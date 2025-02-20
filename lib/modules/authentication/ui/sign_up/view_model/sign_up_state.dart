@@ -2,12 +2,30 @@ import 'package:equatable/equatable.dart';
 
 enum SignUpStatus { initial, loading, success, error }
 
+enum SignUpFormStatus { valid, unValid }
+
 class SignUpState extends Equatable {
   final SignUpStatus signUpStatus;
-  final String? signUpErrorMessage;
+  final SignUpFormStatus signUpFormStatus;
+  final Object? signUpError;
 
-  const SignUpState({required this.signUpStatus, this.signUpErrorMessage});
+  const SignUpState(
+      {required this.signUpStatus,
+      this.signUpError,
+      this.signUpFormStatus = SignUpFormStatus.valid});
 
   @override
-  List<Object?> get props => [signUpStatus,signUpErrorMessage];
+  List<Object?> get props =>
+      [signUpStatus, signUpError, signUpFormStatus];
+
+  SignUpState copyWith(
+      {SignUpStatus? signUpStatus,
+      SignUpFormStatus? signUpFormStatus,
+      Object? signUpErrorMessage}) {
+    return SignUpState(
+      signUpStatus: signUpStatus ?? this.signUpStatus,
+      signUpError: signUpErrorMessage ?? this.signUpError,
+      signUpFormStatus: signUpFormStatus ?? this.signUpFormStatus,
+    );
+  }
 }

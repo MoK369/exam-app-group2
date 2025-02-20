@@ -23,7 +23,7 @@ class SignUpRemoteDataSourceImp implements SignUpRemoteDataSource {
         return Success(data: convertedResult);
 
       case Error<AuthenticationResponseDto>():
-        return Error(apiErrorModel: apiResult.apiErrorModel);
+        return Error(error: apiResult.error);
     }
   }
 }

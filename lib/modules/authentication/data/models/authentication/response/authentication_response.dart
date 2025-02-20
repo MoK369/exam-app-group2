@@ -20,16 +20,6 @@ class AuthenticationResponseDto {
   String? token;
   UserDto? user;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['message'] = message;
-    map['token'] = token;
-    if (user != null) {
-      map['user'] = user?.toJson();
-    }
-    return map;
-  }
-
   AuthenticationResponseEntity convertIntoAuthenticationEntity() {
     return AuthenticationResponseEntity(
         message: message, token: token, user: user?.convertIntoUserEntity());
@@ -79,20 +69,6 @@ class UserDto {
   bool? isVerified;
   String? id;
   String? createdAt;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['username'] = username;
-    map['firstName'] = firstName;
-    map['lastName'] = lastName;
-    map['email'] = email;
-    map['phone'] = phone;
-    map['role'] = role;
-    map['isVerified'] = isVerified;
-    map['_id'] = id;
-    map['createdAt'] = createdAt;
-    return map;
-  }
 
   UserEntity convertIntoUserEntity() {
     return UserEntity(

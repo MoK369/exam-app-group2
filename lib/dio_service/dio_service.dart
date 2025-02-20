@@ -6,7 +6,9 @@ import 'package:injectable/injectable.dart';
 abstract class DioService {
   @singleton
   Dio provideDio() {
-    final Dio dio = Dio(BaseOptions(baseUrl: "https://exam.elevateegy.com/"));
+    final Dio dio = Dio(BaseOptions(
+        connectTimeout: const Duration(seconds: 30),
+        baseUrl: "https://exam.elevateegy.com/"));
     dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,

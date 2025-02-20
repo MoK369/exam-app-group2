@@ -11,7 +11,9 @@ class AppThemes {
   static ThemeData lightTheme = ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: lightPrimaryColor,
-      progressIndicatorTheme: const ProgressIndicatorThemeData(color: blueAppColor),
+      dialogBackgroundColor: lightPrimaryColor,
+      progressIndicatorTheme:
+          const ProgressIndicatorThemeData(color: blueAppColor),
       appBarTheme: const AppBarTheme(
         backgroundColor: lightPrimaryColor,
       ),
