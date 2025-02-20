@@ -8,12 +8,17 @@ import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_local_datasource.dart';
 import 'package:exam_app_group2/modules/authentication/data/datasource_impl/auth_local_datasource_impl.dart';
 import 'package:exam_app_group2/modules/authentication/data/repo_impl/auth_repo_impl.dart';
+import 'package:exam_app_group2/di/injectable_initializer.dart';
+import 'package:exam_app_group2/localization/l10n_manager/local_state.dart';
+import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/service/shared_pref_service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +26,10 @@ void main() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
-  runApp(const MyApp());
+  configureDependencies();
+  runApp(BlocProvider(
+      create: (context) => getIt.get<LocalizationManager>(),
+      child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -32,6 +40,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   void initState() {
     super.initState();
@@ -45,14 +54,22 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: AppThemes.lightTheme,
-          themeMode: ThemeMode.light,
-          onGenerateRoute: GenerateRoute.onGenerateRoute,
-          initialRoute: DefinedRoutes.login,
+        return BlocBuilder<LocalizationManager, LocaleState>(
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: AppThemes.lightTheme,
+              themeMode: ThemeMode.light,
+              locale: Locale(state.languageCode),
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              onGenerateRoute: GenerateRoute.onGenerateRoute,
+              initialRoute: DefinedRoutes.signUpRouteName,
+            );
+          },
         );
       },
     );
   }
+
 }

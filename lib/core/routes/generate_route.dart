@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/core/routes/defined_routes.dart';
+import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/authentication/screens/login/view/login_view.dart';
-import 'package:exam_app_group2/modules/authentication/screens/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
