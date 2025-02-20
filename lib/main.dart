@@ -1,14 +1,5 @@
 import 'dart:developer';
-
-import 'package:exam_app_group2/core/di/di.dart';
-import 'package:exam_app_group2/core/routes/defined_routes.dart';
-import 'package:exam_app_group2/core/routes/generate_route.dart';
-import 'package:exam_app_group2/core/service/cash_service.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
-import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_local_datasource.dart';
-import 'package:exam_app_group2/modules/authentication/data/datasource_impl/auth_local_datasource_impl.dart';
-import 'package:exam_app_group2/modules/authentication/data/repo_impl/auth_repo_impl.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/localization/l10n_manager/local_state.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +8,14 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/di/injectable_initializer.dart';
+import 'core/routing/defined_routes.dart';
+import 'core/routing/generate_route.dart';
 import 'core/service/shared_pref_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await configureDependencies();
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
@@ -40,7 +33,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -64,12 +56,11 @@ class _MyAppState extends State<MyApp> {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateRoute: GenerateRoute.onGenerateRoute,
-              initialRoute: DefinedRoutes.signUpRouteName,
+              initialRoute: DefinedRoutes.login,
             );
           },
         );
       },
     );
   }
-
 }

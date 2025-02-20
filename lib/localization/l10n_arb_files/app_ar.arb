@@ -15,7 +15,22 @@
   "phoneNumber": "رقم الهاتف",
   "enterPhoneNumber": "أدخل رقم الهاتف",
   "alreadyHaveAccount": "هل لديك حساب؟ ",
-  "login": "تسجيل الدخول"
+
+  "login": "تسجيل الدخول",
+  "rememberMe": "تذكرني",
+  "forgetPassword": "نسيت كلمة المرور؟",
+
+  "connection_timeout": "انتهت مهلة الاتصال بالخادم",
+  "send_timeout": "انتهت مهلة الإرسال أثناء الاتصال بالخادم",
+  "receive_timeout": "انتهت مهلة الاستقبال أثناء الاتصال بالخادم",
+  "bad_response": "حدث خطأ أثناء معالجة الاستجابة من الخادم",
+  "request_cancelled": "تم إلغاء الاتصال بالخادم",
+  "connection_failed": "فشل الاتصال بالخادم",
+  "internet_connection_failed": "فشل الاتصال بالخادم بسبب انقطاع الإنترنت",
+  "something_went_wrong": "حدث خطأ ما"
+
+
+
 
 
 }

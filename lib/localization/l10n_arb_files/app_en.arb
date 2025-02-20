@@ -15,7 +15,21 @@
   "phoneNumber": "Phone number",
   "enterPhoneNumber": "Enter phone number",
   "alreadyHaveAccount": "Already have an account? ",
-  "login": "Login"
+
+  "login": "Login",
+  "rememberMe": "Remember me",
+  "forgetPassword": "Forget password ?",
+
+  "connection_timeout": "Connection timeout with the server",
+  "send_timeout": "Send timeout in connection with the server",
+  "receive_timeout": "Receive timeout in connection with the server",
+  "bad_response": "An error occurred while processing the response from the server",
+  "request_cancelled": "Connection to the server was canceled",
+  "connection_failed": "Connection to the server failed",
+  "internet_connection_failed": "Connection to the server failed due to internet connection issues",
+  "something_went_wrong": "Something went wrong"
+
+
 
 
 }

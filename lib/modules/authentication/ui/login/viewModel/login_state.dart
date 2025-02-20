@@ -1,6 +1,5 @@
 part of 'login_cubit.dart';
 
-
 enum LoginStatus {
   initial,
   loading,
@@ -39,8 +38,7 @@ class LoginState extends Equatable {
 
   @override
   List<Object?> get props => [
-    state,
-    apiErrorModel,
-  ];
+        state,
+        apiErrorModel,
+      ];
 }
-
