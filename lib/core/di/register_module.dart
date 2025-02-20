@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:exam_app_group2/core/utils/app_endPoints.dart';
+import 'package:exam_app_group2/core/utils/api_end_points.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class RegisterModule {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: EndPointsConstants.baseUrl,
+      baseUrl: ApiEndPoints.baseUrl,
     ),
   )..interceptors.add(LogInterceptor(
       request: true,

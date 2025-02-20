@@ -8,7 +8,7 @@ import 'package:exam_app_group2/modules/authentication/data/model/login/login_re
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_response.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/utils/app_endPoints.dart';
+import '../../../../core/utils/api_end_points.dart';
 
 @singleton
 @injectable
@@ -23,7 +23,7 @@ class ApiManager {
     required LoginRequest loginRequest,
   }) async {
     var result = await dio.post(
-      EndPointsConstants.loginEndPoint,
+      ApiEndPoints.loginEndPoint,
       data: loginRequest.toJson(),
     );
 
