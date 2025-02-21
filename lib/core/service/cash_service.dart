@@ -8,7 +8,6 @@ abstract class CashService {
 }
 
 @Injectable(as: CashService)
-@singleton
 class CashServiceImpl extends CashService {
   SharedPreferences sharedPreferences;
 
