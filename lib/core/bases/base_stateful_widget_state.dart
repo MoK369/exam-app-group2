@@ -3,9 +3,7 @@ import 'package:exam_app_group2/modules/authentication/domain/use_cases/localiza
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-abstract class BaseStatefulWidgetState<T extends StatefulWidget>
-    extends State<T> {
+abstract class BaseStatefulWidgetState<T extends StatefulWidget> extends State<T>{
   late ThemeData theme;
   late AppLocalizations appLocalizations;
   final LocalizationUseCase localizationUseCase =
@@ -15,5 +13,35 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     super.didChangeDependencies();
     theme = Theme.of(context);
     appLocalizations = localizationUseCase.get(context);
+  }
+
+  void displayAlertDialog(
+      {required Widget title,
+      bool showOkButton = false,
+      bool isDismissible = false}) {
+    showDialog(
+      context: context,
+      barrierDismissible: isDismissible,
+      builder: (context) {
+        return AlertDialog(
+          title: title,
+          actions: !showOkButton
+              ? null
+              : [
+                  ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        appLocalizations.ok,
+                        style: theme.textTheme.labelMedium!
+                            .copyWith(color: Colors.white),
+                      ))
+                ],
+        );
+      },
+    );
+  }
+
+  void hideAlertDialog() {
+    Navigator.pop(context);
   }
 }

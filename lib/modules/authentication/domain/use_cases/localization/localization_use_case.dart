@@ -5,11 +5,10 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class LocalizationUseCase {
-  LocalizationManager _localizationManager;
+  final LocalizationManager _localizationManager;
   LocalizationUseCase(this._localizationManager);
 
   void changeLocale(String languageCode) {
-    print("in local use case $languageCode");
     _localizationManager.changeLocal(languageCode);
   }
 

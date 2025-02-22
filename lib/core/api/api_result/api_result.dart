@@ -1,5 +1,3 @@
-import 'package:exam_app_group2/core/api/api_error/api_error_model.dart';
-
 sealed class ApiResult<T> {}
 
 class Success<T> extends ApiResult<T> {
@@ -9,7 +7,7 @@ class Success<T> extends ApiResult<T> {
 }
 
 class Error<T> extends ApiResult<T> {
-  ApiErrorModel apiErrorModel;
+  Object error;
 
-  Error({required this.apiErrorModel});
+  Error({required this.error});
 }
