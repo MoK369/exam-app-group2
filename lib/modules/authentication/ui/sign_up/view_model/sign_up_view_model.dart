@@ -49,7 +49,7 @@ class SignUpViewModel extends Cubit<SignUpState> {
       case Error<AuthenticationResponseEntity>():
         emit(state.copyWith(
             signUpStatus: SignUpStatus.error,
-            signUpErrorMessage: useCaseResult.error));
+            signUpError: useCaseResult.error));
     }
   }
 

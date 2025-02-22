@@ -21,10 +21,10 @@ class SignUpState extends Equatable {
   SignUpState copyWith(
       {SignUpStatus? signUpStatus,
       SignUpFormStatus? signUpFormStatus,
-      Object? signUpErrorMessage}) {
+      Object? signUpError}) {
     return SignUpState(
       signUpStatus: signUpStatus ?? this.signUpStatus,
-      signUpError: signUpErrorMessage ?? this.signUpError,
+      signUpError: signUpError ?? this.signUpError,
       signUpFormStatus: signUpFormStatus ?? this.signUpFormStatus,
     );
   }
