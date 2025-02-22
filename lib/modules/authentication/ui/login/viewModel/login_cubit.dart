@@ -2,13 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/authentication/domain/usecases/login_use_case.dart';
 import 'package:injectable/injectable.dart';
-
 import '../../../../../core/api/api_error/api_error_model.dart';
 import '../../../../../core/api/api_result/api_result.dart';
 import '../../../data/model/login/login_request.dart';
 
 part 'login_state.dart';
-@preResolve
+
 @injectable
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit({
