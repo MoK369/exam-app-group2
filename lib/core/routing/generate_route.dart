@@ -1,5 +1,6 @@
+import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
-import 'package:exam_app_group2/modules/home/home_screen.dart';
+import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/authentication/ui/login/view/login_view.dart';
@@ -11,8 +12,13 @@ class GenerateRoute {
     var name = settings.name;
     switch (name) {
       case DefinedRoutes.homeRouteName:
+        HomeScreenParameters homeScreenParameters =
+            (args as HomeScreenParameters);
         return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) => HomeScreen(
+            authEntity: homeScreenParameters.authEntity,
+            rememberMe: homeScreenParameters.rememberMe,
+          ),
         );
       case DefinedRoutes.signUpRouteName:
         return MaterialPageRoute(
@@ -26,6 +32,22 @@ class GenerateRoute {
       default:
         return _errorRoute();
     }
+  }
+
+  static List<Route<dynamic>> onGenerateInitialRoutes(
+      {String? initialRoute,
+      required AuthenticationResponseEntity? storedAuthEntity,
+      bool rememberMe = false}) {
+    return [
+      if (storedAuthEntity != null)
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(authEntity: storedAuthEntity),
+        )
+      else
+        MaterialPageRoute(
+          builder: (context) => const LoginView(),
+        )
+    ];
   }
 
   static Route<dynamic> _errorRoute() {

@@ -33,7 +33,11 @@ import '../../modules/authentication/domain/usecases/login_use_case.dart'
     as _i243;
 import '../../modules/authentication/ui/login/view_model/login_cubit.dart'
     as _i953;
-import '../storage/storage_service.dart' as _i865;
+import '../../modules/home/domain/use_cases/login_info_use_case/delete_login_info_use_case.dart'
+    as _i52;
+import '../../modules/home/UI/view_model/home_view_model.dart' as _i907;
+import '../../storage/contracts/storage_service_contract.dart' as _i70;
+import '../../storage/implementation/storage_service.dart' as _i313;
 import 'register_module.dart' as _i291;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -50,15 +54,18 @@ extension GetItInjectableX on _i174.GetIt {
     final registerModule = _$RegisterModule();
     gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager());
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
-    gh.singleton<_i865.StorageService<_i558.FlutterSecureStorage>>(
-        () => _i865.StorageServiceImp());
+    gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
+        () => _i313.StorageServiceImp());
     gh.singleton<_i920.ApiManager>(
         () => _i920.ApiManager(dio: gh<_i361.Dio>()));
     gh.factory<_i618.LocalizationUseCase>(
         () => _i618.LocalizationUseCase(gh<_i375.LocalizationManager>()));
+    gh.factory<_i52.DeleteLoginInfoUseCase>(() => _i52.DeleteLoginInfoUseCase(
+        gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
+    gh.factory<_i907.HomeViewModel>(
+        () => _i907.HomeViewModel(gh<_i52.DeleteLoginInfoUseCase>()));
     gh.factory<_i493.AuthLocalDataSource>(() => _i1032.AuthLocalDataSourceImpl(
-        storageService:
-            gh<_i865.StorageService<_i558.FlutterSecureStorage>>()));
+        storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
     gh.factory<_i536.AuthRemoteDataSource>(() =>
         _i1046.AuthRemoteDataSourceImpl(apiManager: gh<_i920.ApiManager>()));
     gh.factory<_i292.AuthRepo>(() => _i869.AuthRepoImpl(
@@ -66,7 +73,7 @@ extension GetItInjectableX on _i174.GetIt {
           authLocalDataSource: gh<_i493.AuthLocalDataSource>(),
         ));
     gh.factory<_i243.LoginUseCase>(
-        () => _i243.LoginUseCase(repo: gh<_i292.AuthRepo>()));
+        () => _i243.LoginUseCase(authRepo: gh<_i292.AuthRepo>()));
     gh.factory<_i953.LoginCubit>(
         () => _i953.LoginCubit(loginUseCase: gh<_i243.LoginUseCase>()));
     return this;

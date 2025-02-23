@@ -7,15 +7,19 @@ import '../../data/model/login/login_request.dart';
 
 @injectable
 class LoginUseCase {
-  AuthRepo repo;
+  AuthRepo authRepo;
 
-  LoginUseCase({required this.repo});
+  LoginUseCase({required this.authRepo});
 
   Future<ApiResult<AuthenticationResponseEntity>> execute({
     required LoginRequest loginRequest,
   }) {
-    return repo.login(
+    return authRepo.login(
       loginRequest: loginRequest,
     );
+  }
+
+  Future<AuthenticationResponseEntity?> getLoginInfo() {
+    return authRepo.getLoginInfo();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
+import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 
 /// message : "success"
 /// token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjVlYmYwODZhMDI0ZjA2ZWEyODQ1NSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzM5OTc1NjY0fQ.wll3SYKM3pUxJvu4xEzHp_vN1j6No2xnk1ydyfTm9W0"
@@ -39,7 +40,7 @@ class AuthenticationResponseDto {
   static AuthenticationResponseDto convertIntoAuthenticationDto(
       AuthenticationResponseEntity authEntity) {
     return AuthenticationResponseDto(
-        message: authEntity.message,
+        message: StorageConstants.storedMessage,
         token: authEntity.token,
         user: UserDto.convertIntoUserDto(authEntity.user ?? UserEntity()));
   }

@@ -1,13 +1,7 @@
+import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class StorageService<T> {
-  late T _storageInstance;
-  Future<void> initStorage();
-
-  void setStringValue(String key, String value);
-  Future<String?> getStringValue(String key);
-}
 
 @Singleton(as: StorageService<FlutterSecureStorage>)
 class StorageServiceImp implements StorageService<FlutterSecureStorage> {
@@ -31,5 +25,10 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
   @override
   Future<String?> getStringValue(String key) {
     return _storageInstance.read(key: key);
+  }
+
+  @override
+  Future<void> deleteValue(String key) {
+    return _storageInstance.delete(key: key);
   }
 }

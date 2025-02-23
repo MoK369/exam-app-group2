@@ -41,4 +41,9 @@ class AuthRepoImpl implements AuthRepo {
         return Error(apiErrorModel: result.apiErrorModel);
     }
   }
+
+  @override
+  Future<AuthenticationResponseEntity?> getLoginInfo() {
+    return authLocalDataSource.getCashedUser();
+  }
 }
