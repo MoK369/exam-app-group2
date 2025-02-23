@@ -19,22 +19,25 @@ extension LoginStatusEx on LoginState {
 
 class LoginState extends Equatable {
   LoginStatus state;
+  AuthenticationResponseEntity? authEntity;
   final ApiErrorModel? apiErrorModel;
 
   LoginState({
-    this.apiErrorModel,
     this.state = LoginStatus.initial,
+    this.authEntity,
+    this.apiErrorModel,
   });
 
-  LoginState copyWith({
-    LoginStatus? state,
-    ApiErrorModel? apiErrorModel,
-  }) {
-    return LoginState(
-      state: state ?? this.state,
-      apiErrorModel: apiErrorModel ?? this.apiErrorModel,
-    );
-  }
+  // No Need for copyWith function <=====
+  // LoginState copyWith({
+  //   LoginStatus? state,
+  //   ApiErrorModel? apiErrorModel,
+  // }) {
+  //   return LoginState(
+  //     state: state ?? this.state,
+  //     apiErrorModel: apiErrorModel ?? this.apiErrorModel,
+  //   );
+  // }
 
   @override
   List<Object?> get props => [

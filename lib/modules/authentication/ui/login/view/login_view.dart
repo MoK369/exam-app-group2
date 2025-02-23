@@ -3,6 +3,7 @@ import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/loading_widget.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
+import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/injectable_initializer.dart';
 import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
-import '../viewModel/login_cubit.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -67,6 +67,9 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                   ),
                 );
               } else if (state.isSuccess) {
+                var authEntity = state.authEntity;
+                print(authEntity?.user?.email ?? "No Email");
+                print(authEntity?.user?.firstName ?? "No Name");
                 Navigator.pushReplacementNamed(
                   context,
                   DefinedRoutes.homeRouteName,

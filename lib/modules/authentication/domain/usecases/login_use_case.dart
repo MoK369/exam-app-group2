@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/domain/repo_contract/auth_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,10 +9,9 @@ import '../../data/model/login/login_request.dart';
 class LoginUseCase {
   AuthRepo repo;
 
-  @factoryMethod
   LoginUseCase({required this.repo});
 
-  Future<ApiResult<void>> execute({
+  Future<ApiResult<AuthenticationResponseEntity>> execute({
     required LoginRequest loginRequest,
   }) {
     return repo.login(

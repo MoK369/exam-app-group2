@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/di/register_module.dart';
+import 'package:exam_app_group2/modules/authentication/data/model/authentication/response/authentication_response_dto.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/User_dm.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_response.dart';
@@ -19,7 +20,7 @@ class ApiManager {
     required this.dio,
   });
 
-  Future<LoginResponse> login({
+  Future<AuthenticationResponseDto> login({
     required LoginRequest loginRequest,
   }) async {
     var result = await dio.post(
@@ -27,6 +28,6 @@ class ApiManager {
       data: loginRequest.toJson(),
     );
 
-    return LoginResponse.fromJson(result.data);
+    return AuthenticationResponseDto.fromJson(result.data);
   }
 }

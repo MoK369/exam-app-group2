@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'package:exam_app_group2/core/storage/storage_service.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/local_state.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
@@ -6,17 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'core/di/injectable_initializer.dart';
 import 'core/routing/defined_routes.dart';
 import 'core/routing/generate_route.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
   configureDependencies();
+
+  // Initializing local storage
+  final  storageService =
+      getIt.get<StorageService<FlutterSecureStorage>>();
+  await storageService.initStorage();
+
   runApp(BlocProvider(
       create: (context) => getIt.get<LocalizationManager>(),
       child: const MyApp()));
