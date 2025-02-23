@@ -36,4 +36,9 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     storageService.setStringValue(
         StorageConstants.authModelKey, jsonEncode(authDto.toJson()));
   }
+
+  @override
+  Future<void> deleteCachedUser() {
+    return storageService.deleteValue(StorageConstants.authModelKey);
+  }
 }

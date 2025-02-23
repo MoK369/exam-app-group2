@@ -46,4 +46,9 @@ class AuthRepoImpl implements AuthRepo {
   Future<AuthenticationResponseEntity?> getLoginInfo() {
     return authLocalDataSource.getCashedUser();
   }
+
+  @override
+  Future<void> deleteLoginInfo() {
+    return authLocalDataSource.deleteCachedUser();
+  }
 }

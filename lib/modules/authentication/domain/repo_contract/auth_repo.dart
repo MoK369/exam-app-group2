@@ -9,4 +9,6 @@ abstract class AuthRepo {
   });
 
   Future<AuthenticationResponseEntity?> getLoginInfo();
+
+  Future<void> deleteLoginInfo();
 }

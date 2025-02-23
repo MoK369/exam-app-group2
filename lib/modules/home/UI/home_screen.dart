@@ -1,7 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
-import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
-import 'package:exam_app_group2/modules/home/UI/view_model/home_view_model.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -16,12 +14,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen>
     with WidgetsBindingObserver {
-  HomeViewModel homeViewModel = getIt.get<HomeViewModel>();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-
     if (widget.authEntity.message != StorageConstants.storedMessage) {
       print("Logged in Successfully");
       print(widget.authEntity.user?.email ?? "");
@@ -33,22 +28,6 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen>
     return const Placeholder();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.detached) {
-      print("Home screen Detached");
-      if (widget.rememberMe == false) {
-        homeViewModel.deleteLoginInfo();
-      }
-    }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.addObserver(this);
-  }
 }
 
 class HomeScreenParameters {

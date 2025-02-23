@@ -22,6 +22,8 @@ class LoginCubit extends Cubit<LoginState> {
         _login(
           loginRequest: intent.loginRequest,
         );
+      case DeleteLoginInfo():
+        _deleteLoginInfo();
     }
   }
 
@@ -42,6 +44,10 @@ class LoginCubit extends Cubit<LoginState> {
             apiErrorModel: useCaseResult.apiErrorModel));
     }
   }
+
+  void _deleteLoginInfo() async {
+    await loginUseCase.deleteUserInfo();
+  }
 }
 
 sealed class LoginIntent {}
@@ -53,3 +59,5 @@ class OnLoginButtonClicked extends LoginIntent {
     required this.loginRequest,
   });
 }
+
+class DeleteLoginInfo extends LoginIntent {}

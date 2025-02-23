@@ -54,6 +54,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: appLocalizations.login,
+          popOutOfTheApp: true,
         ),
         body: BlocProvider(
           create: (context) => cubit,
@@ -73,6 +74,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                     state.authEntity ?? AuthenticationResponseEntity();
                 print(authEntity.user?.email ?? "No Email");
                 print(authEntity.user?.firstName ?? "No Name");
+                if (!rememberMe) cubit.doIntent(DeleteLoginInfo());
                 // Changing pushReplacementNamed with
                 Navigator.pushNamedAndRemoveUntil(
                     context, DefinedRoutes.homeRouteName, (route) => false,

@@ -33,9 +33,6 @@ import '../../modules/authentication/domain/usecases/login_use_case.dart'
     as _i243;
 import '../../modules/authentication/ui/login/view_model/login_cubit.dart'
     as _i953;
-import '../../modules/home/domain/use_cases/login_info_use_case/delete_login_info_use_case.dart'
-    as _i52;
-import '../../modules/home/UI/view_model/home_view_model.dart' as _i907;
 import '../../storage/contracts/storage_service_contract.dart' as _i70;
 import '../../storage/implementation/storage_service.dart' as _i313;
 import 'register_module.dart' as _i291;
@@ -60,10 +57,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i920.ApiManager(dio: gh<_i361.Dio>()));
     gh.factory<_i618.LocalizationUseCase>(
         () => _i618.LocalizationUseCase(gh<_i375.LocalizationManager>()));
-    gh.factory<_i52.DeleteLoginInfoUseCase>(() => _i52.DeleteLoginInfoUseCase(
-        gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<_i907.HomeViewModel>(
-        () => _i907.HomeViewModel(gh<_i52.DeleteLoginInfoUseCase>()));
     gh.factory<_i493.AuthLocalDataSource>(() => _i1032.AuthLocalDataSourceImpl(
         storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
     gh.factory<_i536.AuthRemoteDataSource>(() =>
