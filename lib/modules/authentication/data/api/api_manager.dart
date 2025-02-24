@@ -3,7 +3,7 @@ import 'package:exam_app_group2/modules/authentication/data/model/authentication
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/utils/api_end_points.dart';
+import '../../../../core/api/api_end_points/api_end_points.dart';
 
 @singleton
 @injectable
