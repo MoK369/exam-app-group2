@@ -3,7 +3,7 @@ import 'package:exam_app_group2/modules/authentication/domain/entity/authenticat
 import '../../../../core/api/api_result/api_result.dart';
 import '../../data/model/login/login_request.dart';
 
-abstract class AuthRepo {
+abstract class LoginRepo {
   Future<ApiResult<AuthenticationResponseEntity>> login({
     required LoginRequest loginRequest,
   });

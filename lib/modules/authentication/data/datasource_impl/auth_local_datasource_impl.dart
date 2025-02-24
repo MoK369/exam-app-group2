@@ -16,9 +16,6 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<AuthenticationResponseEntity?> getCashedUser() async {
-    //======== We need all authentication response user and toke ========//
-    // final token = await storageService.getStringValue('token');
-    // return token;
     String? stringAuthDto =
         await storageService.getStringValue(StorageConstants.authModelKey);
     if (stringAuthDto != null) {

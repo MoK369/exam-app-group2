@@ -75,7 +75,6 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                 print(authEntity.user?.email ?? "No Email");
                 print(authEntity.user?.firstName ?? "No Name");
                 if (!rememberMe) cubit.doIntent(DeleteLoginInfo());
-                // Changing pushReplacementNamed with
                 Navigator.pushNamedAndRemoveUntil(
                     context, DefinedRoutes.homeRouteName, (route) => false,
                     arguments: HomeScreenParameters(

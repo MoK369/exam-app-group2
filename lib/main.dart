@@ -65,7 +65,6 @@ class _MyAppState extends State<MyApp> {
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateRoute: GenerateRoute.onGenerateRoute,
               onGenerateInitialRoutes: (initialRoute) => GenerateRoute.onGenerateInitialRoutes(initialRoute: initialRoute,storedAuthEntity: storedAuthEntity),
-              initialRoute: DefinedRoutes.login,
             );
           },
         );
