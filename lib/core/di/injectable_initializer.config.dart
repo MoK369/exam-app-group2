@@ -18,19 +18,19 @@ import '../../modules/authentication/data/api/api_manager.dart' as _i920;
 import '../../modules/authentication/data/datasource_contract/auth_local_datasource.dart'
     as _i493;
 import '../../modules/authentication/data/datasource_contract/login_remote_datasource.dart'
-    as _i536;
+    as _i975;
 import '../../modules/authentication/data/datasource_impl/auth_local_datasource_impl.dart'
     as _i1032;
 import '../../modules/authentication/data/datasource_impl/login_remote_data_source_impl.dart'
-    as _i1046;
+    as _i281;
 import '../../modules/authentication/data/repo_impl/login_repo_impl.dart'
-    as _i869;
+    as _i248;
 import '../../modules/authentication/domain/repo_contract/login_repo.dart'
-    as _i292;
+    as _i723;
 import '../../modules/authentication/domain/use_cases/localization/localization_use_case.dart'
     as _i618;
 import '../../modules/authentication/domain/use_cases/login/login_use_case.dart'
-    as _i243;
+    as _i543;
 import '../../modules/authentication/ui/login/view_model/login_cubit.dart'
     as _i953;
 import '../../storage/contracts/storage_service_contract.dart' as _i70;
@@ -57,18 +57,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i920.ApiManager(dio: gh<_i361.Dio>()));
     gh.factory<_i618.LocalizationUseCase>(
         () => _i618.LocalizationUseCase(gh<_i375.LocalizationManager>()));
+    gh.factory<_i975.LoginRemoteDataSource>(() =>
+        _i281.LoginRemoteDataSourceImpl(apiManager: gh<_i920.ApiManager>()));
     gh.factory<_i493.AuthLocalDataSource>(() => _i1032.AuthLocalDataSourceImpl(
         storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<_i536.LoginRemoteDataSource>(() =>
-        _i1046.LoginRemoteDataSourceImpl(apiManager: gh<_i920.ApiManager>()));
-    gh.factory<_i292.LoginRepo>(() => _i869.LoginRepoImpl(
-          authRemoteDataSource: gh<_i536.LoginRemoteDataSource>(),
+    gh.factory<_i723.LoginRepo>(() => _i248.LoginRepoImpl(
+          authRemoteDataSource: gh<_i975.LoginRemoteDataSource>(),
           authLocalDataSource: gh<_i493.AuthLocalDataSource>(),
         ));
-    gh.factory<_i243.LoginUseCase>(
-        () => _i243.LoginUseCase(authRepo: gh<_i292.LoginRepo>()));
+    gh.factory<_i543.LoginUseCase>(
+        () => _i543.LoginUseCase(authRepo: gh<_i723.LoginRepo>()));
     gh.factory<_i953.LoginCubit>(
-        () => _i953.LoginCubit(loginUseCase: gh<_i243.LoginUseCase>()));
+        () => _i953.LoginCubit(loginUseCase: gh<_i543.LoginUseCase>()));
     return this;
   }
 }
