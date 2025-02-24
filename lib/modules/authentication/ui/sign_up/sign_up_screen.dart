@@ -1,9 +1,14 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
-import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
+import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
+import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
+import 'package:exam_app_group2/di/injectable_initializer.dart';
+import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_state.dart';
+import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -13,209 +18,305 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
-  final GlobalKey<FormState> formKey = GlobalKey();
-  final TextEditingController userNameController = TextEditingController(),
-      firstNameController = TextEditingController(),
-      lastNameController = TextEditingController(),
-      emailController = TextEditingController(),
-      passwordController = TextEditingController(),
-      confirmPasswordController = TextEditingController(),
-      phoneNumberController = TextEditingController();
+class _SignUpScreenState
+    extends BaseStatefulWidgetState<SignUpScreen> {
+  final SignUpViewModel signUpViewModel = getIt.get<SignUpViewModel>();
+  late ValidateFunctions validateFunctions;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    validateFunctions = ValidateFunctions.getInstance(appLocalizations);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        appBar: CustomAppBar(title: appLocalizations.signUp),
-        body: RPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-          child: SingleChildScrollView(
-            child: Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  TextFormField(
-                    controller: userNameController,
-                    validator: (inputText) {
-                      return ValidateFunctions.validationOfUserName(inputText);
+    return BlocProvider(
+      create: (context) => signUpViewModel,
+      child: GestureDetector(
+        onTap: () => signUpViewModel.getKeyboardUnfocused(),
+        child: BlocListener<SignUpViewModel, SignUpState>(
+          listenWhen: (previous, current) {
+            if (current.signUpStatus == SignUpStatus.initial) return false;
+            return true;
+          },
+          listener: (context, signUpState) {
+            switch (signUpState.signUpStatus) {
+              case SignUpStatus.loading:
+                displayAlertDialog(title: const LoadingStateWidget());
+              case SignUpStatus.success:
+                hideAlertDialog();
+                displayAlertDialog(
+                    showOkButton: true,
+                    title: Text(
+                      appLocalizations.successfullyRegistered,
+                      style: theme.textTheme.labelMedium,
+                    ));
+              case SignUpStatus.error:
+                hideAlertDialog();
+                displayAlertDialog(
+                    showOkButton: true,
+                    title: ErrorStateWidget(error: signUpState.signUpError!));
+              default:
+                const Placeholder();
+            }
+          },
+          child: Scaffold(
+            appBar: CustomAppBar(
+              title: appLocalizations.signUp,
+              showLocaleButton: true,
+              onChangeLocaleButtonClick: () {
+                if (signUpViewModel.state.signUpFormStatus ==
+                    SignUpFormStatus.unValid) {
+                  WidgetsBinding.instance.addPostFrameCallback(
+                    (timeStamp) {
+                      signUpViewModel.validateForm();
                     },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: appLocalizations.userName,
-                      hintText: appLocalizations.enterUserName,
-                    ),
-                  ),
-                  RPadding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: firstNameController,
-                            validator: (inputText) {
-                              return ValidateFunctions
-                                  .validationOfFirstOrLastName(inputText);
-                            },
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            decoration: InputDecoration(
-                              labelText: appLocalizations.firstName,
-                              hintText: appLocalizations.enterFirstName,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 17.w,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            controller: lastNameController,
-                            validator: (inputText) {
-                              return ValidateFunctions
-                                  .validationOfFirstOrLastName(inputText,
-                                      isFirstName: false);
-                            },
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            decoration: InputDecoration(
-                              labelText: appLocalizations.lastName,
-                              hintText: appLocalizations.enterLastName,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextFormField(
-                    controller: emailController,
-                    validator: (inputText) {
-                      return ValidateFunctions.validationOfEmail(inputText);
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: appLocalizations.email,
-                      hintText: appLocalizations.enterYourEmail,
-                    ),
-                  ),
-                  RPadding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: passwordController,
-                            validator: (inputText) {
-                              return ValidateFunctions.validationOfPassword(
-                                  inputText);
-                            },
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            decoration: InputDecoration(
-                              labelText: appLocalizations.password,
-                              hintText: appLocalizations.enterPassword,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 17.w,
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            controller: confirmPasswordController,
-                            validator: (inputText) {
-                              return ValidateFunctions
-                                  .validationOfConfirmPassword(
-                                      inputText, passwordController);
-                            },
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            decoration: InputDecoration(
-                              labelText: appLocalizations.confirmPassword,
-                              hintText: appLocalizations.confirmPassword,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  TextFormField(
-                    controller: phoneNumberController,
-                    validator: (inputText) {
-                      return ValidateFunctions.validationOfPhoneNumber(
-                          inputText);
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: appLocalizations.phoneNumber,
-                      hintText: appLocalizations.enterPhoneNumber,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 48.h,
-                  ),
-                  ElevatedButton(
-                      onPressed: () {
-                        onSignUpButtonClick();
-                      },
-                      child: Text(
-                        appLocalizations.signUp,
-                        style: theme.textTheme.labelMedium!
-                            .copyWith(color: Colors.white),
-                      )),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  Center(
-                    child: RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: appLocalizations.alreadyHaveAccount,
-                          style: theme.textTheme.labelSmall!
-                              .copyWith(fontSize: 14.sp)),
-                      WidgetSpan(
-                          alignment: PlaceholderAlignment.baseline,
-                          baseline: TextBaseline.alphabetic,
-                          child: InkWell(
-                              onTap: () {},
-                              child: Text(
-                                appLocalizations.login,
-                                style: theme.textTheme.labelSmall!.copyWith(
-                                  color: AppThemes.blueAppColor,
-                                  fontSize: 14.sp,
-                                ),
-                              )))
-                    ])),
-                  ),
-                  Row(
+                  );
+                }
+              },
+            ),
+            body: RPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+              child: SingleChildScrollView(
+                child: Form(
+                  key: signUpViewModel.formKey,
+                  onChanged: signUpViewModel.validateForm,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      ElevatedButton(
-                          onPressed: () => localizationUseCase
-                              .changeLocale(LanguagesCodes.english),
-                          child: Text(
-                            "English",
-                            style: theme.textTheme.labelMedium!
-                                .copyWith(color: Colors.white),
-                          )),
-                      const Spacer(),
-                      ElevatedButton(
-                          onPressed: () => localizationUseCase
-                              .changeLocale(LanguagesCodes.arabic),
-                          child: Text(
-                            "العربية",
-                            style: theme.textTheme.labelMedium!
-                                .copyWith(color: Colors.white),
-                          )),
+                      SizedBox(
+                        height: 6.h,
+                      ),
+                      TextFormField(
+                        controller: signUpViewModel.userNameController,
+                        //signUpFieldsControllers[SignUpFieldsKeys.userName],
+                        validator: (inputText) {
+                          return validateFunctions
+                              .validationOfUserName(inputText);
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.name,
+                        focusNode: signUpViewModel.userNameFocusNode,
+                        //signUpFieldsFocusNodes[SignUpFieldsKeys.userName],
+                        onFieldSubmitted: (value) =>
+                            signUpViewModel.firstNameFocusNode.requestFocus(),
+                        decoration: InputDecoration(
+                          labelText: appLocalizations.userName,
+                          hintText: appLocalizations.enterUserName,
+                        ),
+                      ),
+                      RPadding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: signUpViewModel.firstNameController,
+                                validator: (inputText) {
+                                  return validateFunctions
+                                      .validationOfFirstOrLastName(inputText);
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboardType: TextInputType.name,
+                                focusNode: signUpViewModel.firstNameFocusNode,
+                                onFieldSubmitted: (value) =>
+                                    signUpViewModel.lastNameFocusNode.requestFocus(),
+                                decoration: InputDecoration(
+                                  labelText: appLocalizations.firstName,
+                                  hintText: appLocalizations.enterFirstName,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 17.w,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                controller: signUpViewModel.lastNameController,
+                                validator: (inputText) {
+                                  return validateFunctions
+                                      .validationOfFirstOrLastName(inputText,
+                                          isFirstName: false);
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboardType: TextInputType.name,
+                                focusNode: signUpViewModel.lastNameFocusNode,
+                                onFieldSubmitted: (value) =>
+                                    signUpViewModel.emailFocusNode.requestFocus(),
+                                decoration: InputDecoration(
+                                  labelText: appLocalizations.lastName,
+                                  hintText: appLocalizations.enterLastName,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TextFormField(
+                        controller: signUpViewModel.emailController,
+                        validator: (inputText) {
+                          return validateFunctions.validationOfEmail(inputText);
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.emailAddress,
+                        focusNode: signUpViewModel.emailFocusNode,
+                        onFieldSubmitted: (value) =>
+                            signUpViewModel.passwordFocusNode.requestFocus(),
+                        decoration: InputDecoration(
+                          labelText: appLocalizations.email,
+                          hintText: appLocalizations.enterYourEmail,
+                        ),
+                      ),
+                      RPadding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller: signUpViewModel.passwordController,
+                                validator: (inputText) {
+                                  return validateFunctions
+                                      .validationOfPassword(inputText);
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: signUpViewModel.isPasswordObscure,
+                                obscuringCharacter: "*",
+                                focusNode: signUpViewModel.passwordFocusNode,
+                                onFieldSubmitted: (value) => signUpViewModel
+                                    .confirmPasswordFocusNode
+                                    .requestFocus(),
+                                decoration: InputDecoration(
+                                    labelText: appLocalizations.password,
+                                    hintText: appLocalizations.enterPassword,
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            signUpViewModel
+                                                .onPasswordVisibilityIconClick();
+                                          });
+                                        },
+                                        icon: Icon(signUpViewModel.isPasswordObscure
+                                            ? Icons.visibility_off
+                                            : Icons.visibility))),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 17.w,
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                controller: signUpViewModel.confirmPasswordController,
+                                validator: (inputText) {
+                                  return validateFunctions
+                                      .validationOfConfirmPassword(inputText,
+                                          signUpViewModel.passwordController);
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                keyboardType: TextInputType.visiblePassword,
+                                obscureText: signUpViewModel.isConfirmPasswordObscure,
+                                obscuringCharacter: "*",
+                                focusNode: signUpViewModel.confirmPasswordFocusNode,
+                                onFieldSubmitted: (value) => signUpViewModel
+                                    .phoneNumberFocusNode
+                                    .requestFocus(),
+                                decoration: InputDecoration(
+                                    labelText: appLocalizations.confirmPassword,
+                                    hintText: appLocalizations.confirmPassword,
+                                    suffixIcon: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            signUpViewModel
+                                                .onConfirmPasswordVisibilityIconClick();
+                                          });
+                                        },
+                                        icon: Icon(
+                                            signUpViewModel.isConfirmPasswordObscure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility))),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TextFormField(
+                        controller: signUpViewModel.phoneNumberController,
+                        validator: (inputText) {
+                          return validateFunctions
+                              .validationOfPhoneNumber(inputText);
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        keyboardType: TextInputType.phone,
+                        focusNode: signUpViewModel.phoneNumberFocusNode,
+                        onFieldSubmitted: (value) =>
+                            signUpViewModel.phoneNumberFocusNode.unfocus(),
+                        decoration: InputDecoration(
+                          labelText: appLocalizations.phoneNumber,
+                          hintText: appLocalizations.enterPhoneNumber,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 48.h,
+                      ),
+                      BlocBuilder<SignUpViewModel, SignUpState>(
+                        builder: (context, state) {
+                          //debugPrint("BlocBuilder executing");
+                          ButtonStyle? signUpButtonStyle;
+                          switch (state.signUpFormStatus) {
+                            case SignUpFormStatus.valid:
+                              signUpButtonStyle = null;
+                            case SignUpFormStatus.unValid:
+                              signUpButtonStyle =
+                                  theme.elevatedButtonTheme.style!.copyWith(
+                                      backgroundColor:
+                                          const WidgetStatePropertyAll(
+                                              AppThemes.grayAppColor30));
+                          }
+                          return ElevatedButton(
+                              onPressed: state.signUpFormStatus ==
+                                      SignUpFormStatus.unValid
+                                  ? null
+                                  : () => signUpViewModel.onSignUpButtonClick(),
+                              style: signUpButtonStyle,
+                              child: Text(
+                                appLocalizations.signUp,
+                                style: theme.textTheme.labelMedium!
+                                    .copyWith(color: Colors.white),
+                              ));
+                        },
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      Center(
+                        child: RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: appLocalizations.alreadyHaveAccount,
+                              style: theme.textTheme.labelSmall!
+                                  .copyWith(fontSize: 14.sp)),
+                          WidgetSpan(
+                              alignment: PlaceholderAlignment.baseline,
+                              baseline: TextBaseline.alphabetic,
+                              child: InkWell(
+                                  onTap: () {},
+                                  child: Text(
+                                    appLocalizations.login,
+                                    style: theme.textTheme.labelSmall!.copyWith(
+                                      color: AppThemes.blueAppColor,
+                                      fontSize: 14.sp,
+                                    ),
+                                  )))
+                        ])),
+                      ),
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
           ),
@@ -224,9 +325,9 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
     );
   }
 
-  void onSignUpButtonClick() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    if (formKey.currentState?.validate() == true) {}
+  @override
+  void dispose() {
+    super.dispose();
+    signUpViewModel.disposeControllersAndFocusNodes();
   }
 }
-

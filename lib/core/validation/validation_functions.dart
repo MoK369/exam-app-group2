@@ -1,34 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ValidateFunctions {
-  static String? validationOfFullName(String? inputText) {
+  static ValidateFunctions? _instance;
+  late AppLocalizations appLocalizations;
+
+  ValidateFunctions._init(this.appLocalizations);
+
+  static ValidateFunctions getInstance(AppLocalizations appLocalizations) {
+    if (_instance == null) {
+      _instance = ValidateFunctions._init(appLocalizations);
+    } else {
+      _instance!.appLocalizations = appLocalizations;
+    }
+    return _instance!;
+  }
+
+  String? validationOfFullName(String? inputText) {
     if (inputText?.trim().isEmpty == true || inputText == null) {
-      return "Please enter your name.";
+      return appLocalizations.pleaseEnterName;
     }
     return null;
   }
 
-  static String? validationOfUserName(String? inputText) {
+  String? validationOfUserName(String? inputText) {
     if (inputText?.trim().isEmpty == true || inputText == null) {
-      return "Please enter user name.";
+      return appLocalizations.pleaseEnterUserName;
     }
     if (inputText.length < 3 || inputText.length > 16) {
-      return 'Username must be between 3 and 16 characters long.';
+      return appLocalizations.userNameLength;
     }
 
     if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(inputText)) {
-      return 'Username can only contain letters, numbers, and underscores.';
+      return appLocalizations.userNameRules;
     }
     return null;
   }
 
-  static String? validationOfFirstOrLastName(String? inputText,
+  String? validationOfFirstOrLastName(String? inputText,
       {bool isFirstName = true}) {
     RegExp nameRegExp = RegExp(r'^[A-Za-z]+$');
     if (inputText?.trim().isEmpty == true || inputText == null) {
       return isFirstName
-          ? "Please enter first name."
-          : "Please enter last name.";
+          ? appLocalizations.pleaseEnterFirstName
+          : appLocalizations.pleaseEnterLastName;
     }
     if (!nameRegExp.hasMatch(inputText)) {
       return "Names can only have alphabetic characters.";
@@ -36,56 +51,53 @@ class ValidateFunctions {
     return null;
   }
 
-  static String? validationOfEmail(String? inputText) {
+  String? validationOfEmail(String? inputText) {
     RegExp gmailRegExp =
         RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (inputText?.trim().isEmpty == true || inputText == null) {
-      return "Please enter your E-mail.";
+      return appLocalizations.pleaseEnterEmail;
     }
     if (!gmailRegExp.hasMatch(inputText)) {
-      return "Please enter a valid email address.";
+      return appLocalizations.pleaseEnterValidEmail;
     }
     return null;
   }
 
-  static String? validationOfPhoneNumber(String? inputText) {
+  String? validationOfPhoneNumber(String? inputText) {
     RegExp phoneNumber = RegExp(r'^(010|011|012|015)[0-9]{8}$');
     if (inputText?.trim().isEmpty == true || inputText == null) {
-      return "Please enter your phone number.";
+      return appLocalizations.pleaseEnterPhoneNumber;
     } else if (!phoneNumber.hasMatch(inputText)) {
-      return "Number must start with one of the valid prefixes:\n010, 011, 012, or 015\nfollowed by 8 digits.";
+      return appLocalizations.phoneNumberRules;
     }
     return null;
   }
 
-  static String? validationOfPassword(String? inputText) {
+  String? validationOfPassword(String? inputText) {
     // RegExp passValid = RegExp(
-    //     r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{6,}$');
-    // if (inputText?.trim().isEmpty == true || inputText == null) {
-    //   return "Please enter your password.";
-    // } else if (!passValid.hasMatch(inputText)) {
-    //   return "Please, write at least 6 characters\ncontains at least one digit,\none letter and one\nspecial character";
-    // }
+    //     r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@\$%^&*-]).{8,}\$');
     if (inputText?.trim().isEmpty == true || inputText == null) {
-      return "Please enter your password.";
-    } else if (inputText.length < 6) {
-      return 'Password must be at least 6 characters long.';
-    } else if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(inputText)) {
-      return 'At least one alphabetic character must be found.';
-    } else if (!RegExp(r'(?=.*\d)').hasMatch(inputText)) {
-      return 'At least one digit must be there.';
-    } else if (!RegExp(r'(?=.*[!@#$%^&*(),.?":{}|<>])').hasMatch(inputText)) {
-      return 'At least one special character(e.g., !@#\$%^&*) must be included.';
+      return appLocalizations.pleaseEnterPassword;
+    } else if (inputText.length < 8) {
+      return appLocalizations.passwordLength;
+    } else if (!RegExp(r'(?=.*?[A-Z])').hasMatch(inputText)) {
+      return appLocalizations.uppercaseRulePassword;
+    } else if (!RegExp(r'(?=.*?[a-z])').hasMatch(inputText)) {
+      return appLocalizations.lowercaseRulePassword;
+    } else if (!RegExp(r'(?=.*?[0-9])').hasMatch(inputText)) {
+      return appLocalizations.digitRulePassword;
+    } else if (!RegExp(r'(?=.*?[#?!@$%^&*-])').hasMatch(inputText)) {
+      return appLocalizations.specialCharactersRulePassword;
     }
     return null;
   }
 
-  static String? validationOfConfirmPassword(
+  String? validationOfConfirmPassword(
       String? inputText, TextEditingController passwordCont) {
     if (inputText?.trim().isEmpty == true || inputText == null) {
-      return "Please enter your confirm password.";
+      return appLocalizations.pleaseConfirmPassword;
     } else if (inputText != passwordCont.text) {
-      return "No Match";
+      return appLocalizations.noMatch;
     }
     return null;
   }
