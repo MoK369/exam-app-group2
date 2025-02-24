@@ -4,7 +4,7 @@ import 'package:exam_app_group2/modules/authentication/data/model/login/login_re
 import '../../../../core/api/api_result/api_result.dart';
 import '../model/login/login_request.dart';
 
-abstract class AuthRemoteDataSource {
+abstract interface class AuthRemoteDataSource {
   Future<ApiResult<LoginResponse>> login({
     required LoginRequest loginRequest,
   });

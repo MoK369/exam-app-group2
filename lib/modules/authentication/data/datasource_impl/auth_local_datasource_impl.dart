@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:exam_app_group2/core/utils/app_constants.dart';
 import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_local_datasource.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/user_dm.dart';
 import 'package:injectable/injectable.dart';
@@ -14,17 +15,24 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   AuthLocalDataSourceImpl({required this.cashService});
 
   @override
-  Future<String?> getCashedUser() async {
-    final token = await cashService.getString('token');
-    return token;
+  Future<String?> getCashedUser() {
+    return cashService.getString(AppConstants.tokenKey);
   }
 
   @override
   Future<void> cashUser({
     required UserDM? user,
     required String? token,
-  }) {
-    cashService.setString('token', token ?? '');
-    return cashService.setString('user_key', jsonEncode(user?.toJson()));
+  }) async {
+    await cashService.setString(
+      AppConstants.tokenKey,
+      token ?? '',
+    );
+    await cashService.setString(
+      AppConstants.userKey,
+      jsonEncode(
+        user?.toJson(),
+      ),
+    );
   }
 }
