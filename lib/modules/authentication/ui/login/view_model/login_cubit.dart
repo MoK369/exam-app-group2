@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/domain/use_cases/login/login_use_case.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../../core/api/api_error/api_error_model.dart';
+
 import '../../../../../core/api/api_result/api_result.dart';
 import '../../../data/model/login/login_request.dart';
 
@@ -24,6 +25,8 @@ class LoginCubit extends Cubit<LoginState> {
         );
       case DeleteLoginInfo():
         _deleteLoginInfo();
+      case ValidateForm():
+        _validateForm();
     }
   }
 
@@ -37,11 +40,34 @@ class LoginCubit extends Cubit<LoginState> {
     switch (useCaseResult) {
       case Success<AuthenticationResponseEntity>():
         emit(LoginState(
-            state: LoginStatus.success, authEntity: useCaseResult.data));
+          state: LoginStatus.success,
+          authEntity: useCaseResult.data,
+        ));
       case Error<AuthenticationResponseEntity>():
-        emit(LoginState(
+        emit(
+          LoginState(
             state: LoginStatus.error,
-            apiErrorModel: useCaseResult.apiErrorModel));
+            error: useCaseResult.error,
+          ),
+        );
+    }
+  }
+
+  GlobalKey<FormState> formKey = GlobalKey();
+
+  void _validateForm() {
+    if (formKey.currentState?.validate() == false) {
+      emit(
+        state.copyWith(
+          loginFormStatus: LoginFormStatus.unValid,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          loginFormStatus: LoginFormStatus.valid,
+        ),
+      );
     }
   }
 
@@ -61,3 +87,5 @@ class OnLoginButtonClicked extends LoginIntent {
 }
 
 class DeleteLoginInfo extends LoginIntent {}
+
+class ValidateForm extends LoginIntent {}

@@ -1,6 +1,7 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
+import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_widget.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
@@ -27,7 +28,13 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
   final FocusNode emailFocusNode = FocusNode(), passwordFocusNode = FocusNode();
 
   bool rememberMe = false;
-  GlobalKey<FormState> formKey = GlobalKey();
+  late ValidateFunctions validateFunctions;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    validateFunctions = ValidateFunctions.getInstance(appLocalizations);
+  }
 
   @override
   void initState() {
@@ -44,6 +51,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
   }
 
   LoginCubit cubit = getIt<LoginCubit>();
+  bool obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +62,16 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: appLocalizations.login,
-          popOutOfTheApp: true,
+          showLocaleButton: true,
+          onChangeLocaleButtonClick: () {
+            if (cubit.state.isUnValid) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                (timeStamp) {
+                  cubit.doIntent(ValidateForm());
+                },
+              );
+            }
+          },
         ),
         body: BlocProvider(
           create: (context) => cubit,
@@ -64,8 +81,8 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text(
-                      state.apiErrorModel?.message ?? '',
+                    title: ErrorStateWidget(
+                      error: state.error!,
                     ),
                   ),
                 );
@@ -89,15 +106,20 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                     horizontal: 16,
                   ),
                   child: Form(
-                    key: formKey,
+                    key: cubit.formKey,
+                    onChanged: () {
+                      cubit.doIntent(
+                        ValidateForm(),
+                      );
+                    },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextFormField(
                           controller: emailController,
                           validator: (inputText) {
-                            return ValidateFunctions.validationOfEmail(
-                                inputText);
+                            return validateFunctions
+                                .validationOfEmail(inputText);
                           },
                           onFieldSubmitted: (value) =>
                               emailFocusNode.requestFocus(),
@@ -111,18 +133,32 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                           height: 24.h,
                         ),
                         TextFormField(
-                          obscureText: true,
+                          obscureText: obscurePassword,
                           controller: passwordController,
                           validator: (inputText) {
-                            return ValidateFunctions.validationOfPassword(
-                                inputText);
+                            return validateFunctions
+                                .validationOfPassword(inputText);
                           },
                           onFieldSubmitted: (value) =>
                               passwordFocusNode.requestFocus(),
+                          keyboardType: TextInputType.visiblePassword,
+                          obscuringCharacter: '*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             labelText: appLocalizations.password,
                             hintText: appLocalizations.enterPassword,
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  obscurePassword = !obscurePassword;
+                                });
+                              },
+                              icon: Icon(
+                                obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                            ),
                           ),
                         ),
                         Row(
@@ -161,7 +197,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (!formKey.currentState!.validate()) return;
+                            if (!cubit.formKey.currentState!.validate()) return;
                             FocusManager.instance.primaryFocus?.unfocus();
 
                             cubit.doIntent(
@@ -184,6 +220,33 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                       ),
                                 )
                               : const LoadingWidget(),
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        Center(
+                          child: RichText(
+                              text: TextSpan(children: [
+                            TextSpan(
+                              text: appLocalizations.alreadyHaveAccount,
+                              style: theme.textTheme.labelSmall!.copyWith(
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            WidgetSpan(
+                                alignment: PlaceholderAlignment.baseline,
+                                baseline: TextBaseline.alphabetic,
+                                child: InkWell(
+                                    onTap: () {},
+                                    child: Text(
+                                      appLocalizations.login,
+                                      style:
+                                          theme.textTheme.labelSmall!.copyWith(
+                                        color: AppThemes.blueAppColor,
+                                        fontSize: 14.sp,
+                                      ),
+                                    )))
+                          ])),
                         ),
                       ],
                     ),

@@ -17,31 +17,43 @@ extension LoginStatusEx on LoginState {
   bool get isError => state == LoginStatus.error;
 }
 
+enum LoginFormStatus { valid, unValid }
+
+extension LoginFormStatusEx on LoginState {
+  bool get isValid => state == LoginStatus.initial;
+
+  bool get isUnValid => state == LoginStatus.loading;
+}
+
 class LoginState extends Equatable {
   LoginStatus state;
+  LoginFormStatus loginFormStatus;
   AuthenticationResponseEntity? authEntity;
-  final ApiErrorModel? apiErrorModel;
+  final Object? error;
 
   LoginState({
     this.state = LoginStatus.initial,
     this.authEntity,
-    this.apiErrorModel,
+    this.loginFormStatus = LoginFormStatus.valid,
+    this.error,
   });
 
-  // No Need for copyWith function <=====
-  // LoginState copyWith({
-  //   LoginStatus? state,
-  //   ApiErrorModel? apiErrorModel,
-  // }) {
-  //   return LoginState(
-  //     state: state ?? this.state,
-  //     apiErrorModel: apiErrorModel ?? this.apiErrorModel,
-  //   );
-  // }
+  LoginState copyWith({
+    LoginStatus? state,
+    LoginFormStatus? loginFormStatus,
+    Error? error,
+  }) {
+    return LoginState(
+      state: state ?? this.state,
+      error: error ?? this.error,
+      loginFormStatus: loginFormStatus ?? this.loginFormStatus,
+    );
+  }
 
   @override
   List<Object?> get props => [
         state,
-        apiErrorModel,
+        error,
+        loginFormStatus,
       ];
 }

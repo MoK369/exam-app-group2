@@ -2,11 +2,15 @@ import 'package:exam_app_group2/modules/authentication/domain/use_cases/localiza
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-abstract class BaseStatefulWidgetState<T extends StatefulWidget> extends State<T>{
+import '../di/injectable_initializer.dart';
+
+abstract class BaseStatefulWidgetState<T extends StatefulWidget>
+    extends State<T> {
   late ThemeData theme;
   late AppLocalizations appLocalizations;
   final LocalizationUseCase localizationUseCase =
       getIt.get<LocalizationUseCase>();
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

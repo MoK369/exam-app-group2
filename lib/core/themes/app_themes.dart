@@ -12,8 +12,9 @@ class AppThemes {
     useMaterial3: true,
     scaffoldBackgroundColor: lightPrimaryColor,
     dialogBackgroundColor: lightPrimaryColor,
-      progressIndicatorTheme:
-          const ProgressIndicatorThemeData(color: blueAppColor),appBarTheme: const AppBarTheme(
+    progressIndicatorTheme:
+        const ProgressIndicatorThemeData(color: blueAppColor),
+    appBarTheme: const AppBarTheme(
       backgroundColor: lightPrimaryColor,
     ),
     textTheme: TextTheme(
@@ -31,35 +32,16 @@ class AppThemes {
         fontSize: 16.sp,
         fontWeight: FontWeight.w500,
       ),
-      inputDecorationTheme: InputDecorationTheme(
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          border: const OutlineInputBorder(),
-          hintStyle: TextStyle(fontSize: 14.sp, color: const Color(0xFFA6A6A6)),
-          labelStyle:
-              TextStyle(fontSize: 12.sp, color: const Color(0xFF535353)),
-          errorMaxLines: 4,
-          errorBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: errorAppColor)),
-          errorStyle: TextStyle(color: errorAppColor, fontSize: 12.sp)),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: blueAppColor,
-              padding: EdgeInsets.symmetric(vertical: 14.h))));
       labelLarge: GoogleFonts.inter(
         color: Colors.black,
         fontSize: 20.sp,
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      floatingLabelBehavior: FloatingLabelBehavior.always,
       border: const OutlineInputBorder(),
-      hintStyle: TextStyle(
-        fontSize: 14.sp,
-        color: const Color(0xFFA6A6A6),
-      ),
-      labelStyle: TextStyle(
-        fontSize: 12.sp,
-        color: const Color(0xFF535353),
-      ),
+      hintStyle: TextStyle(fontSize: 14.sp, color: const Color(0xFFA6A6A6)),
+      labelStyle: TextStyle(fontSize: 12.sp, color: const Color(0xFF535353)),
       errorMaxLines: 4,
       errorBorder: const OutlineInputBorder(
         borderSide: BorderSide(
@@ -69,13 +51,6 @@ class AppThemes {
       errorStyle: TextStyle(
         color: errorAppColor,
         fontSize: 12.sp,
-      ),
-      focusedBorder: const OutlineInputBorder(),
-      enabledBorder: const OutlineInputBorder(),
-      focusedErrorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: errorAppColor,
-        ),
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(

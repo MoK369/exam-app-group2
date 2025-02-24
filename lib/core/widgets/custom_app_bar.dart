@@ -1,7 +1,6 @@
 import 'package:exam_app_group2/core/bases/base_stateless_widget.dart';
 import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
@@ -16,12 +15,6 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
       this.showLeadingIcon = true,
       this.showLocaleButton = false,
       this.onChangeLocaleButtonClick});
-  final bool popOutOfTheApp;
-  CustomAppBar(
-      {super.key,
-      required this.title,
-      this.showLeadingIcon = true,
-      this.popOutOfTheApp = false});
 
   @override
   Widget customBuild(BuildContext context) {
@@ -31,16 +24,10 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
       leadingWidth: 35,
       titleSpacing: 0,
       leading: !showLeadingIcon
-          ? SizedBox(
-              width: 16.w,
-            )
+          ? null
           : IconButton(
               onPressed: () {
-                if (popOutOfTheApp) {
-                  SystemNavigator.pop();
-                } else {
-                  Navigator.pop(context);
-                }
+                Navigator.pop(context);
               },
               icon: const Icon(
                 Icons.arrow_back_ios,
@@ -56,9 +43,10 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
               TextButton(
                   onPressed: () {
                     localizationUseCase.changeLocale(
-                        currentLocal.toString() == LanguagesCodes.english
-                            ? LanguagesCodes.arabic
-                            : LanguagesCodes.english);
+                      currentLocal.toString() == LanguagesCodes.english
+                          ? LanguagesCodes.arabic
+                          : LanguagesCodes.english,
+                    );
                     if (onChangeLocaleButtonClick != null) {
                       onChangeLocaleButtonClick!();
                     }
