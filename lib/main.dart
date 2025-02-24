@@ -1,19 +1,31 @@
-import 'package:exam_app_group2/core/routes/defined_routes.dart';
-import 'package:exam_app_group2/core/routes/generate_route.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
+import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
+import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+
+import 'core/di/injectable_initializer.dart';
+import 'core/routing/generate_route.dart';
+import 'modules/authentication/domain/use_cases/login/login_use_case.dart';
+
+AuthenticationResponseEntity? storedAuthEntity;
 
 void main() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
   configureDependencies();
+  // Initializing local storage
+  final storageService = getIt.get<StorageService<FlutterSecureStorage>>();
+  await storageService.initStorage();
+  // Get Cached Login Info
+  storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
+
   runApp(ChangeNotifierProvider(
       create: (context) => getIt.get<LocalizationManager>(),
       child: const MyApp()));
@@ -48,9 +60,13 @@ class _MyAppState extends State<MyApp> {
               theme: AppThemes.lightTheme,
               themeMode: ThemeMode.light,
               locale: Locale(localizationManager.currentLocale),
-              localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
               onGenerateRoute: GenerateRoute.onGenerateRoute,
-              initialRoute: DefinedRoutes.signUpRouteName,
+              onGenerateInitialRoutes: (initialRoute) =>
+                  GenerateRoute.onGenerateInitialRoutes(
+                      initialRoute: initialRoute,
+                      storedAuthEntity: storedAuthEntity),
             );
           },
         );

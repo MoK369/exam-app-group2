@@ -43,9 +43,10 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
               TextButton(
                   onPressed: () {
                     localizationUseCase.changeLocale(
-                        currentLocal.toString() == LanguagesCodes.english
-                            ? LanguagesCodes.arabic
-                            : LanguagesCodes.english);
+                      currentLocal.toString() == LanguagesCodes.english
+                          ? LanguagesCodes.arabic
+                          : LanguagesCodes.english,
+                    );
                     if (onChangeLocaleButtonClick != null) {
                       onChangeLocaleButtonClick!();
                     }

@@ -4,12 +4,13 @@ import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_state.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/di/injectable_initializer.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -18,8 +19,7 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState
-    extends BaseStatefulWidgetState<SignUpScreen> {
+class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
   final SignUpViewModel signUpViewModel = getIt.get<SignUpViewModel>();
   late ValidateFunctions validateFunctions;
 

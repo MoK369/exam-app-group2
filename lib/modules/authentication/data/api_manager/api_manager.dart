@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/api/apis_endpoints/apis_endpoints.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/data/models/authentication/response/authentication_response.dart';
 import 'package:exam_app_group2/modules/authentication/data/models/sign_up/request/sign_up_request_parameters.dart';
 import 'package:injectable/injectable.dart';
+
+import '../../../../core/di/injectable_initializer.dart';
 
 @injectable
 class ApiManager {

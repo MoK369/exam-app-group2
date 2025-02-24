@@ -18,7 +18,8 @@
   "login": "تسجيل الدخول",
   "successfullyRegistered": "تم التسجيل بنجاح!",
   "ok": "موافق",
-
+  "rememberMe": "تذكرني",
+  "forgetPassword": "نسيت كلمة المرور ؟",
   "validationFunctions______________": "$$$ تعليق $$$",
   "pleaseEnterName": "يرجى إدخال اسمك.",
   "pleaseEnterUserName": "يرجى إدخال اسم المستخدم.",

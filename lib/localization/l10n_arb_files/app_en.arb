@@ -18,7 +18,8 @@
   "login": "Login",
   "successfullyRegistered": "Successfully Registered!",
   "ok": "OK",
-
+  "rememberMe": "Remember me",
+  "forgetPassword": "Forget password ?",
   "validationFunctions______________": "$$$ Comment $$$",
   "pleaseEnterName": "Please enter your name.",
   "pleaseEnterUserName": "Please enter user name.",
