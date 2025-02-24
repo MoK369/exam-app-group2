@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
-import 'package:exam_app_group2/modules/authentication/domain/usecases/login_use_case.dart';
+import 'package:exam_app_group2/modules/authentication/domain/use_cases/login/login_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/api/api_error/api_error_model.dart';

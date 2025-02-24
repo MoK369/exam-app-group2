@@ -29,7 +29,7 @@ import '../../modules/authentication/domain/repo_contract/login_repo.dart'
     as _i292;
 import '../../modules/authentication/domain/use_cases/localization/localization_use_case.dart'
     as _i618;
-import '../../modules/authentication/domain/usecases/login_use_case.dart'
+import '../../modules/authentication/domain/use_cases/login/login_use_case.dart'
     as _i243;
 import '../../modules/authentication/ui/login/view_model/login_cubit.dart'
     as _i953;

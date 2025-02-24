@@ -9,11 +9,10 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'core/di/injectable_initializer.dart';
-import 'core/routing/defined_routes.dart';
 import 'core/routing/generate_route.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'modules/authentication/domain/usecases/login_use_case.dart';
+import 'modules/authentication/domain/use_cases/login/login_use_case.dart';
 
 AuthenticationResponseEntity? storedAuthEntity;
 void main() async {

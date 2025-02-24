@@ -2,8 +2,8 @@ import 'package:exam_app_group2/modules/authentication/domain/entity/authenticat
 import 'package:exam_app_group2/modules/authentication/domain/repo_contract/login_repo.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/api/api_result/api_result.dart';
-import '../../data/model/login/login_request.dart';
+import '../../../../../core/api/api_result/api_result.dart';
+import '../../../data/model/login/login_request.dart';
 
 @injectable
 class LoginUseCase {
