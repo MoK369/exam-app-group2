@@ -3,6 +3,9 @@ import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/loading_widget.dart';
 import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
+import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
+import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_cubit.dart';
+import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/injectable_initializer.dart';
 import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
-import '../viewModel/login_cubit.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -52,6 +54,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: appLocalizations.login,
+          popOutOfTheApp: true,
         ),
         body: BlocProvider(
           create: (context) => cubit,
@@ -67,13 +70,19 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                   ),
                 );
               } else if (state.isSuccess) {
-                Navigator.pushReplacementNamed(
-                  context,
-                  DefinedRoutes.homeRouteName,
-                );
+                AuthenticationResponseEntity authEntity =
+                    state.authEntity ?? AuthenticationResponseEntity();
+                print(authEntity.user?.email ?? "No Email");
+                print(authEntity.user?.firstName ?? "No Name");
+                if (!rememberMe) cubit.doIntent(DeleteLoginInfo());
+                Navigator.pushNamedAndRemoveUntil(
+                    context, DefinedRoutes.homeRouteName, (route) => false,
+                    arguments: HomeScreenParameters(
+                        authEntity: authEntity, rememberMe: rememberMe));
               }
             },
             builder: (context, state) {
+              print("Building Login UI");
               return SingleChildScrollView(
                 child: Padding(
                   padding: REdgeInsets.symmetric(

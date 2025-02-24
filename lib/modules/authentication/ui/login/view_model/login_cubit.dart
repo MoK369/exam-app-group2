@@ -1,6 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:exam_app_group2/modules/authentication/domain/usecases/login_use_case.dart';
+import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
+import 'package:exam_app_group2/modules/authentication/domain/use_cases/login/login_use_case.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/api/api_error/api_error_model.dart';
 import '../../../../../core/api/api_result/api_result.dart';
@@ -21,31 +22,31 @@ class LoginCubit extends Cubit<LoginState> {
         _login(
           loginRequest: intent.loginRequest,
         );
+      case DeleteLoginInfo():
+        _deleteLoginInfo();
     }
   }
 
   void _login({
     required LoginRequest loginRequest,
   }) async {
-    emit(state.copyWith(
-      state: LoginStatus.loading,
-    ));
-    var result = await loginUseCase.execute(
+    emit(LoginState(state: LoginStatus.loading));
+    var useCaseResult = await loginUseCase.execute(
       loginRequest: loginRequest,
     );
-    switch (result) {
-      case Success<void>():
-        emit(state.copyWith(
-          state: LoginStatus.success,
-        ));
-      case Error<void>():
-        emit(
-          state.copyWith(
+    switch (useCaseResult) {
+      case Success<AuthenticationResponseEntity>():
+        emit(LoginState(
+            state: LoginStatus.success, authEntity: useCaseResult.data));
+      case Error<AuthenticationResponseEntity>():
+        emit(LoginState(
             state: LoginStatus.error,
-            apiErrorModel: result.apiErrorModel,
-          ),
-        );
+            apiErrorModel: useCaseResult.apiErrorModel));
     }
+  }
+
+  void _deleteLoginInfo() async {
+    await loginUseCase.deleteUserInfo();
   }
 }
 
@@ -58,3 +59,5 @@ class OnLoginButtonClicked extends LoginIntent {
     required this.loginRequest,
   });
 }
+
+class DeleteLoginInfo extends LoginIntent {}

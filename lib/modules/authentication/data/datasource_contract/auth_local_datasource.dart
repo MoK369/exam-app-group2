@@ -1,10 +1,9 @@
-import 'package:exam_app_group2/modules/authentication/data/model/login/user_dm.dart';
+import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 
 abstract interface class AuthLocalDataSource {
-  Future<void> cashUser({
-    required UserDM? user,
-    required String? token,
-  });
+  void cashUser({required AuthenticationResponseEntity authEntity});
 
-  Future<String?> getCashedUser();
+  Future<AuthenticationResponseEntity?> getCashedUser();
+
+  Future<void> deleteCachedUser();
 }

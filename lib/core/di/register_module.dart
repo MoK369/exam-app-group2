@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/api/api_end_points/api_end_points.dart';
 import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class RegisterModule {
@@ -25,7 +24,4 @@ abstract class RegisterModule {
 
   @lazySingleton
   Dio get dio => _dio;
-
-  @lazySingleton
-  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 }
