@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/injectable_initializer.dart';
 import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
+import '../../../../../core/widgets/underline_text.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -89,8 +90,6 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
               } else if (state.isSuccess) {
                 AuthenticationResponseEntity authEntity =
                     state.authEntity ?? AuthenticationResponseEntity();
-                print(authEntity.user?.email ?? "No Email");
-                print(authEntity.user?.firstName ?? "No Name");
                 if (!rememberMe) cubit.doIntent(DeleteLoginInfo());
                 Navigator.pushNamedAndRemoveUntil(
                     context, DefinedRoutes.homeRouteName, (route) => false,
@@ -99,7 +98,6 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
               }
             },
             builder: (context, state) {
-              print("Building Login UI");
               return SingleChildScrollView(
                 child: Padding(
                   padding: REdgeInsets.symmetric(
@@ -115,6 +113,9 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        SizedBox(
+                          height: 6.h,
+                        ),
                         TextFormField(
                           controller: emailController,
                           validator: (inputText) {
@@ -180,13 +181,13 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                             const Spacer(),
                             GestureDetector(
                               onTap: () {},
-                              child: Text(
-                                appLocalizations.forgetPassword,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(
-                                      decoration: TextDecoration.underline,
+                              child: UnderlineText(
+                                child: Text(appLocalizations.forgetPassword,
+                                    style: Theme.of(context).textTheme.bodySmall
+                                    // ?.copyWith(
+                                    //   decoration: TextDecoration.underline,
+                                    //   decorationThickness: 1.2
+                                    // ),
                                     ),
                               ),
                             )
@@ -228,7 +229,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                           child: RichText(
                               text: TextSpan(children: [
                             TextSpan(
-                              text: appLocalizations.alreadyHaveAccount,
+                              text: appLocalizations.doNotHaveAccount,
                               style: theme.textTheme.labelSmall!.copyWith(
                                 fontSize: 14.sp,
                               ),
@@ -237,9 +238,12 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                 alignment: PlaceholderAlignment.baseline,
                                 baseline: TextBaseline.alphabetic,
                                 child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          DefinedRoutes.signUpRouteName);
+                                    },
                                     child: Text(
-                                      appLocalizations.login,
+                                      appLocalizations.signUp,
                                       style:
                                           theme.textTheme.labelSmall!.copyWith(
                                         color: AppThemes.blueAppColor,

@@ -15,11 +15,15 @@
   "phoneNumber": "رقم الهاتف",
   "enterPhoneNumber": "أدخل رقم الهاتف",
   "alreadyHaveAccount": "هل لديك حساب؟ ",
+
+  "loginScreen___________": "$$$ تعليق $$$",
   "login": "تسجيل الدخول",
   "successfullyRegistered": "تم التسجيل بنجاح!",
   "ok": "موافق",
   "rememberMe": "تذكرني",
   "forgetPassword": "نسيت كلمة المرور ؟",
+  "doNotHaveAccount": "هل لا تمتلك حساب؟ ",
+
   "validationFunctions______________": "$$$ تعليق $$$",
   "pleaseEnterName": "يرجى إدخال اسمك.",
   "pleaseEnterUserName": "يرجى إدخال اسم المستخدم.",
