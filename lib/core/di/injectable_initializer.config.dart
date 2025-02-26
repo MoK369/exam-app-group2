@@ -15,27 +15,26 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../dio_service/dio_service.dart' as _i678;
 import '../../localization/l10n_manager/localization_manager.dart' as _i375;
-import '../../modules/authentication/data/api/api_manager.dart' as _i920;
 import '../../modules/authentication/data/api_manager/api_manager.dart'
     as _i355;
+import '../../modules/authentication/data/data_sources_contracts/auth_local_datasource.dart'
+    as _i74;
+import '../../modules/authentication/data/data_sources_contracts/login/login_remote_datasource.dart'
+    as _i422;
 import '../../modules/authentication/data/data_sources_contracts/sign_up/sign_up_remote_data_source.dart'
     as _i186;
+import '../../modules/authentication/data/data_sources_imp/auth_local_datasource_impl.dart'
+    as _i907;
+import '../../modules/authentication/data/data_sources_imp/login/login_remote_data_source_impl.dart'
+    as _i712;
 import '../../modules/authentication/data/data_sources_imp/sign_up/sign_up_data_source_imp.dart'
     as _i522;
-import '../../modules/authentication/data/datasource_contract/auth_local_datasource.dart'
-    as _i493;
-import '../../modules/authentication/data/datasource_contract/login_remote_datasource.dart'
-    as _i975;
-import '../../modules/authentication/data/datasource_impl/auth_local_datasource_impl.dart'
-    as _i1032;
-import '../../modules/authentication/data/datasource_impl/login_remote_data_source_impl.dart'
-    as _i281;
-import '../../modules/authentication/data/repo_impl/login_repo_impl.dart'
-    as _i248;
+import '../../modules/authentication/data/repositories_imp/login/login_repo_impl.dart'
+    as _i914;
 import '../../modules/authentication/data/repositories_imp/sign_up/sign_up_repository_imp.dart'
     as _i1059;
-import '../../modules/authentication/domain/repo_contract/login_repo.dart'
-    as _i723;
+import '../../modules/authentication/domain/repositories_constracts/login/login_repo.dart'
+    as _i145;
 import '../../modules/authentication/domain/repositories_constracts/sign_up/sign_up_repository.dart'
     as _i745;
 import '../../modules/authentication/domain/use_cases/localization/localization_use_case.dart'
@@ -63,33 +62,31 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final dioService = _$DioService();
-    gh.factory<_i355.ApiManager>(() => _i355.ApiManager());
     gh.singleton<_i361.Dio>(() => dioService.provideDio());
     gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager());
+    gh.singleton<_i355.ApiManager>(() => _i355.ApiManager());
     gh.factory<_i186.SignUpRemoteDataSource>(() =>
         _i522.SignUpRemoteDataSourceImp(apiManager: gh<_i355.ApiManager>()));
+    gh.factory<_i422.LoginRemoteDataSource>(() =>
+        _i712.LoginRemoteDataSourceImpl(apiManager: gh<_i355.ApiManager>()));
     gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
         () => _i313.StorageServiceImp());
     gh.factory<_i745.SignUpRepository>(() => _i1059.SignUpRepositoryImp(
         signUpRemoteDataSource: gh<_i186.SignUpRemoteDataSource>()));
-    gh.singleton<_i920.ApiManager>(
-        () => _i920.ApiManager(dio: gh<_i361.Dio>()));
     gh.factory<_i618.LocalizationUseCase>(
         () => _i618.LocalizationUseCase(gh<_i375.LocalizationManager>()));
-    gh.factory<_i975.LoginRemoteDataSource>(() =>
-        _i281.LoginRemoteDataSourceImpl(apiManager: gh<_i920.ApiManager>()));
-    gh.factory<_i493.AuthLocalDataSource>(() => _i1032.AuthLocalDataSourceImpl(
+    gh.factory<_i74.AuthLocalDataSource>(() => _i907.AuthLocalDataSourceImpl(
         storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<_i723.LoginRepo>(() => _i248.LoginRepoImpl(
-          authRemoteDataSource: gh<_i975.LoginRemoteDataSource>(),
-          authLocalDataSource: gh<_i493.AuthLocalDataSource>(),
-        ));
     gh.factory<_i367.SignUpUseCase>(() =>
         _i367.SignUpUseCase(signUpRepository: gh<_i745.SignUpRepository>()));
     gh.factory<_i399.SignUpViewModel>(
         () => _i399.SignUpViewModel(gh<_i367.SignUpUseCase>()));
+    gh.factory<_i145.LoginRepo>(() => _i914.LoginRepoImpl(
+          authRemoteDataSource: gh<_i422.LoginRemoteDataSource>(),
+          authLocalDataSource: gh<_i74.AuthLocalDataSource>(),
+        ));
     gh.factory<_i543.LoginUseCase>(
-        () => _i543.LoginUseCase(authRepo: gh<_i723.LoginRepo>()));
+        () => _i543.LoginUseCase(authRepo: gh<_i145.LoginRepo>()));
     gh.factory<_i953.LoginCubit>(
         () => _i953.LoginCubit(loginUseCase: gh<_i543.LoginUseCase>()));
     return this;

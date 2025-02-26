@@ -5,8 +5,9 @@ import 'package:exam_app_group2/modules/authentication/data/models/sign_up/reque
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/di/injectable_initializer.dart';
+import '../models/login/login_request.dart';
 
-@injectable
+@singleton
 class ApiManager {
   late final Dio _dio;
 
@@ -16,12 +17,23 @@ class ApiManager {
 
   Future<AuthenticationResponseDto> signUp(
       {required SignUpRequestParameters signUpParameters}) async {
-    Response response = await _dio.post(ApisEndpoints.signUpEndpoint,
-        data: signUpParameters.toJson());
+    Response response =
+        await _dio.post(ApisEndpoints.signUp, data: signUpParameters.toJson());
 
     AuthenticationResponseDto authenticationResponse =
         AuthenticationResponseDto.fromJson(response.data);
     //authenticationResponse.message = 23 as String;
     return authenticationResponse;
+  }
+
+  Future<AuthenticationResponseDto> login({
+    required LoginRequest loginRequest,
+  }) async {
+    var result = await _dio.post(
+      ApisEndpoints.login,
+      data: loginRequest.toJson(),
+    );
+
+    return AuthenticationResponseDto.fromJson(result.data);
   }
 }

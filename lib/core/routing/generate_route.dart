@@ -1,8 +1,8 @@
-import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import '../../modules/authentication/ui/login/view/login_view.dart';
 import 'defined_routes.dart';
 

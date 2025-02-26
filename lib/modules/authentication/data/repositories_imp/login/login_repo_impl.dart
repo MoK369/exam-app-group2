@@ -1,11 +1,11 @@
-import 'package:exam_app_group2/modules/authentication/data/datasource_contract/auth_local_datasource.dart';
-import 'package:exam_app_group2/modules/authentication/data/datasource_contract/login_remote_datasource.dart';
-import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
-import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
-import 'package:exam_app_group2/modules/authentication/domain/repo_contract/login_repo.dart';
+import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/auth_local_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/login/login_remote_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/domain/repositories_constracts/login/login_repo.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/api/api_result/api_result.dart';
+import '../../../../../core/api/api_result/api_result.dart';
+import '../../../domain/entities/authentication/authentication_response_entity.dart';
+import '../../models/login/login_request.dart';
 
 @Injectable(as: LoginRepo)
 class LoginRepoImpl implements LoginRepo {
