@@ -171,7 +171,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                   rememberMe = val ?? rememberMe;
                                 });
                               },
-                              activeColor: AppThemes.blueAppColor,
+                              activeColor: AppTheme.blueAppColor,
                               checkColor: Colors.white,
                             ),
                             Text(
@@ -246,7 +246,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                       appLocalizations.signUp,
                                       style:
                                           theme.textTheme.labelSmall!.copyWith(
-                                        color: AppThemes.blueAppColor,
+                                            color: AppTheme.blueAppColor,
                                         fontSize: 14.sp,
                                       ),
                                     )))

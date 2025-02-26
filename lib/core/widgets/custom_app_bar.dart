@@ -8,13 +8,18 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final bool showLeadingIcon;
   final bool showLocaleButton;
   final void Function()? onChangeLocaleButtonClick;
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
 
-  CustomAppBar(
-      {super.key,
-      required this.title,
-      this.showLeadingIcon = true,
-      this.showLocaleButton = false,
-      this.onChangeLocaleButtonClick});
+  CustomAppBar({
+    this.padding,
+    this.textStyle,
+    super.key,
+    required this.title,
+    this.showLeadingIcon = true,
+    this.showLocaleButton = false,
+    this.onChangeLocaleButtonClick,
+  });
 
   @override
   Widget customBuild(BuildContext context) {
@@ -33,9 +38,13 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
                 Icons.arrow_back_ios,
                 size: 25,
               )),
-      title: Text(
-        title,
-        style: theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
+      title: Padding(
+        padding: padding ?? EdgeInsets.zero,
+        child: Text(
+          title,
+          style: textStyle ??
+              theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
+        ),
       ),
       actions: !showLocaleButton
           ? null

@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
               LocalizationManager localizationManager, Widget? child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: AppThemes.lightTheme,
+              theme: AppTheme.lightTheme,
               themeMode: ThemeMode.light,
               locale: Locale(localizationManager.currentLocale),
               localizationsDelegates: AppLocalizations.localizationsDelegates,

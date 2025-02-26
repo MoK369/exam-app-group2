@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppThemes {
+abstract class AppTheme {
   static const Color blueAppColor = Color(0xFF02369C);
   static const Color grayAppColor30 = Color(0xFF878787);
   static const Color lightPrimaryColor = Color(0xFFF9F9F9);
   static const Color errorAppColor = Color(0xFFCC1010);
+  static const Color white = Colors.white;
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -60,6 +61,14 @@ class AppThemes {
           vertical: 14.h,
         ),
       ),
+    ),
+    cardTheme: CardTheme(
+      color: white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      elevation: 0.8,
+      margin: EdgeInsets.symmetric(vertical: 8.h),
     ),
   );
 }

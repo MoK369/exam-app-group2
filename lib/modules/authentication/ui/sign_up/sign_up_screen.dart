@@ -275,7 +275,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                                   theme.elevatedButtonTheme.style!.copyWith(
                                       backgroundColor:
                                           const WidgetStatePropertyAll(
-                                              AppThemes.grayAppColor30));
+                                              AppTheme.grayAppColor30));
                           }
                           return ElevatedButton(
                               onPressed: state.signUpFormStatus ==
@@ -308,7 +308,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                                   child: Text(
                                     appLocalizations.login,
                                     style: theme.textTheme.labelSmall!.copyWith(
-                                      color: AppThemes.blueAppColor,
+                                      color: AppTheme.blueAppColor,
                                       fontSize: 14.sp,
                                     ),
                                   )))

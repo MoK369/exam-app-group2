@@ -11,6 +11,10 @@ abstract class DioService {
       BaseOptions(
         connectTimeout: const Duration(seconds: 30),
         baseUrl: ApisEndpoints.baseUrl,
+        headers: {
+          'token':
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmYwZjU0NTU1NGIzMjg5MTI1YWY5NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwNTg1MDM3fQ.p3pCumwu-1YMANH-Uzd9Z4GjPrevB0Oi1OenyUQ4zvM',
+        },
       ),
     );
     dio.interceptors.add(LogInterceptor(
