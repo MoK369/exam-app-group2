@@ -15,11 +15,15 @@
   "phoneNumber": "Phone number",
   "enterPhoneNumber": "Enter phone number",
   "alreadyHaveAccount": "Already have an account? ",
+
+  "loginScreen___________": "$$$ Comment $$$",
   "login": "Login",
   "successfullyRegistered": "Successfully Registered!",
   "ok": "OK",
   "rememberMe": "Remember me",
   "forgetPassword": "Forget password ?",
+  "doNotHaveAccount": "Don't have an account? ",
+
   "validationFunctions______________": "$$$ Comment $$$",
   "pleaseEnterName": "Please enter your name.",
   "pleaseEnterUserName": "Please enter user name.",
