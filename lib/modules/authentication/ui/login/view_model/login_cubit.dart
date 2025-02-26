@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/domain/use_cases/login/login_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/api/api_result/api_result.dart';
-import '../../../data/model/login/login_request.dart';
+import '../../../data/models/login/login_request.dart';
+import '../../../domain/entities/authentication/authentication_response_entity.dart';
 
 part 'login_state.dart';
 

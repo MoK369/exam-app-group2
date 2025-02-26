@@ -1,12 +1,12 @@
 import 'package:exam_app_group2/core/api/api_excutor/api_excutor.dart';
-import 'package:exam_app_group2/modules/authentication/data/api/api_manager.dart';
-import 'package:exam_app_group2/modules/authentication/data/datasource_contract/login_remote_datasource.dart';
-import 'package:exam_app_group2/modules/authentication/data/model/authentication/response/authentication_response_dto.dart';
-import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
-import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
+import 'package:exam_app_group2/modules/authentication/data/api_manager/api_manager.dart';
+import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/login/login_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/api/api_result/api_result.dart';
+import '../../../../../core/api/api_result/api_result.dart';
+import '../../../domain/entities/authentication/authentication_response_entity.dart';
+import '../../models/authentication/response/authentication_response.dart';
+import '../../models/login/login_request.dart';
 
 @Injectable(as: LoginRemoteDataSource)
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {

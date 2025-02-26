@@ -1,6 +1,5 @@
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
-import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import 'core/di/injectable_initializer.dart';
 import 'core/routing/generate_route.dart';
+import 'modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import 'modules/authentication/domain/use_cases/login/login_use_case.dart';
 
 AuthenticationResponseEntity? storedAuthEntity;

@@ -3,8 +3,6 @@ import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_widget.dart';
-import 'package:exam_app_group2/modules/authentication/data/model/login/login_request.dart';
-import 'package:exam_app_group2/modules/authentication/domain/entity/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_cubit.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +13,8 @@ import '../../../../../core/di/injectable_initializer.dart';
 import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
 import '../../../../../core/widgets/underline_text.dart';
+import '../../../data/models/login/login_request.dart';
+import '../../../domain/entities/authentication/authentication_response_entity.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
