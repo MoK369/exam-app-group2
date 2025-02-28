@@ -53,7 +53,14 @@
   "connectionError": "No Internet connection \uD83D\uDE11",
   "unknown": "Something Went Wrong \uD83E\uDD14",
   "badCertificate": "The certificate provided by the server is not valid \uD83D\uDCD1",
-  "somethingWentWrong": "Something Went Wrong \uD83E\uDD14"
+  "somethingWentWrong": "Something Went Wrong \uD83E\uDD14",
+
+
+  "homeScreen______________": "$$$ Comment $$$",
+  "loggedInSuccessfully": "Logged In Successfully!",
+  "explore": "Explore",
+  "result": "Result",
+  "profile": "Profile"
 
 
 }

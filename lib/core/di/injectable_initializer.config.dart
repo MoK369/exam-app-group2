@@ -43,7 +43,7 @@ import '../../modules/authentication/domain/use_cases/login/login_use_case.dart'
     as _i543;
 import '../../modules/authentication/domain/use_cases/sign_up/sign_up_use_case.dart'
     as _i367;
-import '../../modules/authentication/ui/login/view_model/login_cubit.dart'
+import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
     as _i953;
 import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
     as _i399;
@@ -87,8 +87,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i543.LoginUseCase>(
         () => _i543.LoginUseCase(authRepo: gh<_i145.LoginRepo>()));
-    gh.factory<_i953.LoginCubit>(
-        () => _i953.LoginCubit(loginUseCase: gh<_i543.LoginUseCase>()));
+    gh.factory<_i953.LoginViewModel>(
+        () => _i953.LoginViewModel(loginUseCase: gh<_i543.LoginUseCase>()));
     return this;
   }
 }

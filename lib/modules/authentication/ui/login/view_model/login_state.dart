@@ -1,4 +1,4 @@
-part of 'login_cubit.dart';
+part of 'login_view_model.dart';
 
 enum LoginStatus {
   initial,

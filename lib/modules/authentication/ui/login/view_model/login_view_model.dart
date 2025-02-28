@@ -11,8 +11,8 @@ import '../../../domain/entities/authentication/authentication_response_entity.d
 part 'login_state.dart';
 
 @injectable
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit({
+class LoginViewModel extends Cubit<LoginState> {
+  LoginViewModel({
     required this.loginUseCase,
   }) : super(LoginState());
   LoginUseCase loginUseCase;
@@ -33,41 +33,45 @@ class LoginCubit extends Cubit<LoginState> {
   void _login({
     required LoginRequest loginRequest,
   }) async {
-    emit(LoginState(state: LoginStatus.loading));
-    var useCaseResult = await loginUseCase.execute(
-      loginRequest: loginRequest,
-    );
-    switch (useCaseResult) {
-      case Success<AuthenticationResponseEntity>():
-        emit(LoginState(
-          state: LoginStatus.success,
-          authEntity: useCaseResult.data,
-        ));
-      case Error<AuthenticationResponseEntity>():
-        emit(
-          LoginState(
-            state: LoginStatus.error,
-            error: useCaseResult.error,
-          ),
-        );
+    if (_validateForm()) {
+      emit(LoginState(state: LoginStatus.loading));
+      var useCaseResult = await loginUseCase.execute(
+        loginRequest: loginRequest,
+      );
+      switch (useCaseResult) {
+        case Success<AuthenticationResponseEntity>():
+          emit(LoginState(
+            state: LoginStatus.success,
+            authEntity: useCaseResult.data,
+          ));
+        case Error<AuthenticationResponseEntity>():
+          emit(
+            LoginState(
+              state: LoginStatus.error,
+              error: useCaseResult.error,
+            ),
+          );
+      }
     }
   }
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  void _validateForm() {
-    if (formKey.currentState?.validate() == false) {
+  bool _validateForm() {
+    if (formKey.currentState!.validate() == false) {
       emit(
         state.copyWith(
           loginFormStatus: LoginFormStatus.unValid,
         ),
       );
+      return false;
     } else {
       emit(
         state.copyWith(
           loginFormStatus: LoginFormStatus.valid,
         ),
       );
+      return true;
     }
   }
 
