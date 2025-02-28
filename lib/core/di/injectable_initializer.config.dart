@@ -37,7 +37,7 @@ import '../../modules/authentication/domain/repositories_constracts/login/login_
     as _i145;
 import '../../modules/authentication/domain/repositories_constracts/sign_up/sign_up_repository.dart'
     as _i745;
-import '../../modules/authentication/domain/use_cases/localization/localization_use_case.dart'
+import '../../localization/use_case/localization_use_case.dart'
     as _i618;
 import '../../modules/authentication/domain/use_cases/login/login_use_case.dart'
     as _i543;
