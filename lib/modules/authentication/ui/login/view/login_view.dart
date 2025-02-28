@@ -98,24 +98,6 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                         showOkButton: true,
                         title: ErrorStateWidget(error: state.error!));
                 }
-                // if (state.isError) {
-                //   showDialog(
-                //     context: context,
-                //     builder: (context) => AlertDialog(
-                //       title: ErrorStateWidget(
-                //         error: state.error!,
-                //       ),
-                //     ),
-                //   );
-                // } else if (state.isSuccess) {
-                //   AuthenticationResponseEntity authEntity =
-                //       state.authEntity ?? AuthenticationResponseEntity();
-                //   if (!rememberMe) cubit.doIntent(DeleteLoginInfo());
-                //   Navigator.pushNamedAndRemoveUntil(
-                //       context, DefinedRoutes.homeRouteName, (route) => false,
-                //       arguments: HomeScreenParameters(
-                //           authEntity: authEntity, rememberMe: rememberMe));
-                // }
               },
               child: SingleChildScrollView(
                 child: Padding(
@@ -192,25 +174,15 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                   rememberMe = val ?? rememberMe;
                                 });
                               },
-                              // activeColor: AppThemes.blueAppColor,
-                              // checkColor: Colors.white,
                             ),
                             Text(appLocalizations.rememberMe,
-                                style: theme.textTheme.bodySmall
-                                // Theme.of(context).textTheme.bodySmall,
-                                ),
+                                style: theme.textTheme.bodySmall),
                             const Spacer(),
                             GestureDetector(
                               onTap: () {},
                               child: UnderlineText(
                                 child: Text(appLocalizations.forgetPassword,
-                                    style: theme.textTheme.bodySmall
-                                    //Theme.of(context).textTheme.bodySmall
-                                    // ?.copyWith(
-                                    //   decoration: TextDecoration.underline,
-                                    //   decorationThickness: 1.2
-                                    // ),
-                                    ),
+                                    style: theme.textTheme.bodySmall),
                               ),
                             )
                           ],
@@ -218,30 +190,6 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                         SizedBox(
                           height: 48.h,
                         ),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       if (!loginViewModel.formKey.currentState!.validate())
-                        //         return;
-                        //       FocusManager.instance.primaryFocus?.unfocus();
-                        //
-                        //       loginViewModel.doIntent(
-                        //         OnLoginButtonClicked(
-                        //           loginRequest: LoginRequest(
-                        //             password: passwordController.text,
-                        //             email: emailController.text,
-                        //           ),
-                        //         ),
-                        //       );
-                        //     },
-                        //     child: Text(
-                        //       appLocalizations.login,
-                        //       style: Theme.of(context)
-                        //           .textTheme
-                        //           .labelMedium!
-                        //           .copyWith(
-                        //             color: Colors.white,
-                        //           ),
-                        //     )),
                         BlocSelector<LoginViewModel, LoginState,
                             LoginFormStatus>(
                           builder: (context, state) {

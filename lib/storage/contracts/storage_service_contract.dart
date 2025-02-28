@@ -1,8 +1,7 @@
 abstract class StorageService<T> {
-  late T _storageInstance;
-  Future<void> initStorage();
+  void initStorage();
 
-  void setStringValue(String key, String value);
+  void setStringValue(String key, dynamic value);
 
   Future<String?> getStringValue(String key);
 

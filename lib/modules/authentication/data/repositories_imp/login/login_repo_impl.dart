@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/auth_local_datasource.dart';
 import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/login/login_remote_datasource.dart';
-import 'package:exam_app_group2/modules/authentication/domain/repositories_constracts/login/login_repo.dart';
+import 'package:exam_app_group2/modules/authentication/domain/repositories_contracts/login/login_repo.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/api/api_result/api_result.dart';

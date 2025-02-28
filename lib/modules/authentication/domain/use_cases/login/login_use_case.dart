@@ -1,4 +1,4 @@
-import 'package:exam_app_group2/modules/authentication/domain/repositories_constracts/login/login_repo.dart';
+import 'package:exam_app_group2/modules/authentication/domain/repositories_contracts/login/login_repo.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/api/api_result/api_result.dart';
 import '../../../data/models/login/login_request.dart';

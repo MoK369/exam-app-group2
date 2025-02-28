@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 @module
 abstract class DioService {
-  @singleton
+  @lazySingleton
   Dio provideDio() {
     final Dio dio = Dio(
       BaseOptions(

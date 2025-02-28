@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
@@ -21,8 +22,8 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   configureDependencies();
   // Initializing local storage
-  final storageService = getIt.get<StorageService<FlutterSecureStorage>>();
-  await storageService.initStorage();
+  //final storageService = getIt.get<StorageService<FlutterSecureStorage>>();
+  // storageService.initStorage();
   // Get Cached Login Info
   storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
 
