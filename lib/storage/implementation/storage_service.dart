@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
+import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:exam_app_group2/storage/handler/storage_handler.dart';
 import 'package:exam_app_group2/storage/result/storage_result.dart';
@@ -12,6 +13,7 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
   StorageServiceImp(this.errorNotifier) {
     initStorage();
   }
+
   @override
   void initStorage() {
     storageInstance = FlutterSecureStorage(aOptions: _getAndroidOptions());
@@ -22,11 +24,12 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
       );
 
   @override
-  void setStringValue(String key, dynamic value) async {
+  void setStringValue(String key, String value) async {
     var result = await StorageExecutor.execute<void>(
         () => storageInstance.write(key: key, value: value));
     if (result is StorageErrorResult) {
-      errorNotifier.setError("Error Storing Value: ${result.error.toString()}");
+      errorNotifier.setError(
+          StorageConstants.errorStoringMessage(result.error.toString()));
     }
   }
 
@@ -39,8 +42,8 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
       case StorageSuccessResult<String?>():
         return storageResult.data;
       case StorageErrorResult<String?>():
-        errorNotifier
-            .setError("Error Reading Value: ${storageResult.error.toString()}");
+        errorNotifier.setError(StorageConstants.errorDeletingMessage(
+            storageResult.error.toString()));
     }
     return null;
   }
@@ -51,8 +54,8 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
       () => storageInstance.delete(key: key),
     );
     if (storageResult is StorageErrorResult) {
-      errorNotifier
-          .setError("Error Deleting Value: ${storageResult.error.toString()}");
+      errorNotifier.setError(StorageConstants.errorDeletingMessage(
+          storageResult.error.toString()));
     }
   }
 }

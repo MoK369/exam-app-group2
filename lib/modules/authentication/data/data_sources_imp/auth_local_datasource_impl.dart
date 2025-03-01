@@ -31,8 +31,8 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   void cashUser({required AuthenticationResponseEntity authEntity}) {
     var authDto =
         AuthenticationResponseDto.convertIntoAuthenticationDto(authEntity);
-    storageService.setStringValue(StorageConstants.authModelKey, authEntity);
-    // jsonEncode(authDto.toJson())
+    storageService.setStringValue(
+        StorageConstants.authModelKey, jsonEncode(authDto.toJson()));
   }
 
   @override

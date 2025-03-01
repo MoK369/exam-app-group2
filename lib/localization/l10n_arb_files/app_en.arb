@@ -60,7 +60,6 @@
   "loggedInSuccessfully": "Logged In Successfully!",
   "explore": "Explore",
   "result": "Result",
-  "profile": "Profile"
-
-
+  "profile": "Profile",
+  "noError": "No Error"
 }

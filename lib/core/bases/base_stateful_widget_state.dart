@@ -59,8 +59,9 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
               ),
               Expanded(
                 child: Text(
-                  errorNotifier.errorMessage ?? "No Error",
+                  errorNotifier.errorMessage ?? appLocalizations.noError,
                   maxLines: 3,
+                  textDirection: TextDirection.ltr,
                   overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.labelSmall!
                       .copyWith(color: AppColors.white),

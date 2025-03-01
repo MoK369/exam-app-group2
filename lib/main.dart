@@ -1,13 +1,10 @@
-import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
-import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/injectable_initializer.dart';
@@ -21,10 +18,8 @@ void main() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
+  // Initializing local storage (Flutter Secure Storage) happens here
   configureDependencies();
-  // Initializing local storage
-  //final storageService = getIt.get<StorageService<FlutterSecureStorage>>();
-  // storageService.initStorage();
   // Get Cached Login Info
   storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
 
@@ -69,9 +64,7 @@ class _MyAppState extends State<MyApp> {
               locale: Locale(localizationManager.currentLocale),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              onGenerateRoute: (settings) {
-                return GenerateRoute.onGenerateRoute(settings);
-              },
+              onGenerateRoute: GenerateRoute.onGenerateRoute,
               onGenerateInitialRoutes: (initialRoute) =>
                   GenerateRoute.onGenerateInitialRoutes(
                       initialRoute: initialRoute,

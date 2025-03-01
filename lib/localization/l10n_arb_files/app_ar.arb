@@ -59,6 +59,7 @@
   "loggedInSuccessfully": "تم تسجيل الدخول بنجاح!",
   "explore": "استكشاف",
   "result": "النتيجة",
-  "profile": "الملف الشخصي"
+  "profile": "الملف الشخصي",
+  "noError": "لا يوجد خطأ"
 
 }

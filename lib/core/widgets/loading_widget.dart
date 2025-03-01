@@ -1,5 +1,3 @@
-import 'package:exam_app_group2/core/themes/app_themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {

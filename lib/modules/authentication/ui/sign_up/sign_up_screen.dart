@@ -1,6 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
-import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
