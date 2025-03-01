@@ -15,7 +15,24 @@
   "phoneNumber": "Phone number",
   "enterPhoneNumber": "Enter phone number",
   "alreadyHaveAccount": "Already have an account? ",
-  "login": "Login"
+  "login": "Login",
+  "errorMessages": "$$$ Comment $$$",
+  "connectionTimeout": "Connection timeout with server ⌛",
+  "sendTimeout": "Send timeout in connection with server ⏱",
+  "receiveTimeout": "Receive timeout in connection with server ⏰",
+  "cancel": "Request to server was cancelled ✖",
+  "connectionError": "No Internet connection \uD83D\uDE11",
+  "unknown": "Something Went Wrong \uD83E\uDD14",
+  "badCertificate": "The certificate provided by the server is not valid \uD83D\uDCD1",
+  "somethingWentWrong": "Something Went Wrong \uD83E\uDD14",
 
+  "resetPassword": "Reset Password",
+  "passwordRequirements": "Password must not be empty and must contain 6 characters with an uppercase letter and at least one number",
+  "newPassword": "New Password",
+  "enterNewPassword": "Enter new password",
+  "confirmYourPassword": "Confirm your password",
+  "continueText": "Continue",
+  "error": "Error"
+  
 
 }

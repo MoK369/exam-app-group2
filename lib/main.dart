@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateRoute: GenerateRoute.onGenerateRoute,
-              initialRoute: DefinedRoutes.signUpRouteName,
+              initialRoute: DefinedRoutes.forgetPasswordName,
             );
           },
         );
