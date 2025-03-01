@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/languages/language_codes.dart';
+import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
@@ -27,9 +28,14 @@ void main() async {
   // Get Cached Login Info
   storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
 
-  runApp(ChangeNotifierProvider(
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
       create: (context) => getIt.get<LocalizationManager>(),
-      child: const MyApp()));
+    ),
+    ChangeNotifierProvider(
+      create: (context) => getIt.get<ErrorNotifier>(),
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -63,7 +69,9 @@ class _MyAppState extends State<MyApp> {
               locale: Locale(localizationManager.currentLocale),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
-              onGenerateRoute: GenerateRoute.onGenerateRoute,
+              onGenerateRoute: (settings) {
+                return GenerateRoute.onGenerateRoute(settings);
+              },
               onGenerateInitialRoutes: (initialRoute) =>
                   GenerateRoute.onGenerateInitialRoutes(
                       initialRoute: initialRoute,

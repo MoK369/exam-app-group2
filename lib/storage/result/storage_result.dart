@@ -5,7 +5,7 @@ class StorageSuccessResult<T> extends StorageResult<T> {
   StorageSuccessResult({required this.data});
 }
 
-class StorageErrorResult extends StorageResult {
+class StorageErrorResult<T> extends StorageResult<T> {
   Object error;
   StorageErrorResult({required this.error});
 }

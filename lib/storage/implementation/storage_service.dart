@@ -1,12 +1,15 @@
+import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:exam_app_group2/storage/handler/storage_handler.dart';
+import 'package:exam_app_group2/storage/result/storage_result.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: StorageService<FlutterSecureStorage>)
 class StorageServiceImp implements StorageService<FlutterSecureStorage> {
   late final FlutterSecureStorage storageInstance;
-  StorageServiceImp() {
+  final ErrorNotifier errorNotifier;
+  StorageServiceImp(this.errorNotifier) {
     initStorage();
   }
   @override
@@ -19,18 +22,37 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
       );
 
   @override
-  void setStringValue(String key, dynamic value) {
-    StorageExecutor.execute<void>(
+  void setStringValue(String key, dynamic value) async {
+    var result = await StorageExecutor.execute<void>(
         () => storageInstance.write(key: key, value: value));
+    if (result is StorageErrorResult) {
+      errorNotifier.setError("Error Storing Value: ${result.error.toString()}");
+    }
   }
 
   @override
-  Future<String?> getStringValue(String key) {
-    return storageInstance.read(key: key);
+  Future<String?> getStringValue(String key) async {
+    var storageResult = await StorageExecutor.execute(
+      () => storageInstance.read(key: key),
+    );
+    switch (storageResult) {
+      case StorageSuccessResult<String?>():
+        return storageResult.data;
+      case StorageErrorResult<String?>():
+        errorNotifier
+            .setError("Error Reading Value: ${storageResult.error.toString()}");
+    }
+    return null;
   }
 
   @override
-  Future<void> deleteValue(String key) {
-    return storageInstance.delete(key: key);
+  Future<void> deleteValue(String key) async {
+    var storageResult = await StorageExecutor.execute(
+      () => storageInstance.delete(key: key),
+    );
+    if (storageResult is StorageErrorResult) {
+      errorNotifier
+          .setError("Error Deleting Value: ${storageResult.error.toString()}");
+    }
   }
 }
