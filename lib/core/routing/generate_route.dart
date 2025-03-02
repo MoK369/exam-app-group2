@@ -2,7 +2,6 @@ import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import 'defined_routes.dart';
 
 class GenerateRoute {

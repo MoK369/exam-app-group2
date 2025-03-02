@@ -1,5 +1,3 @@
-import 'package:exam_app_group2/core/languages/language_codes.dart';
-import 'package:exam_app_group2/localization/initializer/initializer.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
