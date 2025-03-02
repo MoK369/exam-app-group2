@@ -13,7 +13,7 @@ abstract class DioService {
         baseUrl: ApisEndpoints.baseUrl,
         headers: {
           'token':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmYwZjU0NTU1NGIzMjg5MTI1YWY5NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwNTg1MDM3fQ.p3pCumwu-1YMANH-Uzd9Z4GjPrevB0Oi1OenyUQ4zvM',
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmYwZjU0NTU1NGIzMjg5MTI1YWY5NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwODQyODQxfQ.WUq650wFx14zwn8rPbF3-KMWsmYj9T6Ws6y0ijIlgkg',
         },
       ),
     );

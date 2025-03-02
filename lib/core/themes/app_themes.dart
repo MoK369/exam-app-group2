@@ -7,7 +7,12 @@ abstract class AppTheme {
   static const Color grayAppColor30 = Color(0xFF878787);
   static const Color lightPrimaryColor = Color(0xFFF9F9F9);
   static const Color errorAppColor = Color(0xFFCC1010);
+  static const Color darkGray = Color(0xFF535353);
+  static const Color gray = Color(0xFFCFCFCF);
+  static const Color lightBlue = Color(0xFFCCD7EB);
+  static const Color moreLightBlue = Color(0xFFEDEFF3);
   static const Color white = Colors.white;
+  static const Color green = Color(0xFF11CE19);
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -37,6 +42,16 @@ abstract class AppTheme {
         color: Colors.black,
         fontSize: 20.sp,
       ),
+      bodyLarge: GoogleFonts.inter(
+        color: Colors.black,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w600,
+      ),
+      titleSmall: GoogleFonts.roboto(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+        color: darkGray,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -56,6 +71,7 @@ abstract class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        foregroundColor: white,
         backgroundColor: blueAppColor,
         padding: EdgeInsets.symmetric(
           vertical: 14.h,
@@ -69,6 +85,16 @@ abstract class AppTheme {
       ),
       elevation: 0.8,
       margin: EdgeInsets.symmetric(vertical: 8.h),
+    ),
+    listTileTheme: ListTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.r),
+        ),
+      ),
+      tileColor: moreLightBlue,
+      selectedTileColor: lightBlue,
+      selectedColor: Colors.black,
     ),
   );
 }

@@ -1,15 +1,17 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/di/injectable_initializer.dart';
+import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
-import 'package:exam_app_group2/core/widgets/loading_widget.dart';
-import 'package:exam_app_group2/modules/home/UI/view_model/home_cubit.dart';
+import 'package:exam_app_group2/modules/home/UI/view_model/home/home_cubit.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../authentication/domain/entities/authentication/authentication_response_entity.dart';
+import '../../../../core/widgets/loading_state_widget.dart';
+import '../../../authentication/domain/entities/authentication/authentication_response_entity.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool? rememberMe;
@@ -23,10 +25,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen>
     with WidgetsBindingObserver {
+  var cubit = getIt.get<HomeCubit>();
+
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeCubit>(context).doIntent(GetAllSubjectsIntent());
+    cubit.doIntent(GetAllSubjectsIntent());
     if (widget.authEntity.message != StorageConstants.storedMessage) {
       print("Logged in Successfully");
       print(widget.authEntity.user?.email ?? "");
@@ -65,27 +69,39 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen>
             SizedBox(
               height: 24.h,
             ),
-            BlocBuilder<HomeCubit, HomeState>(
-              builder: (context, state) {
-                if (state.isLoading) {
-                  return const LoadingWidget();
-                } else if (state.isError) {
-                  return ErrorStateWidget(
-                    error: state.error!,
-                  );
-                } else if (state.isSuccess) {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemBuilder: (context, index) => buildSubjectCard(
-                        title: state.subjects?[index].name ?? '',
-                        url: state.subjects![index].icon ?? '',
+            BlocProvider(
+              create: (context) => cubit,
+              child: BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  if (state.isLoading) {
+                    return const LoadingStateWidget();
+                  } else if (state.isError) {
+                    return ErrorStateWidget(
+                      error: state.error!,
+                    );
+                  } else if (state.isSuccess) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              DefinedRoutes.exams,
+                              arguments: state.subjects?[index],
+                            );
+                          },
+                          child: buildSubjectCard(
+                            title: state.subjects?[index].name ?? '',
+                            url: state.subjects![index].icon ?? '',
+                          ),
+                        ),
+                        itemCount: state.subjects?.length,
                       ),
-                      itemCount: state.subjects?.length,
-                    ),
-                  );
-                }
-                return const SizedBox();
-              },
+                    );
+                  }
+                  return const SizedBox();
+                },
+              ),
             ),
           ],
         ),
@@ -94,27 +110,27 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen>
   }
 
   Widget buildSearchBar() => TextField(
-        decoration: InputDecoration(
-          hintText: 'Search',
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppTheme.grayAppColor30,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.r),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: AppTheme.blueAppColor,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.r),
-            ),
-          ),
+    decoration: InputDecoration(
+      hintText: 'Search',
+      prefixIcon: const Icon(
+        Icons.search,
+        color: AppTheme.grayAppColor30,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.r),
         ),
-      );
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: AppTheme.blueAppColor,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.r),
+        ),
+      ),
+    ),
+  );
 
   Widget buildSubjectCard({
     required String title,

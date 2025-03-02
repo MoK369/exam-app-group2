@@ -10,10 +10,12 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final void Function()? onChangeLocaleButtonClick;
   final TextStyle? textStyle;
   final EdgeInsets? padding;
+  final List<Widget>? actions;
 
   CustomAppBar({
     this.padding,
     this.textStyle,
+    this.actions,
     super.key,
     required this.title,
     this.showLeadingIcon = true,
@@ -46,25 +48,27 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
               theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
         ),
       ),
-      actions: !showLocaleButton
-          ? null
-          : [
-              TextButton(
-                  onPressed: () {
-                    localizationUseCase.changeLocale(
-                      currentLocal.toString() == LanguagesCodes.english
-                          ? LanguagesCodes.arabic
-                          : LanguagesCodes.english,
-                    );
-                    if (onChangeLocaleButtonClick != null) {
-                      onChangeLocaleButtonClick!();
-                    }
-                  },
-                  child: Text(
-                    currentLocal.toString().toUpperCase(),
-                    style: theme.textTheme.labelMedium,
-                  ))
-            ],
+      actions: actions ??
+          (!showLocaleButton
+              ? null
+              : [
+                  TextButton(
+                    onPressed: () {
+                      localizationUseCase.changeLocale(
+                        currentLocal.toString() == LanguagesCodes.english
+                            ? LanguagesCodes.arabic
+                            : LanguagesCodes.english,
+                      );
+                      if (onChangeLocaleButtonClick != null) {
+                        onChangeLocaleButtonClick!();
+                      }
+                    },
+                    child: Text(
+                      currentLocal.toString().toUpperCase(),
+                      style: theme.textTheme.labelMedium,
+                    ),
+                  )
+                ]),
     );
   }
 

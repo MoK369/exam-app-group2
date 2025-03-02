@@ -1,28 +1,28 @@
 import '../meta_data.dart';
-import 'subject.dart';
+import 'exam.dart';
 
-class GetAllSubjectsResponse {
-  GetAllSubjectsResponse({
+class GetAllExamsOnSubjectResponse {
+  GetAllExamsOnSubjectResponse({
     this.message,
     this.metadata,
-    this.subjects,
+    this.exams,
   });
 
-  GetAllSubjectsResponse.fromJson(dynamic json) {
+  GetAllExamsOnSubjectResponse.fromJson(dynamic json) {
     message = json['message'];
     metadata =
         json['metadata'] != null ? Metadata.fromJson(json['metadata']) : null;
-    if (json['subjects'] != null) {
-      subjects = [];
-      json['subjects'].forEach((v) {
-        subjects?.add(Subject.fromJson(v));
+    if (json['exams'] != null) {
+      exams = [];
+      json['exams'].forEach((v) {
+        exams?.add(Exam.fromJson(v));
       });
     }
   }
 
   String? message;
   Metadata? metadata;
-  List<Subject>? subjects;
+  List<Exam>? exams;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -30,8 +30,8 @@ class GetAllSubjectsResponse {
     if (metadata != null) {
       map['metadata'] = metadata?.toJson();
     }
-    if (subjects != null) {
-      map['subjects'] = subjects?.map((v) => v.toJson()).toList();
+    if (exams != null) {
+      map['exams'] = exams?.map((v) => v.toJson()).toList();
     }
     return map;
   }

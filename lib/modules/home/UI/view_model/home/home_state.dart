@@ -19,7 +19,7 @@ extension LoginStatusEx on HomeState {
 
 class HomeState extends Equatable {
   Status getAllSubjectsStatus;
-  List<SubjectEntity>? subjects = [];
+  List<SubjectEntity>? subjects;
 
   Object? error;
 

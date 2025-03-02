@@ -1,12 +1,15 @@
-import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
-import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
-import 'package:exam_app_group2/modules/home/UI/view_model/home_cubit.dart';
+import 'package:exam_app_group2/modules/home/UI/views/exam_score.dart';
+import 'package:exam_app_group2/modules/home/UI/views/exams_view.dart';
+import 'package:exam_app_group2/modules/home/UI/views/home_screen.dart';
+import 'package:exam_app_group2/modules/home/UI/views/questions_view.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import '../../modules/authentication/ui/login/view/login_view.dart';
+import '../../modules/home/UI/views/exam_details_view.dart';
 import 'defined_routes.dart';
 
 class GenerateRoute {
@@ -18,12 +21,9 @@ class GenerateRoute {
         HomeScreenParameters homeScreenParameters =
             (args as HomeScreenParameters);
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => getIt<HomeCubit>(),
-            child: HomeScreen(
-              authEntity: homeScreenParameters.authEntity,
-              rememberMe: homeScreenParameters.rememberMe,
-            ),
+          builder: (context) => HomeScreen(
+            authEntity: homeScreenParameters.authEntity,
+            rememberMe: homeScreenParameters.rememberMe,
           ),
         );
       case DefinedRoutes.signUpRouteName:
@@ -34,6 +34,32 @@ class GenerateRoute {
       case DefinedRoutes.login:
         return MaterialPageRoute(
           builder: (context) => const LoginView(),
+        );
+      case DefinedRoutes.examScore:
+        return MaterialPageRoute(
+          builder: (context) => const ExamScore(),
+        );
+      case DefinedRoutes.questions:
+        ExamEntity examEntity = (args as ExamEntity);
+        return MaterialPageRoute(
+          builder: (context) => QuestionsView(
+            examEntity: examEntity,
+          ),
+        );
+
+      case DefinedRoutes.exams:
+        SubjectEntity subjectEntity = (args as SubjectEntity);
+        return MaterialPageRoute(
+          builder: (context) => ExamsView(
+            subjectEntity: subjectEntity,
+          ),
+        );
+      case DefinedRoutes.examDetails:
+        ExamEntity examEntity = (args as ExamEntity);
+        return MaterialPageRoute(
+          builder: (context) => ExamDetailsView(
+            examEntity: examEntity,
+          ),
         );
       default:
         return _errorRoute();

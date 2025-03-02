@@ -58,6 +58,11 @@ dependencies:
   dio: ^5.8.0+1
   # local storage
   flutter_secure_storage: ^9.2.4
+  percent_indicator: ^4.2.4
+  choice: ^2.3.2
+  flutter_timer_countdown: ^1.0.7
+  step_progress_indicator: ^1.0.2
+  mockito: ^5.4.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -87,9 +92,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-#  assets:
-#  - assets/images/
-#  - assets/icons/
+  assets:
+    #  - assets/images/
+    - assets/icons/
 #  - assets/animations/
   #   - images/a_dot_ham.jpeg
 

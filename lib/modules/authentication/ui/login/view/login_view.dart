@@ -2,9 +2,8 @@ import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
-import 'package:exam_app_group2/core/widgets/loading_widget.dart';
 import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_cubit.dart';
-import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
+import 'package:exam_app_group2/modules/home/UI/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/di/injectable_initializer.dart';
 import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
+import '../../../../../core/widgets/loading_state_widget.dart';
 import '../../../../../core/widgets/underline_text.dart';
 import '../../../data/models/login/login_request.dart';
 import '../../../domain/entities/authentication/authentication_response_entity.dart';
@@ -220,7 +220,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                         color: Colors.white,
                                       ),
                                 )
-                              : const LoadingWidget(),
+                              : const LoadingStateWidget(),
                         ),
                         SizedBox(
                           height: 16.h,
