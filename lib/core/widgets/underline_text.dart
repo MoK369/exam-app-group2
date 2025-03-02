@@ -14,7 +14,6 @@ class _UnderlineTextState extends State<UnderlineText> {
   @override
   Widget build(BuildContext context) {
     paintText();
-    print(widget.child.style);
     return Stack(
       children: [
         Positioned(

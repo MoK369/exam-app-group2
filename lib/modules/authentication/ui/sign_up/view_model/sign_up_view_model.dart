@@ -65,19 +65,21 @@ class SignUpViewModel extends Cubit<SignUpState> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void validateForm() {
-    if (formKey.currentState?.validate() == false) {
+  bool validateForm() {
+    if (formKey.currentState!.validate() == false) {
       emit(const SignUpState(
           signUpStatus: SignUpStatus.initial,
           signUpFormStatus: SignUpFormStatus.unValid));
+      return false;
     } else {
       emit(state.copyWith(signUpFormStatus: SignUpFormStatus.valid));
+      return true;
     }
   }
 
   void onSignUpButtonClick() {
     getKeyboardUnfocused();
-    if (formKey.currentState?.validate() == true) {
+    if (validateForm()) {
       signUp(
           signUpParameters: SignUpRequestParameters(
         username: _signUpFieldsControllers[SignUpFieldsKeys.userName]?.text,

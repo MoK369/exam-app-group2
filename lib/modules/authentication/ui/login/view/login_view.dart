@@ -1,7 +1,10 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
-import 'package:exam_app_group2/core/themes/app_themes.dart';
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
+import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
+import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_view_model.dart';
+import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_cubit.dart';
 import 'package:exam_app_group2/modules/home/UI/views/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +54,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
     passwordController.dispose();
   }
 
-  LoginCubit cubit = getIt<LoginCubit>();
+  LoginViewModel loginViewModel = getIt<LoginViewModel>();
   bool obscurePassword = true;
 
   @override
@@ -65,48 +68,49 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
           title: appLocalizations.login,
           showLocaleButton: true,
           onChangeLocaleButtonClick: () {
-            if (cubit.state.isUnValid) {
+            if (loginViewModel.state.isUnValid) {
               WidgetsBinding.instance.addPostFrameCallback(
                 (timeStamp) {
-                  cubit.doIntent(ValidateForm());
+                  loginViewModel.doIntent(ValidateForm());
                 },
               );
             }
           },
         ),
         body: BlocProvider(
-          create: (context) => cubit,
-          child: BlocConsumer<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state.isError) {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: ErrorStateWidget(
-                      error: state.error!,
-                    ),
-                  ),
-                );
-              } else if (state.isSuccess) {
-                AuthenticationResponseEntity authEntity =
-                    state.authEntity ?? AuthenticationResponseEntity();
-                if (!rememberMe) cubit.doIntent(DeleteLoginInfo());
-                Navigator.pushNamedAndRemoveUntil(
-                    context, DefinedRoutes.homeRouteName, (route) => false,
-                    arguments: HomeScreenParameters(
-                        authEntity: authEntity, rememberMe: rememberMe));
-              }
-            },
-            builder: (context, state) {
-              return SingleChildScrollView(
+          create: (context) => loginViewModel,
+          child: BlocListener<LoginViewModel, LoginState>(
+              listener: (context, state) {
+                switch (state.state) {
+                  case LoginStatus.initial:
+                    break;
+                  case LoginStatus.loading:
+                    displayAlertDialog(title: const LoadingStateWidget());
+                  case LoginStatus.success:
+                    hideAlertDialog();
+                    AuthenticationResponseEntity authEntity =
+                        state.authEntity ?? AuthenticationResponseEntity();
+                    if (!rememberMe) loginViewModel.doIntent(DeleteLoginInfo());
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, DefinedRoutes.homeRouteName, (route) => false,
+                        arguments: HomeScreenParameters(
+                            authEntity: authEntity, rememberMe: rememberMe));
+                  case LoginStatus.error:
+                    hideAlertDialog();
+                    displayAlertDialog(
+                        showOkButton: true,
+                        title: ErrorStateWidget(error: state.error!));
+                }
+              },
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: REdgeInsets.symmetric(
                     horizontal: 16,
                   ),
                   child: Form(
-                    key: cubit.formKey,
+                    key: loginViewModel.formKey,
                     onChanged: () {
-                      cubit.doIntent(
+                      loginViewModel.doIntent(
                         ValidateForm(),
                       );
                     },
@@ -117,13 +121,14 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                           height: 6.h,
                         ),
                         TextFormField(
+                          focusNode: emailFocusNode,
                           controller: emailController,
                           validator: (inputText) {
                             return validateFunctions
                                 .validationOfEmail(inputText);
                           },
                           onFieldSubmitted: (value) =>
-                              emailFocusNode.requestFocus(),
+                              passwordFocusNode.requestFocus(),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             labelText: appLocalizations.email,
@@ -134,6 +139,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                           height: 24.h,
                         ),
                         TextFormField(
+                          focusNode: passwordFocusNode,
                           obscureText: obscurePassword,
                           controller: passwordController,
                           validator: (inputText) {
@@ -141,7 +147,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                 .validationOfPassword(inputText);
                           },
                           onFieldSubmitted: (value) =>
-                              passwordFocusNode.requestFocus(),
+                              passwordFocusNode.unfocus(),
                           keyboardType: TextInputType.visiblePassword,
                           obscuringCharacter: '*',
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -171,24 +177,15 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                   rememberMe = val ?? rememberMe;
                                 });
                               },
-                              activeColor: AppTheme.blueAppColor,
-                              checkColor: Colors.white,
                             ),
-                            Text(
-                              appLocalizations.rememberMe,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
+                            Text(appLocalizations.rememberMe,
+                                style: theme.textTheme.bodySmall),
                             const Spacer(),
                             GestureDetector(
                               onTap: () {},
                               child: UnderlineText(
                                 child: Text(appLocalizations.forgetPassword,
-                                    style: Theme.of(context).textTheme.bodySmall
-                                    // ?.copyWith(
-                                    //   decoration: TextDecoration.underline,
-                                    //   decorationThickness: 1.2
-                                    // ),
-                                    ),
+                                    style: theme.textTheme.bodySmall),
                               ),
                             )
                           ],
@@ -196,31 +193,27 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                         SizedBox(
                           height: 48.h,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (!cubit.formKey.currentState!.validate()) return;
-                            FocusManager.instance.primaryFocus?.unfocus();
-
-                            cubit.doIntent(
-                              OnLoginButtonClicked(
-                                loginRequest: LoginRequest(
-                                  password: passwordController.text,
-                                  email: emailController.text,
-                                ),
-                              ),
-                            );
-                          },
-                          child: !state.isLoading
-                              ? Text(
+                        BlocSelector<LoginViewModel, LoginState,
+                            LoginFormStatus>(
+                          builder: (context, state) {
+                            return ElevatedButton(
+                                onPressed: state == LoginFormStatus.unValid
+                                    ? null
+                                    : () => loginViewModel.doIntent(
+                                          OnLoginButtonClicked(
+                                            loginRequest: LoginRequest(
+                                              password: passwordController.text,
+                                              email: emailController.text,
+                                            ),
+                                          ),
+                                        ),
+                                child: Text(
                                   appLocalizations.login,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(
-                                        color: Colors.white,
-                                      ),
-                                )
-                              : const LoadingStateWidget(),
+                                ));
+                          },
+                          selector: (LoginState state) {
+                            return state.loginFormStatus;
+                          },
                         ),
                         SizedBox(
                           height: 16.h,
@@ -246,7 +239,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                       appLocalizations.signUp,
                                       style:
                                           theme.textTheme.labelSmall!.copyWith(
-                                            color: AppTheme.blueAppColor,
+                                        color: AppColors.blue,
                                         fontSize: 14.sp,
                                       ),
                                     )))
@@ -256,9 +249,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                     ),
                   ),
                 ),
-              );
-            },
-          ),
+              )),
         ),
       ),
     );

@@ -1,6 +1,6 @@
-abstract class StorageService<T> {
-  late T _storageInstance;
-  Future<void> initStorage();
+
+abstract interface class StorageService<T> {
+  void initStorage();
 
   void setStringValue(String key, String value);
 

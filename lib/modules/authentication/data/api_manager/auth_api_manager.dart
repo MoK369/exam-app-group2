@@ -7,11 +7,11 @@ import 'package:injectable/injectable.dart';
 import '../../../../core/di/injectable_initializer.dart';
 import '../models/login/login_request.dart';
 
-@singleton
-class ApiManager {
+@lazySingleton
+class AuthApiManager {
   late final Dio _dio;
 
-  ApiManager() {
+  AuthApiManager() {
     _dio = getIt.get<Dio>();
   }
 

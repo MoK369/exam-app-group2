@@ -53,6 +53,13 @@
   "connectionError": "لا يوجد اتصال بالإنترنت \uD83D\uDE11",
   "unknown": "حدث خطأ ما \uD83E\uDD14",
   "badCertificate": "الشهادة المقدمة من الخادم غير صالحة \uD83D\uDCD1",
-  "somethingWentWrong": "حدث خطأ ما \uD83E\uDD14"
+  "somethingWentWrong": "حدث خطأ ما \uD83E\uDD14",
+
+  "homeScreen______________": "$$$ تعليق $$$",
+  "loggedInSuccessfully": "تم تسجيل الدخول بنجاح!",
+  "explore": "استكشاف",
+  "result": "النتيجة",
+  "profile": "الملف الشخصي",
+  "noError": "لا يوجد خطأ"
 
 }

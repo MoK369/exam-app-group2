@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,14 +15,14 @@ abstract class AppTheme {
   static const Color white = Colors.white;
   static const Color green = Color(0xFF11CE19);
 
+class AppThemes {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: lightPrimaryColor,
-    dialogBackgroundColor: lightPrimaryColor,
-    progressIndicatorTheme:
-        const ProgressIndicatorThemeData(color: blueAppColor),
+    scaffoldBackgroundColor: AppColors.white,
+    dialogBackgroundColor: AppColors.white,
+    progressIndicatorTheme: ProgressIndicatorThemeData(color: AppColors.blue),
     appBarTheme: const AppBarTheme(
-      backgroundColor: lightPrimaryColor,
+      backgroundColor: AppColors.white,
     ),
     textTheme: TextTheme(
       labelSmall: GoogleFonts.inter(
@@ -61,23 +62,70 @@ abstract class AppTheme {
       errorMaxLines: 4,
       errorBorder: const OutlineInputBorder(
         borderSide: BorderSide(
-          color: errorAppColor,
+          color: AppColors.red,
         ),
       ),
       errorStyle: TextStyle(
-        color: errorAppColor,
+        color: AppColors.red,
         fontSize: 12.sp,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: white,
-        backgroundColor: blueAppColor,
+        elevation: 0,
+        backgroundColor: AppColors.blue,
+        foregroundColor: AppColors.white,
+        disabledBackgroundColor: AppColors.black[30],
+        disabledForegroundColor: AppColors.white,
+        textStyle:
+            GoogleFonts.roboto(fontSize: 16.sp, fontWeight: FontWeight.w500),
         padding: EdgeInsets.symmetric(
           vertical: 14.h,
         ),
       ),
     ),
+    checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateColor.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.selected)) {
+              return AppColors.blue;
+            } else {
+              return AppColors.white;
+            }
+          },
+        ),
+        checkColor: const WidgetStatePropertyAll(AppColors.white)),
+    navigationBarTheme: NavigationBarThemeData(
+        elevation: 0,
+        backgroundColor: AppColors.lightBlue,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) {
+            if (states.contains(WidgetState.selected)) {
+              return IconThemeData(
+                color: AppColors.blue,
+                size: 24.r,
+              );
+            } else {
+              return IconThemeData(color: AppColors.black[30], size: 24.r);
+            }
+          },
+        ),
+        indicatorColor: AppColors.blue[10],
+        indicatorShape:
+            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(48)),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) {
+            Color? chooseColor = AppColors.black[30];
+            if (states.contains(WidgetState.selected)) {
+              chooseColor = AppColors.blue;
+            }
+            return GoogleFonts.roboto(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+                height: 2.2,
+                color: chooseColor);
+          },
+        )),
     cardTheme: CardTheme(
       color: white,
       shape: RoundedRectangleBorder(

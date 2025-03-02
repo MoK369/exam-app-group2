@@ -1,5 +1,5 @@
 import 'package:exam_app_group2/core/api/api_excutor/api_excutor.dart';
-import 'package:exam_app_group2/modules/authentication/data/api_manager/api_manager.dart';
+import 'package:exam_app_group2/modules/authentication/data/api_manager/auth_api_manager.dart';
 import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/login/login_remote_datasource.dart';
 import 'package:injectable/injectable.dart';
 
@@ -10,7 +10,7 @@ import '../../models/login/login_request.dart';
 
 @Injectable(as: LoginRemoteDataSource)
 class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
-  ApiManager apiManager;
+  AuthApiManager apiManager;
 
   LoginRemoteDataSourceImpl({required this.apiManager});
 
