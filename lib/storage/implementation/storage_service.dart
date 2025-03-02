@@ -8,20 +8,9 @@ import 'package:injectable/injectable.dart';
 
 @Singleton(as: StorageService<FlutterSecureStorage>)
 class StorageServiceImp implements StorageService<FlutterSecureStorage> {
-  late final FlutterSecureStorage storageInstance;
+  final FlutterSecureStorage storageInstance;
   final ErrorNotifier errorNotifier;
-  StorageServiceImp(this.errorNotifier) {
-    initStorage();
-  }
-
-  @override
-  void initStorage() {
-    storageInstance = FlutterSecureStorage(aOptions: _getAndroidOptions());
-  }
-
-  AndroidOptions _getAndroidOptions() => const AndroidOptions(
-        encryptedSharedPreferences: true,
-      );
+  StorageServiceImp(this.errorNotifier, this.storageInstance);
 
   @override
   void setStringValue(String key, String value) async {

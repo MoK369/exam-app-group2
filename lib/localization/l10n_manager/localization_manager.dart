@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/languages/language_codes.dart';
+import 'package:exam_app_group2/localization/initializer/initializer.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
@@ -7,15 +8,10 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class LocalizationManager extends ChangeNotifier {
-  late String currentLocale;
+  String currentLocale;
   final StorageService<FlutterSecureStorage> _storageService;
-  LocalizationManager(this._storageService) {
-    _initCurrentLocale();
-  }
-
-  void _initCurrentLocale() async {
-    currentLocale = await getSavedLocal() ?? LanguagesCodes.english;
-  }
+  LocalizationManager(
+      this._storageService, @Named("initCurrentLocal") this.currentLocale);
 
   void changeLocal(String languageCode) {
     currentLocale = languageCode;

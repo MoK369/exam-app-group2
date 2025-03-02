@@ -3,7 +3,6 @@ import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
-import '../../modules/authentication/ui/login/view/login_view.dart';
 import 'defined_routes.dart';
 
 class GenerateRoute {
@@ -25,29 +24,9 @@ class GenerateRoute {
           builder: (context) => const SignUpScreen(),
         );
 
-      case DefinedRoutes.login:
-        return MaterialPageRoute(
-          builder: (context) => const LoginView(),
-        );
       default:
         return _errorRoute();
     }
-  }
-
-  static List<Route<dynamic>> onGenerateInitialRoutes(
-      {String? initialRoute,
-      required AuthenticationResponseEntity? storedAuthEntity,
-      bool rememberMe = false}) {
-    return [
-      if (storedAuthEntity != null)
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(authEntity: storedAuthEntity),
-        )
-      else
-        MaterialPageRoute(
-          builder: (context) => const LoginView(),
-        )
-    ];
   }
 
   static Route<dynamic> _errorRoute() {
