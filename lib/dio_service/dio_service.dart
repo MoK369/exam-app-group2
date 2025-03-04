@@ -14,7 +14,7 @@ abstract class DioService {
         baseUrl: ApisEndpoints.baseUrl,
         headers: {
           'token':
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmYwZjU0NTU1NGIzMjg5MTI1YWY5NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwODQyODQxfQ.WUq650wFx14zwn8rPbF3-KMWsmYj9T6Ws6y0ijIlgkg',
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YmYwZjU0NTU1NGIzMjg5MTI1YWY5NCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQxMDQwMDMwfQ.zE4Onzw97gpa41b6KS67NEnaTIvjjCRXQhnvepCCrmI',
         },
       ),
     );

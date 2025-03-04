@@ -5,11 +5,11 @@ import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_subjects_use_case.dart';
 import 'package:injectable/injectable.dart';
 
-part 'home_state.dart';
+part 'explore_state.dart';
 
 @injectable
-class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({required this.getAllSubjectsUseCase}) : super(HomeState());
+class ExploreCubit extends Cubit<HomeState> {
+  ExploreCubit({required this.getAllSubjectsUseCase}) : super(HomeState());
   GetAllSubjectsUseCase getAllSubjectsUseCase;
 
   void doIntent(HomeViewIntent intent) {

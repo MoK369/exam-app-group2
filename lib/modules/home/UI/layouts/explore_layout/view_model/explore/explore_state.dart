@@ -1,4 +1,4 @@
-part of 'home_cubit.dart';
+part of 'explore_cubit.dart';
 
 enum Status {
   initial,

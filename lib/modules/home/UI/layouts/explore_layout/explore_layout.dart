@@ -3,14 +3,13 @@ import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
-import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/explore/home_cubit.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/colors/app_colors.dart';
 import '../../../../../core/widgets/loading_state_widget.dart';
-import '../../../../authentication/domain/entities/authentication/authentication_response_entity.dart';
 
 class ExploreLayout extends StatefulWidget {
   const ExploreLayout({
@@ -23,7 +22,7 @@ class ExploreLayout extends StatefulWidget {
 
 class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
     with WidgetsBindingObserver {
-  var cubit = getIt.get<HomeCubit>();
+  var cubit = getIt.get<ExploreCubit>();
 
   @override
   void initState() {
@@ -65,7 +64,7 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
             ),
             BlocProvider(
               create: (context) => cubit,
-              child: BlocBuilder<HomeCubit, HomeState>(
+              child: BlocBuilder<ExploreCubit, HomeState>(
                 builder: (context, state) {
                   if (state.isLoading) {
                     return const LoadingStateWidget();
@@ -170,11 +169,4 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
           ],
         ),
       );
-}
-
-class HomeScreenParameters {
-  AuthenticationResponseEntity authEntity;
-  bool rememberMe;
-
-  HomeScreenParameters({required this.authEntity, required this.rememberMe});
 }

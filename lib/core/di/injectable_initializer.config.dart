@@ -49,8 +49,6 @@ import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.da
     as _i399;
 import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
     as _i313;
-import '../../modules/home/UI/layouts/explore_layout/view_model/explore/home_cubit.dart'
-    as _i27;
 import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
     as _i563;
 import '../../modules/home/data/api_manager/home_api_manager.dart' as _i945;
@@ -93,28 +91,18 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i393.ErrorNotifier>(() => _i393.ErrorNotifier());
-    gh.lazySingleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
-    gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
     gh.singleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
-    gh.lazySingleton<_i361.Dio>(() => dioService.provideDio());
     gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
     gh.factory<_i186.SignUpRemoteDataSource>(() =>
         _i522.SignUpRemoteDataSourceImp(
             apiManager: gh<_i208.AuthApiManager>()));
     gh.factory<_i818.GetAllSubjectsUseCase>(
         () => _i818.GetAllSubjectsUseCase(repo: gh<_i982.HomeRepository>()));
-    gh.factory<_i27.HomeCubit>(() => _i27.HomeCubit(
-        getAllSubjectsUseCase: gh<_i818.GetAllSubjectsUseCase>()));
     gh.factory<_i422.LoginRemoteDataSource>(() =>
         _i712.LoginRemoteDataSourceImpl(
             apiManager: gh<_i208.AuthApiManager>()));
     gh.factory<_i16.HomeDataSource>(
         () => _i973.HomeDataSourceImpl(apiManager: gh<_i945.HomeApiManager>()));
-    gh.factory<_i369.GetAllExamsOnSubjectUseCase>(() =>
-        _i369.GetAllExamsOnSubjectUseCase(
-            homeRepo: gh<_i982.HomeRepository>()));
-    gh.factory<_i370.GetAllQuestionsUseCase>(() =>
-        _i370.GetAllQuestionsUseCase(homeRepo: gh<_i982.HomeRepository>()));
     gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
         () => _i622.StorageServiceImp(
               gh<_i393.ErrorNotifier>(),
@@ -126,6 +114,11 @@ extension GetItInjectableX on _i174.GetIt {
       instanceName: 'initCurrentLocal',
       preResolve: true,
     );
+    gh.factory<_i369.GetAllExamsOnSubjectUseCase>(() =>
+        _i369.GetAllExamsOnSubjectUseCase(
+            homeRepo: gh<_i982.HomeRepository>()));
+    gh.factory<_i370.GetAllQuestionsUseCase>(() =>
+        _i370.GetAllQuestionsUseCase(homeRepo: gh<_i982.HomeRepository>()));
     gh.factory<_i1011.SignUpRepository>(() => _i1059.SignUpRepositoryImp(
         signUpRemoteDataSource: gh<_i186.SignUpRemoteDataSource>()));
     gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager(
