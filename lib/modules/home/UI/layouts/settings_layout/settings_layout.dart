@@ -69,3 +69,5 @@ class _SettingsLayoutState extends BaseStatefulWidgetState<SettingsLayout> {
     );
   }
 }
+
+enum Language { english, arabic }
