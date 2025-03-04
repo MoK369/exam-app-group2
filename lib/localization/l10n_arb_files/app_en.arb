@@ -69,6 +69,8 @@
   "resetPassword": "Rest Password",
   "currentPassword": "Current Password",
   "newPassword": "New Password",
-  "language": "Language"
-
+  "language": "Language",
+  "cancelWord": "Cancel",
+  "logout": "Logout",
+  "deleteAccount": "Delete Account"
 }

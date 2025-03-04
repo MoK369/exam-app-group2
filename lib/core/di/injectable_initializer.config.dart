@@ -51,7 +51,13 @@ import '../../modules/edit_profile/view_model/edit_profile_screen_view_model.dar
     as _i1011;
 import '../../modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart'
     as _i1063;
+import '../../modules/home/UI/view_model/home_view_model.dart' as _i907;
+import '../../modules/home/data/api/api_client/home_api_client.dart' as _i293;
+import '../../modules/home/data/api/api_client_provider/home_api_client_provider.dart'
+    as _i939;
 import '../../modules/home/data/api_manager/home_api_manager.dart' as _i945;
+import '../../modules/home/data/data_source_imp/logout/logout_data_source_imp.dart'
+    as _i484;
 import '../../modules/reset_password/view_model/reset_password_screen_view_model.dart'
     as _i749;
 import '../../storage/contracts/storage_service_contract.dart' as _i70;
@@ -70,28 +76,32 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    final dioService = _$DioService();
     final storageInitializer = _$StorageInitializer();
+    final dioService = _$DioService();
+    final homeApiClientProvider = _$HomeApiClientProvider();
     final localeInitializer = _$LocaleInitializer();
-    await gh.factoryAsync<_i361.Dio>(
-      () => dioService.provideDio(),
-      preResolve: true,
-    );
-    await gh.factoryAsync<_i558.FlutterSecureStorage>(
-      () => storageInitializer.initFlutterSecureStorage(),
-      preResolve: true,
-    );
     gh.factory<_i1063.ProfileViewModel>(() => _i1063.ProfileViewModel());
+    gh.factory<_i907.HomeViewModel>(() => _i907.HomeViewModel());
     gh.factory<_i1011.EditProfileScreenViewModel>(
         () => _i1011.EditProfileScreenViewModel());
     gh.factory<_i749.ResetPasswordScreenViewModel>(
         () => _i749.ResetPasswordScreenViewModel());
+    await gh.factoryAsync<_i558.FlutterSecureStorage>(
+      () => storageInitializer.initFlutterSecureStorage(),
+      preResolve: true,
+    );
+    await gh.factoryAsync<_i361.Dio>(
+      () => dioService.provideDio(),
+      preResolve: true,
+    );
     gh.singleton<_i393.ErrorNotifier>(() => _i393.ErrorNotifier());
     gh.lazySingleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
     gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
     gh.factory<_i186.SignUpRemoteDataSource>(() =>
         _i522.SignUpRemoteDataSourceImp(
             apiManager: gh<_i208.AuthApiManager>()));
+    gh.singleton<_i293.HomeApiClient>(
+        () => homeApiClientProvider.provideApiClient(gh<_i361.Dio>()));
     gh.factory<_i422.LoginRemoteDataSource>(() =>
         _i712.LoginRemoteDataSourceImpl(
             apiManager: gh<_i208.AuthApiManager>()));
@@ -106,6 +116,8 @@ extension GetItInjectableX on _i174.GetIt {
       instanceName: 'initCurrentLocal',
       preResolve: true,
     );
+    gh.factory<_i484.HomeDataSourceImp>(
+        () => _i484.HomeDataSourceImp(gh<_i293.HomeApiClient>()));
     gh.factory<_i1011.SignUpRepository>(() => _i1059.SignUpRepositoryImp(
         signUpRemoteDataSource: gh<_i186.SignUpRemoteDataSource>()));
     gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager(
@@ -132,8 +144,10 @@ extension GetItInjectableX on _i174.GetIt {
   }
 }
 
+class _$StorageInitializer extends _i661.StorageInitializer {}
+
 class _$DioService extends _i678.DioService {}
 
-class _$StorageInitializer extends _i661.StorageInitializer {}
+class _$HomeApiClientProvider extends _i939.HomeApiClientProvider {}
 
 class _$LocaleInitializer extends _i852.LocaleInitializer {}

@@ -9,6 +9,7 @@ class AppThemes {
     scaffoldBackgroundColor: AppColors.white,
     dialogBackgroundColor: AppColors.white,
     progressIndicatorTheme: ProgressIndicatorThemeData(color: AppColors.blue),
+    dividerColor: AppColors.gray,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.white,
     ),
@@ -66,7 +67,7 @@ class AppThemes {
       style: TextButton.styleFrom(
         foregroundColor: AppColors.blue,
         textStyle:
-            GoogleFonts.inter(fontSize: 12.sp, fontWeight: FontWeight.w500),
+            GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.w500),
       ),
     ),
     checkboxTheme: CheckboxThemeData(

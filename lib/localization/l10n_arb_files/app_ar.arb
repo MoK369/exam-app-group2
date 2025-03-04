@@ -60,6 +60,15 @@
   "explore": "استكشاف",
   "result": "النتيجة",
   "profile": "الملف الشخصي",
-  "noError": "لا يوجد خطأ"
+  "settings": "الإعدادات",
+  "noError": "لا يوجد خطأ",
+  "change": "تغيير",
+  "update": "تحديث",
+  "editProfile": "تعديل الملف الشخصي",
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "currentPassword": "كلمة المرور الحالية",
+  "newPassword": "كلمة المرور الجديدة",
+  "language": "اللغة",
+  "cancelWord": "إلغاء"
 
 }

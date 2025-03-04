@@ -56,20 +56,29 @@ dependencies:
   equatable: ^2.0.7
   # API Calling Package
   dio: ^5.8.0+1
+  # retrofit
+  retrofit: ^4.4.2
+  logger: ^2.5.0
+  json_annotation: ^4.9.0
   # local storage
   flutter_secure_storage: ^9.2.4
   # snack bars
   animated_snack_bar: ^0.4.0
   # pretty logger
   pretty_dio_logger: ^1.4.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # add the generator to your dev_dependencies
+  # injectable div
   injectable_generator: 2.6.2
-  # add build runner if not already added
   build_runner: 2.4.13
+  # retrofit dev
+  retrofit_generator: 9.1.5
+  json_serializable: 6.9.0
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

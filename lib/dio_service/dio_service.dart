@@ -24,13 +24,6 @@ abstract class DioService {
           debugPrint(object.toString());
         },
       ),
-      // LogInterceptor(
-      //   requestBody: true,
-      //   responseBody: true,
-      //   logPrint: (object) {
-      //     debugPrint(object.toString());
-      //   },
-      // ),
     );
     return dio;
   }
