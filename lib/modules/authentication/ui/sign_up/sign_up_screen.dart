@@ -1,5 +1,6 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
+import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
@@ -187,7 +188,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                                     AutovalidateMode.onUserInteraction,
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText: signUpViewModel.isPasswordObscure,
-                                obscuringCharacter: "*",
+                                obscuringCharacter: Emojis.star,
                                 focusNode: signUpViewModel.passwordFocusNode,
                                 onFieldSubmitted: (value) => signUpViewModel
                                     .confirmPasswordFocusNode

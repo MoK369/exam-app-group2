@@ -61,5 +61,14 @@
   "explore": "Explore",
   "result": "Result",
   "profile": "Profile",
-  "noError": "No Error"
+  "settings": "Settings",
+  "noError": "No Error",
+  "change": "Change",
+  "update": "Update",
+  "editProfile": "Edit Profile",
+  "resetPassword": "Rest Password",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "language": "Language"
+
 }

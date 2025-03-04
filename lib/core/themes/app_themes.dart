@@ -62,6 +62,13 @@ class AppThemes {
         ),
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: AppColors.blue,
+        textStyle:
+            GoogleFonts.inter(fontSize: 12.sp, fontWeight: FontWeight.w500),
+      ),
+    ),
     checkboxTheme: CheckboxThemeData(
         fillColor: WidgetStateColor.resolveWith(
           (states) {
@@ -74,35 +81,42 @@ class AppThemes {
         ),
         checkColor: const WidgetStatePropertyAll(AppColors.white)),
     navigationBarTheme: NavigationBarThemeData(
-        elevation: 0,
-        backgroundColor: AppColors.lightBlue,
-        iconTheme: WidgetStateProperty.resolveWith(
-          (states) {
-            if (states.contains(WidgetState.selected)) {
-              return IconThemeData(
-                color: AppColors.blue,
-                size: 24.r,
-              );
-            } else {
-              return IconThemeData(color: AppColors.black[30], size: 24.r);
-            }
-          },
-        ),
-        indicatorColor: AppColors.blue[10],
-        indicatorShape:
-            ContinuousRectangleBorder(borderRadius: BorderRadius.circular(48)),
-        labelTextStyle: WidgetStateProperty.resolveWith(
-          (states) {
-            Color? chooseColor = AppColors.black[30];
-            if (states.contains(WidgetState.selected)) {
-              chooseColor = AppColors.blue;
-            }
-            return GoogleFonts.roboto(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w600,
-                height: 2.2,
-                color: chooseColor);
-          },
-        )),
+      elevation: 0,
+      backgroundColor: AppColors.lightBlue,
+      iconTheme: WidgetStateProperty.resolveWith(
+        (states) {
+          if (states.contains(WidgetState.selected)) {
+            return IconThemeData(
+              color: AppColors.blue,
+              size: 24.r,
+            );
+          } else {
+            return IconThemeData(color: AppColors.black[30], size: 24.r);
+          }
+        },
+      ),
+      indicatorColor: AppColors.blue[10],
+      indicatorShape:
+          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(48)),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (states) {
+          Color? chooseColor = AppColors.black[30];
+          if (states.contains(WidgetState.selected)) {
+            chooseColor = AppColors.blue;
+          }
+          return GoogleFonts.roboto(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              height: 2.2,
+              color: chooseColor);
+        },
+      ),
+    ),
+    listTileTheme: ListTileThemeData(
+      titleTextStyle: GoogleFonts.roboto(
+          color: AppColors.black,
+          fontSize: 18.sp,
+          fontWeight: FontWeight.normal),
+    ),
   );
 }

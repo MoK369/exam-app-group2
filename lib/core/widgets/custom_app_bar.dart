@@ -22,7 +22,7 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
     return AppBar(
       forceMaterialTransparency: true,
       leadingWidth: 35,
-      titleSpacing: 0,
+      titleSpacing: showLeadingIcon ? 0 : 16.w,
       leading: !showLeadingIcon
           ? null
           : IconButton(

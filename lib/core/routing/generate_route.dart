@@ -1,5 +1,7 @@
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
+import 'package:exam_app_group2/modules/edit_profile/edit_profile_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
+import 'package:exam_app_group2/modules/reset_password/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
@@ -28,6 +30,16 @@ class GenerateRoute {
       case DefinedRoutes.login:
         return MaterialPageRoute(
           builder: (context) => const LoginView(),
+        );
+      case DefinedRoutes.editProfileRoutName:
+        return MaterialPageRoute(
+          builder: (context) => EditProfileScreen(
+            authEntity: (args as AuthenticationResponseEntity),
+          ),
+        );
+      case DefinedRoutes.resetPasswordRoutName:
+        return MaterialPageRoute(
+          builder: (context) => ResetPasswordScreen(),
         );
       default:
         return _errorRoute();
