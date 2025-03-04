@@ -18,8 +18,8 @@ void main() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
-  // Initializing local storage (Flutter Secure Storage) happens here
-  configureDependencies();
+  // Initializing local storage (Flutter Secure Storage) and current locale (Stored Locale) happens here
+  await configureDependencies();
   // Get Cached Login Info
   storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
 

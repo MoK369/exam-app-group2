@@ -6,8 +6,8 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 @module
 abstract class DioService {
-  @lazySingleton
-  Dio provideDio() {
+  @preResolve
+  Future<Dio> provideDio() async {
     final Dio dio = Dio(
       BaseOptions(
         connectTimeout: const Duration(seconds: 30),

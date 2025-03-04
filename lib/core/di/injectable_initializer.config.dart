@@ -14,6 +14,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import '../../dio_service/dio_service.dart' as _i678;
+import '../../localization/initializer/locale_initializer.dart' as _i852;
 import '../../localization/l10n_manager/localization_manager.dart' as _i375;
 import '../../localization/use_case/localization_use_case.dart' as _i964;
 import '../../modules/authentication/data/api_manager/auth_api_manager.dart'
@@ -65,22 +66,35 @@ import '../../modules/home/domain/use_cases/get_all_questions.dart' as _i370;
 import '../../modules/home/domain/use_cases/get_all_subjects_use_case.dart'
     as _i818;
 import '../../storage/contracts/storage_service_contract.dart' as _i70;
-import '../../storage/implementation/storage_service.dart' as _i313;
+import '../../storage/implementation/storage_service_imp.dart' as _i622;
+import '../../storage/initializer/storage_initializer.dart' as _i661;
 import '../providers/error/error_notifier.dart' as _i393;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(
       this,
       environment,
       environmentFilter,
     );
     final dioService = _$DioService();
+    final storageInitializer = _$StorageInitializer();
+    final localeInitializer = _$LocaleInitializer();
+    await gh.factoryAsync<_i361.Dio>(
+      () => dioService.provideDio(),
+      preResolve: true,
+    );
+    await gh.factoryAsync<_i558.FlutterSecureStorage>(
+      () => storageInitializer.initFlutterSecureStorage(),
+      preResolve: true,
+    );
     gh.singleton<_i393.ErrorNotifier>(() => _i393.ErrorNotifier());
+    gh.lazySingleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
+    gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
     gh.singleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
     gh.lazySingleton<_i361.Dio>(() => dioService.provideDio());
     gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
@@ -102,11 +116,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i370.GetAllQuestionsUseCase>(() =>
         _i370.GetAllQuestionsUseCase(homeRepo: gh<_i982.HomeRepository>()));
     gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
-        () => _i313.StorageServiceImp(gh<_i393.ErrorNotifier>()));
-    gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager(
-        gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
+        () => _i622.StorageServiceImp(
+              gh<_i393.ErrorNotifier>(),
+              gh<_i558.FlutterSecureStorage>(),
+            ));
+    await gh.factoryAsync<String>(
+      () => localeInitializer.initCurrentLocal(
+          gh<_i70.StorageService<_i558.FlutterSecureStorage>>()),
+      instanceName: 'initCurrentLocal',
+      preResolve: true,
+    );
     gh.factory<_i1011.SignUpRepository>(() => _i1059.SignUpRepositoryImp(
         signUpRemoteDataSource: gh<_i186.SignUpRemoteDataSource>()));
+    gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager(
+          gh<_i70.StorageService<_i558.FlutterSecureStorage>>(),
+          gh<String>(instanceName: 'initCurrentLocal'),
+        ));
     gh.factory<_i74.AuthLocalDataSource>(() => _i907.AuthLocalDataSourceImpl(
         storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
     gh.factory<_i367.SignUpUseCase>(() =>
@@ -132,3 +157,7 @@ extension GetItInjectableX on _i174.GetIt {
 }
 
 class _$DioService extends _i678.DioService {}
+
+class _$StorageInitializer extends _i661.StorageInitializer {}
+
+class _$LocaleInitializer extends _i852.LocaleInitializer {}
