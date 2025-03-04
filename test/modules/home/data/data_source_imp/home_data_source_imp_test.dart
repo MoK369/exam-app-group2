@@ -1,13 +1,13 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/modules/home/data/api_manager/home_api_manager.dart';
-import 'package:exam_app_group2/modules/home/data/datasource_contract/home_data_source_contract.dart';
-import 'package:exam_app_group2/modules/home/data/datasource_impl/home_data_source_impl.dart';
+import 'package:exam_app_group2/modules/home/data/data_source_contracts/home_data_source.dart';
+import 'package:exam_app_group2/modules/home/data/data_source_imp/home_data_source_imp.dart';
 import 'package:exam_app_group2/modules/home/data/models/all_subjects_response/get_all_subjects_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'home_data_source_impl_test.mocks.dart';
+import 'home_data_source_imp_test.mocks.dart';
 
 @GenerateMocks([HomeApiManager])
 void main() {

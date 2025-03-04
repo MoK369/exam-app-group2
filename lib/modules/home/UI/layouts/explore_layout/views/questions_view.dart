@@ -1,13 +1,12 @@
 import 'dart:developer';
 
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
-import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/utils/app_strings.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
-import 'package:exam_app_group2/modules/home/UI/view_model/questions/questions_cubit.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,8 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-import '../../../../core/routing/defined_routes.dart';
-import '../../domain/entities/question_entity.dart';
+import '../../../../../../core/routing/defined_routes.dart';
+import '../../../../domain/entities/question_entity.dart';
+import '../view_model/questions/questions_cubit.dart';
 
 class QuestionsView extends StatefulWidget {
   const QuestionsView({super.key, required this.examEntity});
@@ -68,7 +68,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 enableDescriptions: false,
                 spacerWidth: 3.w,
                 timeTextStyle: theme.textTheme.bodySmall?.copyWith(
-                  color: AppTheme.green,
+                  color: AppColors.green,
                   fontSize: 20.sp,
                 ),
                 onEnd: () {
@@ -101,9 +101,9 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                       'Time out !! ',
                                       style:
                                           theme.textTheme.titleSmall?.copyWith(
-                                        fontSize: 32.sp,
+                                            fontSize: 32.sp,
                                         fontWeight: FontWeight.w400,
-                                        color: AppTheme.errorAppColor,
+                                        color: AppColors.red,
                                       ),
                                     ),
                                   ],
@@ -122,7 +122,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                     'view score',
                                     style:
                                         theme.textTheme.labelMedium?.copyWith(
-                                      color: AppTheme.white,
+                                          color: AppColors.white,
                                     ),
                                   ),
                                 ),
@@ -191,8 +191,8 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                           currentStep: cubit.currentQuestion,
                           size: 4.h,
                           padding: 0,
-                          selectedColor: AppTheme.blueAppColor,
-                          unselectedColor: AppTheme.gray,
+                          selectedColor: AppColors.blue,
+                          unselectedColor: AppColors.gray,
                           roundedEdges: Radius.circular(100.r),
                         ),
                         SizedBox(
@@ -218,14 +218,14 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                      color: AppTheme.blueAppColor,
+                                    side: BorderSide(
+                                      color: AppColors.blue,
                                     ),
                                     borderRadius: BorderRadius.circular(
                                       10.r,
                                     ),
                                   ),
-                                  backgroundColor: AppTheme.lightPrimaryColor,
+                                  backgroundColor: AppColors.lightBlue,
                                 ),
                                 onPressed: () {
                                   cubit.doIntent(PreviousQuestionIntent());
@@ -233,7 +233,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                 child: Text(
                                   'Back',
                                   style: theme.textTheme.labelMedium?.copyWith(
-                                    color: AppTheme.blueAppColor,
+                                    color: AppColors.blue,
                                   ),
                                 ),
                               ),
@@ -250,7 +250,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                       10.r,
                                     ),
                                   ),
-                                  backgroundColor: AppTheme.blueAppColor,
+                                  backgroundColor: AppColors.blue,
                                 ),
                                 onPressed: () {
                                   cubit.doIntent(NextQuestionIntent());
@@ -258,7 +258,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                 child: Text(
                                   'Next',
                                   style: theme.textTheme.labelMedium?.copyWith(
-                                    color: AppTheme.white,
+                                    color: AppColors.white,
                                   ),
                                 ),
                               ),
@@ -296,7 +296,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               question.answers?[index].answer ?? '',
             ),
             leading: Radio<int>(
-              activeColor: AppTheme.blueAppColor,
+              activeColor: AppColors.blue,
               value: index,
               groupValue: selectedIndex,
               onChanged: (int? value) {

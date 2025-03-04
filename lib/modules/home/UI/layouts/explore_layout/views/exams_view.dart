@@ -3,16 +3,16 @@ import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
-import 'package:exam_app_group2/modules/home/UI/view_model/exam/exam_cubit.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/themes/app_themes.dart';
-import '../../../../core/utils/app_strings.dart';
-import '../../../../core/widgets/loading_state_widget.dart';
+import '../../../../../../core/colors/app_colors.dart';
+import '../../../../../../core/utils/app_strings.dart';
+import '../../../../../../core/widgets/loading_state_widget.dart';
+import '../view_model/exam/exam_cubit.dart';
 
 class ExamsView extends StatefulWidget {
   const ExamsView({
@@ -85,7 +85,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
   Widget buildExamCard(ExamEntity? entity) => Container(
         margin: REdgeInsets.symmetric(vertical: 8, horizontal: 8),
         decoration: BoxDecoration(
-          color: AppTheme.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
@@ -129,7 +129,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                 Text(
                   '${entity!.numberOfQuestions} Question' ?? '',
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppTheme.darkGray,
+                    color: AppColors.darkGray,
                   ),
                 ),
                 SizedBox(
@@ -147,7 +147,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
             Text(
               '${entity.duration} minutes',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppTheme.blueAppColor,
+                color: AppColors.blue,
               ),
             ),
           ],

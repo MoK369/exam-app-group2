@@ -1,23 +1,23 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
-import 'package:exam_app_group2/modules/home/data/datasource_contract/home_data_source_contract.dart';
+import 'package:exam_app_group2/modules/home/data/data_source_contracts/home_data_source.dart';
 import 'package:exam_app_group2/modules/home/data/models/all_subjects_response/get_all_subjects_response.dart';
-import 'package:exam_app_group2/modules/home/data/repo_impl/home_repo_impl.dart';
+import 'package:exam_app_group2/modules/home/data/repository_imp/home_repository_imp.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
-import 'package:exam_app_group2/modules/home/domain/repo_contract/home_repo_contract.dart';
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'home_repo_impl_test.mocks.dart';
+import 'home_repository_imp.mocks.dart';
 
 @GenerateMocks([HomeDataSource])
 void main() {
   late MockHomeDataSource mockHomeDataSource;
-  late HomeRepo homeRepo;
+  late HomeRepository homeRepo;
   GetAllSubjectsResponse getAllSubjectsResponse = GetAllSubjectsResponse();
   setUpAll(() {
     mockHomeDataSource = MockHomeDataSource();
-    homeRepo = HomeRepoImpl(homeDataSource: mockHomeDataSource);
+    homeRepo = HomeRepositoryImp(homeDataSource: mockHomeDataSource);
   });
   group('home repo', () {
     group('get all subjects', () {

@@ -1,15 +1,15 @@
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
-import 'package:exam_app_group2/modules/home/UI/views/exam_score.dart';
-import 'package:exam_app_group2/modules/home/UI/views/exams_view.dart';
-import 'package:exam_app_group2/modules/home/UI/views/home_screen.dart';
-import 'package:exam_app_group2/modules/home/UI/views/questions_view.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import '../../modules/authentication/ui/login/view/login_view.dart';
-import '../../modules/home/UI/views/exam_details_view.dart';
+import '../../modules/home/UI/home_screen.dart';
+import '../../modules/home/UI/layouts/explore_layout/views/exam_details_view.dart';
+import '../../modules/home/UI/layouts/explore_layout/views/exam_score.dart';
+import '../../modules/home/UI/layouts/explore_layout/views/exams_view.dart';
+import '../../modules/home/UI/layouts/explore_layout/views/questions_view.dart';
 import 'defined_routes.dart';
 
 class GenerateRoute {
@@ -54,6 +54,7 @@ class GenerateRoute {
             subjectEntity: subjectEntity,
           ),
         );
+
       case DefinedRoutes.examDetails:
         ExamEntity examEntity = (args as ExamEntity);
         return MaterialPageRoute(

@@ -4,7 +4,7 @@ import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dar
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_questions.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../../core/api/api_result/api_result.dart';
+import '../../../../../../../core/api/api_result/api_result.dart';
 
 part 'questions_state.dart';
 

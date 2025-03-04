@@ -1,12 +1,12 @@
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/api/api_result/api_result.dart';
 import '../entities/question_entity.dart';
-import '../repo_contract/home_repo_contract.dart';
 
 @injectable
 class GetAllQuestionsUseCase {
-  final HomeRepo homeRepo;
+  final HomeRepository homeRepo;
 
   GetAllQuestionsUseCase({required this.homeRepo});
 

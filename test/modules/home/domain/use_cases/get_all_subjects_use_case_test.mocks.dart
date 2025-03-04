@@ -12,7 +12,7 @@ import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dar
     as _i8;
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart'
     as _i5;
-import 'package:exam_app_group2/modules/home/domain/repo_contract/home_repo_contract.dart'
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
@@ -30,11 +30,11 @@ import 'package:mockito/src/dummies.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [HomeRepo].
+/// A class which mocks [HomeRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHomeRepo extends _i1.Mock implements _i2.HomeRepo {
-  MockHomeRepo() {
+class MockHomeRepository extends _i1.Mock implements _i2.HomeRepository {
+  MockHomeRepository() {
     _i1.throwOnMissingStub(this);
   }
 

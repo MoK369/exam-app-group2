@@ -14,7 +14,11 @@ class HomeScreen extends StatefulWidget {
   final bool? rememberMe;
   final AuthenticationResponseEntity authEntity;
 
-  const HomeScreen({super.key, required this.authEntity, this.rememberMe});
+  const HomeScreen({
+    super.key,
+    required this.authEntity,
+    this.rememberMe,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -23,7 +27,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
   int currentSelectedItemIndex = 0;
   final PageController pageViewController = PageController(initialPage: 0);
-  List<Widget> layouts = [ExploreLayout(), ResultLayout(), ProfileLayout()];
+  List<Widget> layouts = const [
+    ExploreLayout(),
+    ResultLayout(),
+    ProfileLayout(),
+  ];
 
   @override
   void initState() {

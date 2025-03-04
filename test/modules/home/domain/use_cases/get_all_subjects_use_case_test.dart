@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
-import 'package:exam_app_group2/modules/home/domain/repo_contract/home_repo_contract.dart';
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_subjects_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -8,12 +8,12 @@ import 'package:mockito/mockito.dart';
 
 import 'get_all_subjects_use_case_test.mocks.dart';
 
-@GenerateMocks([HomeRepo])
+@GenerateMocks([HomeRepository])
 void main() {
   late GetAllSubjectsUseCase getAllSubjectsUseCase;
-  late MockHomeRepo mockHomeRepo;
+  late MockHomeRepository mockHomeRepo;
   setUpAll(() {
-    mockHomeRepo = MockHomeRepo();
+    mockHomeRepo = MockHomeRepository();
     getAllSubjectsUseCase = GetAllSubjectsUseCase(repo: mockHomeRepo);
   });
 

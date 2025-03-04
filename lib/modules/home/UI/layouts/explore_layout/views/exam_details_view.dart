@@ -1,12 +1,11 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
-import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/utils/app_strings.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/routing/defined_routes.dart';
+import '../../../../../../core/colors/app_colors.dart';
+import '../../../../../../core/routing/defined_routes.dart';
 
 class ExamDetailsView extends StatefulWidget {
   const ExamDetailsView({super.key, required this.examEntity});
@@ -46,7 +45,7 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                       Text(
                         '${widget.examEntity.numberOfQuestions} Question',
                         style: theme.textTheme.labelMedium?.copyWith(
-                          color: AppTheme.darkGray,
+                          color: AppColors.darkGray,
                         ),
                       )
                     ],
@@ -55,13 +54,13 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                   Text(
                     '${widget.examEntity.duration} minutes',
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: AppTheme.blueAppColor,
+                      color: AppColors.blue,
                     ),
                   ),
                 ],
               ),
               const Divider(
-                color: AppTheme.lightBlue,
+                color: AppColors.lightBlue,
                 thickness: 0.5,
                 height: 32,
               ),
