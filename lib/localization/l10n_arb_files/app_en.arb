@@ -72,5 +72,9 @@
   "language": "Language",
   "cancelWord": "Cancel",
   "logout": "Logout",
-  "deleteAccount": "Delete Account"
+  "deleteAccount": "Delete Account",
+  "loggedOutSuccessfully": "Logged Out Successfully!",
+  "confirm": "Confirm",
+  "deletingAccountAlertMessage": "Are you sure you want to delete your account permanently?\uD83E\uDD28",
+  "deletedAccountSuccessfully": "Deleted Account Successfully!"
 }

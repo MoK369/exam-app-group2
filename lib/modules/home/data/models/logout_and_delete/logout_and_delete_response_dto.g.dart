@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'logout_response_dto.dart';
+part of 'logout_and_delete_response_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-LogoutResponseDto _$LogoutResponseDtoFromJson(Map<String, dynamic> json) =>
-    LogoutResponseDto(
+LogoutAndDeleteResponseDto _$LogoutAndDeleteResponseDtoFromJson(
+        Map<String, dynamic> json) =>
+    LogoutAndDeleteResponseDto(
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$LogoutResponseDtoToJson(LogoutResponseDto instance) =>
+Map<String, dynamic> _$LogoutAndDeleteResponseDtoToJson(
+        LogoutAndDeleteResponseDto instance) =>
     <String, dynamic>{
       'message': instance.message,
     };

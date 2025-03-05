@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../../authentication/domain/entities/authentication/authentication_response_entity.dart';
 
-late final AuthenticationResponseEntity authEntity;
+late AuthenticationResponseEntity authEntity;
 
 class HomeScreen extends StatefulWidget {
   final bool? rememberMe;

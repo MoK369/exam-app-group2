@@ -226,7 +226,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                                 keyboardType: TextInputType.visiblePassword,
                                 obscureText:
                                     signUpViewModel.isConfirmPasswordObscure,
-                                obscuringCharacter: "*",
+                                obscuringCharacter: Emojis.star,
                                 focusNode:
                                     signUpViewModel.confirmPasswordFocusNode,
                                 onFieldSubmitted: (value) => signUpViewModel

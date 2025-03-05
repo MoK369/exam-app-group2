@@ -34,6 +34,7 @@ class LoginViewModel extends Cubit<LoginState> {
     required LoginRequest loginRequest,
   }) async {
     if (_validateForm()) {
+      FocusManager.instance.primaryFocus?.unfocus();
       emit(LoginState(state: LoginStatus.loading));
       var useCaseResult = await loginUseCase.execute(
         loginRequest: loginRequest,

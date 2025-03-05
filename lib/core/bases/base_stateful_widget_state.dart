@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../di/injectable_initializer.dart';
 
+typedef VoidFunction = void Function()?;
+
 abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     extends State<T> {
   late ThemeData theme;
@@ -81,24 +83,40 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   void displayAlertDialog(
       {required Widget title,
       bool showOkButton = false,
-      bool isDismissible = false}) {
+      bool showConfirmButton = false,
+      bool isDismissible = false,
+      VoidFunction onOkButtonClick,
+      VoidFunction onConfirmButtonClick}) {
     showDialog(
       context: context,
       barrierDismissible: isDismissible,
       builder: (context) {
         return AlertDialog(
           title: title,
-          actions: !showOkButton
-              ? null
-              : [
-                  ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text(
-                        appLocalizations.ok,
-                        style: theme.textTheme.labelMedium!
-                            .copyWith(color: Colors.white),
-                      ))
-                ],
+          actions: [
+            if (showOkButton)
+              ElevatedButton(
+                  onPressed: () => onOkButtonClick == null
+                      ? Navigator.pop(context)
+                      : onOkButtonClick(),
+                  child: Text(
+                    appLocalizations.ok,
+                    style: theme.textTheme.labelMedium!
+                        .copyWith(color: Colors.white),
+                  )),
+            if (showConfirmButton)
+              Center(
+                child: ElevatedButton(
+                    onPressed: onConfirmButtonClick,
+                    child: RPadding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4.0, horizontal: 16),
+                      child: Text(appLocalizations.confirm,
+                          style: theme.textTheme.labelMedium!
+                              .copyWith(color: Colors.white)),
+                    )),
+              ),
+          ],
         );
       },
     );

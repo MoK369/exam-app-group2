@@ -22,12 +22,12 @@ class _HomeApiClient implements HomeApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<LogoutResponseDto> logout() async {
+  Future<LogoutAndDeleteResponseDto> logout() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<LogoutResponseDto>(Options(
+    final _options = _setStreamType<LogoutAndDeleteResponseDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -44,9 +44,42 @@ class _HomeApiClient implements HomeApiClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late LogoutResponseDto _value;
+    late LogoutAndDeleteResponseDto _value;
     try {
-      _value = LogoutResponseDto.fromJson(_result.data!);
+      _value = LogoutAndDeleteResponseDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<LogoutAndDeleteResponseDto> deleteAccount() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<LogoutAndDeleteResponseDto>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          'api/v1/auth/deleteMe',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late LogoutAndDeleteResponseDto _value;
+    try {
+      _value = LogoutAndDeleteResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
