@@ -30,11 +30,6 @@ class QuestionsView extends StatefulWidget {
 class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
   int selectedIndex = 0;
   var cubit = getIt.get<QuestionsCubit>();
-  bool isEnd = false;
-  int correctAnswersCount = 0;
-  int wrongAnswersCount = 0;
-
-  Map<int, int> correctAnswersMap = {};
 
   @override
   void initState() {
@@ -46,7 +41,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Exam',
+        title: appLocalizations.exam,
         actions: [
           Row(
             children: [
@@ -98,10 +93,10 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                       width: 4.w,
                                     ),
                                     Text(
-                                      'Time out !! ',
+                                      appLocalizations.examTimeOut,
                                       style:
                                           theme.textTheme.titleSmall?.copyWith(
-                                            fontSize: 32.sp,
+                                        fontSize: 32.sp,
                                         fontWeight: FontWeight.w400,
                                         color: AppColors.red,
                                       ),
@@ -119,10 +114,10 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                     );
                                   },
                                   child: Text(
-                                    'view score',
+                                    appLocalizations.viewScore,
                                     style:
                                         theme.textTheme.labelMedium?.copyWith(
-                                          color: AppColors.white,
+                                      color: AppColors.white,
                                     ),
                                   ),
                                 ),
@@ -152,28 +147,23 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
           child: BlocConsumer<QuestionsCubit, QuestionsState>(
             listener: (context, state) {
               if (state.isEndExam) {
-                log(cubit.correctAnswers.toString());
-                log(cubit.wrongAnswers.toString());
-                // log(correctAnswersCount.toString());
-                // log(wrongAnswersCount.toString());
-                // Navigator.pushNamed(
-                //   context,
-                //   DefinedRoutes.examScore,
-                // );
+                // cubit.doIntent(GetAnswersList());
+                // cubit.doIntent(CheckQuestionIntent());
+                Navigator.pushReplacementNamed(
+                  context,
+                  DefinedRoutes.examScore,
+                  arguments: cubit,
+                );
               }
             },
             builder: (context, state) {
-              // log(state.toString());
               if (state.isLoading) {
                 return const LoadingStateWidget();
               } else if (state.isError) {
                 return ErrorStateWidget(error: state.error!);
               } else if (state.isSuccess) {
                 var question = state.questions?[cubit.currentQuestion - 1];
-                String? correctAnswer = question?.correct?.split('A')[1];
-                correctAnswersMap[cubit.currentQuestion] =
-                    int.parse(correctAnswer!);
-
+                cubit.answersMap[question?.id] = "A${selectedIndex + 1}";
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -192,7 +182,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                           size: 4.h,
                           padding: 0,
                           selectedColor: AppColors.blue,
-                          unselectedColor: AppColors.gray,
+                          unselectedColor: AppColors.black[20]!,
                           roundedEdges: Radius.circular(100.r),
                         ),
                         SizedBox(
@@ -301,11 +291,8 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               groupValue: selectedIndex,
               onChanged: (int? value) {
                 selectedIndex = value ?? 0;
-                cubit.userAnswers[cubit.currentQuestion] = selectedIndex + 1;
-                cubit.getExamResult(correctAnswersMap);
-
-                // log(cubit.userAnswers.toString());
-                // log(correctAnswersMap.toString());
+                cubit.answersMap[question.id] = "A${selectedIndex + 1}";
+                log(cubit.answersMap.toString());
                 setState(() {});
               },
             ),

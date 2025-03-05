@@ -61,5 +61,18 @@
   "explore": "Explore",
   "result": "Result",
   "profile": "Profile",
-  "noError": "No Error"
+  "noError": "No Error",
+  "survey": "Survey",
+  "browseBySubject": "Browse by Subject",
+  "noExamsFound": "No exams found",
+  "search": "Search",
+  "exam": "Exam",
+  "viewScore": "View Score",
+  "examTimeOut": "Time out !! ",
+  "examScore" : "Exam Score",
+  "correct" : "Correct",
+  "inCorrect" : "InCorrect",
+  "showResult" : "Show Result",
+  "startAgain" : "Start Again",
+  "yourScore" : "Your Score"
 }

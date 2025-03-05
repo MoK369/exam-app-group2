@@ -47,22 +47,27 @@ import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
     as _i108;
 import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
     as _i399;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
-    as _i313;
-import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
-    as _i563;
-import '../../modules/home/data/api_manager/home_api_manager.dart' as _i945;
-import '../../modules/home/data/data_source_contracts/home_data_source.dart'
-    as _i16;
-import '../../modules/home/data/data_source_imp/home_data_source_imp.dart'
-    as _i973;
-import '../../modules/home/domain/repositories_contracts/home_repository.dart'
-    as _i982;
+import '../../modules/home/data/api_manager/explore_api_manager.dart' as _i696;
+import '../../modules/home/data/data_source_contracts/explore_data_source.dart'
+    as _i940;
+import '../../modules/home/data/data_source_imp/explore_data_source_imp.dart'
+    as _i77;
+import '../../modules/home/data/repository_imp/explore_repository_imp.dart'
+    as _i999;
+import '../../modules/home/domain/repositories_contracts/explore_repository.dart'
+    as _i951;
+import '../../modules/home/domain/use_cases/check_questions.dart' as _i811;
 import '../../modules/home/domain/use_cases/get_all_exams_on_subject.dart'
     as _i369;
 import '../../modules/home/domain/use_cases/get_all_questions.dart' as _i370;
 import '../../modules/home/domain/use_cases/get_all_subjects_use_case.dart'
     as _i818;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
+    as _i313;
+import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
+    as _i746;
+import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
+    as _i563;
 import '../../storage/contracts/storage_service_contract.dart' as _i70;
 import '../../storage/implementation/storage_service_imp.dart' as _i622;
 import '../../storage/initializer/storage_initializer.dart' as _i661;
@@ -91,18 +96,16 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i393.ErrorNotifier>(() => _i393.ErrorNotifier());
-    gh.singleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
+    gh.singleton<_i696.ExploreApiManager>(() => _i696.ExploreApiManager());
     gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
     gh.factory<_i186.SignUpRemoteDataSource>(() =>
         _i522.SignUpRemoteDataSourceImp(
             apiManager: gh<_i208.AuthApiManager>()));
-    gh.factory<_i818.GetAllSubjectsUseCase>(
-        () => _i818.GetAllSubjectsUseCase(repo: gh<_i982.HomeRepository>()));
+    gh.factory<_i940.ExploreDataSource>(() =>
+        _i77.HomeDataSourceImpl(apiManager: gh<_i696.ExploreApiManager>()));
     gh.factory<_i422.LoginRemoteDataSource>(() =>
         _i712.LoginRemoteDataSourceImpl(
             apiManager: gh<_i208.AuthApiManager>()));
-    gh.factory<_i16.HomeDataSource>(
-        () => _i973.HomeDataSourceImpl(apiManager: gh<_i945.HomeApiManager>()));
     gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
         () => _i622.StorageServiceImp(
               gh<_i393.ErrorNotifier>(),
@@ -114,23 +117,31 @@ extension GetItInjectableX on _i174.GetIt {
       instanceName: 'initCurrentLocal',
       preResolve: true,
     );
-    gh.factory<_i369.GetAllExamsOnSubjectUseCase>(() =>
-        _i369.GetAllExamsOnSubjectUseCase(
-            homeRepo: gh<_i982.HomeRepository>()));
-    gh.factory<_i370.GetAllQuestionsUseCase>(() =>
-        _i370.GetAllQuestionsUseCase(homeRepo: gh<_i982.HomeRepository>()));
+    gh.factory<_i951.ExploreRepository>(() =>
+        _i999.HomeRepositoryImp(homeDataSource: gh<_i940.ExploreDataSource>()));
     gh.factory<_i1011.SignUpRepository>(() => _i1059.SignUpRepositoryImp(
         signUpRemoteDataSource: gh<_i186.SignUpRemoteDataSource>()));
     gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager(
           gh<_i70.StorageService<_i558.FlutterSecureStorage>>(),
           gh<String>(instanceName: 'initCurrentLocal'),
         ));
+    gh.factory<_i818.GetAllSubjectsUseCase>(
+        () => _i818.GetAllSubjectsUseCase(repo: gh<_i951.ExploreRepository>()));
+    gh.factory<_i369.GetAllExamsOnSubjectUseCase>(() =>
+        _i369.GetAllExamsOnSubjectUseCase(
+            homeRepo: gh<_i951.ExploreRepository>()));
+    gh.factory<_i370.GetAllQuestionsUseCase>(() =>
+        _i370.GetAllQuestionsUseCase(homeRepo: gh<_i951.ExploreRepository>()));
     gh.factory<_i74.AuthLocalDataSource>(() => _i907.AuthLocalDataSourceImpl(
         storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
+    gh.factory<_i811.CheckQuestionsUseCase>(() => _i811.CheckQuestionsUseCase(
+        homeRepository: gh<_i951.ExploreRepository>()));
     gh.factory<_i367.SignUpUseCase>(() =>
         _i367.SignUpUseCase(signUpRepository: gh<_i1011.SignUpRepository>()));
     gh.factory<_i313.ExamCubit>(() => _i313.ExamCubit(
         getAllExamsOnSubjectUseCase: gh<_i369.GetAllExamsOnSubjectUseCase>()));
+    gh.factory<_i746.ExploreCubit>(() => _i746.ExploreCubit(
+        getAllSubjectsUseCase: gh<_i818.GetAllSubjectsUseCase>()));
     gh.factory<_i399.SignUpViewModel>(
         () => _i399.SignUpViewModel(gh<_i367.SignUpUseCase>()));
     gh.factory<_i964.LocalizationUseCase>(
@@ -139,10 +150,12 @@ extension GetItInjectableX on _i174.GetIt {
           authRemoteDataSource: gh<_i422.LoginRemoteDataSource>(),
           authLocalDataSource: gh<_i74.AuthLocalDataSource>(),
         ));
-    gh.factory<_i563.QuestionsCubit>(() => _i563.QuestionsCubit(
-        getAllQuestionsUseCase: gh<_i370.GetAllQuestionsUseCase>()));
     gh.factory<_i543.LoginUseCase>(
         () => _i543.LoginUseCase(authRepo: gh<_i450.LoginRepo>()));
+    gh.factory<_i563.QuestionsCubit>(() => _i563.QuestionsCubit(
+          getAllQuestionsUseCase: gh<_i370.GetAllQuestionsUseCase>(),
+          checkQuestionsUseCase: gh<_i811.CheckQuestionsUseCase>(),
+        ));
     gh.factory<_i108.LoginViewModel>(
         () => _i108.LoginViewModel(loginUseCase: gh<_i543.LoginUseCase>()));
     return this;

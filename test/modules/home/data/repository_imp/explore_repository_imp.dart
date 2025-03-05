@@ -1,23 +1,23 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
-import 'package:exam_app_group2/modules/home/data/data_source_contracts/home_data_source.dart';
+import 'package:exam_app_group2/modules/home/data/data_source_contracts/explore_data_source.dart';
 import 'package:exam_app_group2/modules/home/data/models/all_subjects_response/get_all_subjects_response.dart';
-import 'package:exam_app_group2/modules/home/data/repository_imp/home_repository_imp.dart';
+import 'package:exam_app_group2/modules/home/data/repository_imp/explore_repository_imp.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
-import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart';
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/explore_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'home_repository_imp.mocks.dart';
+import 'explore_repository_imp.mocks.dart';
 
-@GenerateMocks([HomeDataSource])
+@GenerateMocks([ExploreDataSource])
 void main() {
-  late MockHomeDataSource mockHomeDataSource;
-  late HomeRepository homeRepo;
+  late MockExploreDataSource mockExploreDataSource;
+  late ExploreRepository homeRepo;
   GetAllSubjectsResponse getAllSubjectsResponse = GetAllSubjectsResponse();
   setUpAll(() {
-    mockHomeDataSource = MockHomeDataSource();
-    homeRepo = HomeRepositoryImp(homeDataSource: mockHomeDataSource);
+    mockExploreDataSource = MockExploreDataSource();
+    homeRepo = HomeRepositoryImp(homeDataSource: mockExploreDataSource);
   });
   group('home repo', () {
     group('get all subjects', () {
@@ -25,7 +25,7 @@ void main() {
         // arrange
         provideDummy<ApiResult<GetAllSubjectsResponse>>(
             Success<GetAllSubjectsResponse>(data: getAllSubjectsResponse));
-        when(mockHomeDataSource.getAllSubjects()).thenAnswer((_) async =>
+        when(mockExploreDataSource.getAllSubjects()).thenAnswer((_) async =>
             Success<GetAllSubjectsResponse>(data: getAllSubjectsResponse));
 
         // act
@@ -33,7 +33,7 @@ void main() {
 
         // assert
         expect(result, isA<Success<List<SubjectEntity>?>>());
-        verify(mockHomeDataSource.getAllSubjects()).called(1);
+        verify(mockExploreDataSource.getAllSubjects()).called(1);
       });
     });
   });

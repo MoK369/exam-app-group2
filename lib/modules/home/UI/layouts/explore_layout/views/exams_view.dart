@@ -54,6 +54,26 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
             } else if (state.isError) {
               return ErrorStateWidget(error: state.error!);
             } else if (state.isSuccess) {
+              if (state.exams!.isEmpty) {
+                return Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'No Exams Found',
+                        style: theme.textTheme.bodyLarge,
+                      ),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      Icon(
+                        Icons.playlist_remove_outlined,
+                        size: 60,
+                        color: AppColors.blue,
+                      )
+                    ],
+                  ),
+                );
+              }
               return Padding(
                 padding: REdgeInsets.symmetric(
                   horizontal: 8,
@@ -65,12 +85,12 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                         context,
                         DefinedRoutes.examDetails,
                         arguments: state.exams?[index],
-                      );
-                    },
-                    child: buildExamCard(
-                      state.exams?[index],
-                    ),
-                  ),
+                          );
+                        },
+                        child: buildExamCard(
+                          state.exams?[index],
+                        ),
+                      ),
                   itemCount: state.exams?.length,
                 ),
               );
@@ -144,10 +164,13 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
               ],
             ),
             const Spacer(),
-            Text(
-              '${entity.duration} minutes',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.blue,
+            Padding(
+              padding: REdgeInsets.all(16),
+              child: Text(
+                '${entity.duration} minutes',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: AppColors.blue,
+                ),
               ),
             ),
           ],

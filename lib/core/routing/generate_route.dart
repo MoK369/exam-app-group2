@@ -1,7 +1,9 @@
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import '../../modules/authentication/ui/login/view/login_view.dart';
@@ -36,8 +38,12 @@ class GenerateRoute {
           builder: (context) => const LoginView(),
         );
       case DefinedRoutes.examScore:
+        QuestionsCubit questionsCubit = (args as QuestionsCubit);
         return MaterialPageRoute(
-          builder: (context) => const ExamScore(),
+          builder: (context) => BlocProvider.value(
+            value: questionsCubit,
+            child: const ExamScore(),
+          ),
         );
       case DefinedRoutes.questions:
         ExamEntity examEntity = (args as ExamEntity);

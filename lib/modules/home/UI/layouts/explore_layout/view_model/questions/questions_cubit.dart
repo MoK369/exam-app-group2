@@ -1,18 +1,27 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/use_cases/check_questions.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_questions.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../../../core/api/api_result/api_result.dart';
+import '../../../../../data/models/check_questions/answers.dart';
+import '../../../../../data/models/check_questions/check_questions_request.dart';
 
 part 'questions_state.dart';
 
 @injectable
 class QuestionsCubit extends Cubit<QuestionsState> {
-  QuestionsCubit({required this.getAllQuestionsUseCase})
-      : super(QuestionsState());
+  QuestionsCubit({
+    required this.getAllQuestionsUseCase,
+    required this.checkQuestionsUseCase,
+  }) : super(QuestionsState());
   GetAllQuestionsUseCase getAllQuestionsUseCase;
+  CheckQuestionsUseCase checkQuestionsUseCase;
 
   void doIntent(QuestionsIntent intent) {
     switch (intent) {
@@ -22,26 +31,33 @@ class QuestionsCubit extends Cubit<QuestionsState> {
         _nextQuestion();
       case PreviousQuestionIntent():
         _previousQuestion();
-    }
-  }
-
-  int correctAnswers = 0;
-  int wrongAnswers = 0;
-
-  void getExamResult(Map<int, int> correctAnswersMap) {
-    for (var key in userAnswers.keys) {
-      if (correctAnswersMap.containsKey(key)) {
-        if (userAnswers[key] == correctAnswersMap[key]) {
-          correctAnswers++;
-        } else {
-          wrongAnswers++;
-        }
-      }
+      case CheckQuestionIntent():
+        _checkQuestions();
+      case GetAnswersList():
+        _getCheckedAnswers();
     }
   }
 
   int currentQuestion = 1;
-  Map<int, int> userAnswers = {};
+  List<Answers>? checkedAnswers = [];
+
+  Map<String?, String> answersMap = {};
+
+  void _getCheckedAnswers() {
+    log('get checked answers list ');
+
+    log('answersMap: $answersMap');
+
+    answersMap.forEach((key, value) {
+      checkedAnswers?.add(Answers(
+        questionId: key,
+        correct: value,
+      ));
+    });
+
+    // log(checkedAnswers![0].toString());
+    // log(answersMap.toString());
+  }
 
   Future<void> _getAllQuestions({required String examId}) async {
     emit(state.copyWith(getAllQuestionsStatus: Status.loading));
@@ -58,6 +74,32 @@ class QuestionsCubit extends Cubit<QuestionsState> {
         emit(
           state.copyWith(
             getAllQuestionsStatus: Status.error,
+            error: result.error,
+          ),
+        );
+    }
+  }
+
+  Future<void> _checkQuestions() async {
+    emit(state.copyWith(checkQuestionsStatus: Status.loading));
+    var result = await checkQuestionsUseCase.execute(
+      checkQuestionRequest: CheckQuestionsRequest(
+        answers: checkedAnswers,
+      ),
+    );
+
+    switch (result) {
+      case Success<CheckQuestionsResponseEntity>():
+        emit(
+          state.copyWith(
+            checkQuestionsStatus: Status.success,
+            checkQuestionsResponseEntity: result.data,
+          ),
+        );
+      case Error<CheckQuestionsResponseEntity>():
+        emit(
+          state.copyWith(
+            checkQuestionsStatus: Status.error,
             error: result.error,
           ),
         );
@@ -104,3 +146,7 @@ class GetAllQuestionsIntent extends QuestionsIntent {
 class NextQuestionIntent extends QuestionsIntent {}
 
 class PreviousQuestionIntent extends QuestionsIntent {}
+
+class CheckQuestionIntent extends QuestionsIntent {}
+
+class GetAnswersList extends QuestionsIntent {}

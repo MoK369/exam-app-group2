@@ -6,13 +6,17 @@
 import 'dart:async' as _i3;
 
 import 'package:exam_app_group2/core/api/api_result/api_result.dart' as _i4;
+import 'package:exam_app_group2/modules/home/data/models/check_questions/check_questions_request.dart'
+    as _i10;
+import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart'
+    as _i9;
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart'
     as _i7;
 import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart'
     as _i8;
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart'
     as _i5;
-import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart'
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/explore_repository.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
@@ -30,11 +34,11 @@ import 'package:mockito/src/dummies.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [HomeRepository].
+/// A class which mocks [ExploreRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHomeRepository extends _i1.Mock implements _i2.HomeRepository {
-  MockHomeRepository() {
+class MockExploreRepository extends _i1.Mock implements _i2.ExploreRepository {
+  MockExploreRepository() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -90,4 +94,25 @@ class MockHomeRepository extends _i1.Mock implements _i2.HomeRepository {
           ),
         )),
       ) as _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>>>);
+
+  @override
+  _i3.Future<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>> checkQuestions(
+          {required _i10.CheckQuestionsRequest? checkQuestionRequest}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #checkQuestions,
+          [],
+          {#checkQuestionRequest: checkQuestionRequest},
+        ),
+        returnValue:
+            _i3.Future<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>>.value(
+                _i6.dummyValue<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>>(
+          this,
+          Invocation.method(
+            #checkQuestions,
+            [],
+            {#checkQuestionRequest: checkQuestionRequest},
+          ),
+        )),
+      ) as _i3.Future<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>>);
 }

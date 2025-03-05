@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
-import 'package:exam_app_group2/modules/home/domain/repositories_contracts/home_repository.dart';
+import 'package:exam_app_group2/modules/home/domain/repositories_contracts/explore_repository.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_subjects_use_case.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -8,13 +8,13 @@ import 'package:mockito/mockito.dart';
 
 import 'get_all_subjects_use_case_test.mocks.dart';
 
-@GenerateMocks([HomeRepository])
+@GenerateMocks([ExploreRepository])
 void main() {
   late GetAllSubjectsUseCase getAllSubjectsUseCase;
-  late MockHomeRepository mockHomeRepo;
+  late MockExploreRepository mockExploreRepository;
   setUpAll(() {
-    mockHomeRepo = MockHomeRepository();
-    getAllSubjectsUseCase = GetAllSubjectsUseCase(repo: mockHomeRepo);
+    mockExploreRepository = MockExploreRepository();
+    getAllSubjectsUseCase = GetAllSubjectsUseCase(repo: mockExploreRepository);
   });
 
   group("get subjects use case ", () {
@@ -22,7 +22,7 @@ void main() {
       // arrange
       provideDummy<ApiResult<List<SubjectEntity>?>>(
           Success<List<SubjectEntity>?>(data: []));
-      when(mockHomeRepo.getAllSubjects())
+      when(mockExploreRepository.getAllSubjects())
           .thenAnswer((_) async => Success<List<SubjectEntity>?>(data: []));
 
       // act
@@ -30,14 +30,14 @@ void main() {
 
       // assert
       expect(result, isA<Success<List<SubjectEntity>?>>());
-      verify(mockHomeRepo.getAllSubjects()).called(1);
+      verify(mockExploreRepository.getAllSubjects()).called(1);
     });
 
     test('get subjects Error from use case ', () async {
       // arrange
       provideDummy<ApiResult<List<SubjectEntity>?>>(
           Error<List<SubjectEntity>?>(error: Object()));
-      when(mockHomeRepo.getAllSubjects()).thenAnswer(
+      when(mockExploreRepository.getAllSubjects()).thenAnswer(
           (_) async => Error<List<SubjectEntity>?>(error: Object()));
 
       // act
@@ -45,7 +45,7 @@ void main() {
 
       // assert
       expect(result, isA<Error<List<SubjectEntity>?>>());
-      verify(mockHomeRepo.getAllSubjects()).called(1);
+      verify(mockExploreRepository.getAllSubjects()).called(1);
     });
   });
 }

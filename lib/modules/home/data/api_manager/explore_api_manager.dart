@@ -2,16 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/home/data/models/all_exams_on_subject_response/get_all_exams_on_subject_response.dart';
 import 'package:exam_app_group2/modules/home/data/models/all_subjects_response/get_all_subjects_response.dart';
+import 'package:exam_app_group2/modules/home/data/models/check_questions/check_question_response.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/api/apis_endpoints/apis_endpoints.dart';
 import '../models/all_questions_response/get_all_questions_response.dart';
+import '../models/check_questions/check_questions_request.dart';
 
 @singleton
-class HomeApiManager {
+class ExploreApiManager {
   late final Dio _dio;
 
-  HomeApiManager() {
+  ExploreApiManager() {
     _dio = getIt.get<Dio>();
   }
 
@@ -40,5 +42,14 @@ class HomeApiManager {
     );
 
     return GetAllQuestionsResponse.fromJson(response.data);
+  }
+
+  Future<CheckQuestionResponse> checkQuestions(
+      {required CheckQuestionsRequest checkQuestionRequest}) async {
+    Response response = await _dio.post(
+      ApisEndpoints.checkQuestions,
+      data: checkQuestionRequest.toJson(),
+    );
+    return CheckQuestionResponse.fromJson(response.data);
   }
 }

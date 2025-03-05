@@ -5,4 +5,5 @@ class ApisEndpoints {
   static const String getAllSubjects = 'api/v1/subjects';
   static const String getAllExamsOnSubject = 'api/v1/exams';
   static const String getAllQuestions = 'api/v1/questions';
+  static const String checkQuestions = 'api/v1/questions/check';
 }

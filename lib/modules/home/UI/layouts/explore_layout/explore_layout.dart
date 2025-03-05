@@ -34,7 +34,7 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Survey',
+        title: appLocalizations.survey,
         padding: REdgeInsets.symmetric(
           horizontal: 16,
         ),
@@ -56,7 +56,7 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
               height: 40.h,
             ),
             Text(
-              'Browse by subject',
+              appLocalizations.browseBySubject,
               style: theme.textTheme.labelMedium,
             ),
             SizedBox(
@@ -104,7 +104,7 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
 
   Widget buildSearchBar() => TextField(
         decoration: InputDecoration(
-          hintText: 'Search',
+          hintText: appLocalizations.search,
           prefixIcon: const Icon(
             Icons.search,
             color: AppColors.gray,
