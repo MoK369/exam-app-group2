@@ -62,12 +62,20 @@ dependencies:
   animated_snack_bar: ^0.4.0
   # pretty logger
   pretty_dio_logger: ^1.4.0
+  # local database
+  isar: ^3.1.0
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
+  # local database devs
+  isar_generator: ^3.1.0
   # add the generator to your dev_dependencies
-  injectable_generator: 2.6.2
+  injectable_generator: 2.4.2
   # add build runner if not already added
   build_runner: 2.4.13
 
