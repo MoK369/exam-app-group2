@@ -147,12 +147,11 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
           child: BlocConsumer<QuestionsCubit, QuestionsState>(
             listener: (context, state) {
               if (state.isEndExam) {
-                // cubit.doIntent(GetAnswersList());
-                // cubit.doIntent(CheckQuestionIntent());
+                cubit.doIntent(GetAnswersList());
                 Navigator.pushReplacementNamed(
                   context,
                   DefinedRoutes.examScore,
-                  arguments: cubit,
+                  arguments: [cubit.checkedAnswers, widget.examEntity],
                 );
               }
             },

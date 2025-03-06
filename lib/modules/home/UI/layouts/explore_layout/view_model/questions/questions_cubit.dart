@@ -55,7 +55,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
       ));
     });
 
-    // log(checkedAnswers![0].toString());
+    log(checkedAnswers![0].toString());
     // log(answersMap.toString());
   }
 

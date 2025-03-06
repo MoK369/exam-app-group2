@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
+import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart';
+import 'package:exam_app_group2/modules/home/data/models/check_questions/answers.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,22 +15,31 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../../../../core/di/injectable_initializer.dart';
 import '../../../../../../core/widgets/error_state_widget.dart';
-import '../view_model/questions/questions_cubit.dart';
 
 class ExamScore extends StatefulWidget {
-  const ExamScore({super.key});
+  const ExamScore({
+    super.key,
+    required this.answers,
+    required this.examEntity,
+  });
+
+  final List<Answers>? answers;
+  final ExamEntity examEntity;
 
   @override
   State<ExamScore> createState() => _ExamScoreState();
 }
 
 class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
-  var cubit = getIt.get<QuestionsCubit>();
+  var cubit = getIt.call<ExamScoreCubit>;
 
   @override
   void initState() {
-    cubit.doIntent(GetAnswersList());
-    cubit.doIntent(CheckQuestionIntent());
+    BlocProvider.of<ExamScoreCubit>(context).doIntent(
+      GetCheckedAnswers(
+        answers: widget.answers,
+      ),
+    );
     super.initState();
   }
 
@@ -34,21 +49,25 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
       appBar: CustomAppBar(
         title: appLocalizations.examScore,
       ),
-      body: Padding(
-        padding: REdgeInsets.symmetric(horizontal: 16),
-        child: BlocConsumer<QuestionsCubit, QuestionsState>(
-          listener: (context, state) {
-            if (state.isErrorCheckQuestions) {
-              displayAlertDialog(
-                  showOkButton: true,
-                  title: ErrorStateWidget(error: state.error!));
-            }
-          },
-          builder: (context, state) {
-            if (state.isLoadingCheckQuestions) {
-              return const LoadingStateWidget();
-            } else if (state.isSuccessCheckQuestions) {
-              return Column(
+      body: BlocConsumer<ExamScoreCubit, ExamScoreState>(
+        listener: (context, state) {
+          if (state.isError) {
+            displayAlertDialog(
+                showOkButton: true,
+                title: ErrorStateWidget(error: state.error!));
+          }
+        },
+        builder: (context, state) {
+          if (state.isLoading) {
+            return const LoadingStateWidget();
+          } else if (state.isSuccess) {
+            String score =
+                state.checkQuestionsResponseEntity!.total!.split('%')[0];
+            log(score);
+            int total = int.parse(double.parse(score).round().toString());
+            return Padding(
+              padding: REdgeInsets.symmetric(horizontal: 16),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(
@@ -71,7 +90,7 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                         percent: 0.8,
                         backgroundColor: AppColors.red,
                         center: Text(
-                          '${state.checkQuestionsResponseEntity?.total}%',
+                          '$total %',
                           style: theme.textTheme.labelMedium?.copyWith(
                             fontSize: 20.sp,
                           ),
@@ -113,7 +132,7 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                                     state.checkQuestionsResponseEntity!.correct
                                         .toString(),
                                     style:
-                                        theme.textTheme.labelMedium?.copyWith(
+                                    theme.textTheme.labelMedium?.copyWith(
                                       color: AppColors.blue,
                                       fontSize: 13.sp,
                                     ),
@@ -153,7 +172,7 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                                     state.checkQuestionsResponseEntity!.wrong
                                         .toString(),
                                     style:
-                                        theme.textTheme.labelMedium?.copyWith(
+                                    theme.textTheme.labelMedium?.copyWith(
                                       color: AppColors.red,
                                       fontSize: 13.sp,
                                     ),
@@ -170,7 +189,9 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                     height: 80.h,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      /// navigate to result screen
+                    },
                     child: Text(
                       appLocalizations.showResult,
                     ),
@@ -182,22 +203,30 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       foregroundColor: AppColors.blue,
+                      elevation: 0,
+                      shadowColor: Colors.transparent,
                       side: BorderSide(
                         color: AppColors.blue,
                         width: 1.w,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                        context,
+                        DefinedRoutes.questions,
+                        arguments: widget.examEntity,
+                      );
+                    },
                     child: Text(
                       appLocalizations.startAgain,
                     ),
                   ),
                 ],
-              );
-            }
-            return const SizedBox();
-          },
-        ),
+              ),
+            );
+          }
+          return const SizedBox();
+        },
       ),
     );
   }
