@@ -8,7 +8,7 @@ subprojects {
     afterEvaluate { project ->
         if (project.name == 'isar_flutter_libs') {
             project.android {
-                namespace = 'dev.isar.isar_flutter_libs'
+                namespace = 'dev.isar.exam_app_group2'
             }
         }
     }
