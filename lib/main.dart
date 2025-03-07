@@ -1,7 +1,8 @@
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
-import 'package:exam_app_group2/modules/home/domain/entities/check_question_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/exam_result_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:exam_app_group2/storage/contracts/isar_storage_service_contract.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,22 +26,31 @@ void main() async {
   // Get Cached Login Info
   storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
 
-  var isarService = getIt.get<IsarStorageService<CheckQuestionEntity>>();
-  await isarService.write(
-    CheckQuestionEntity(
+  var isarExamEntityService = getIt.get<IsarStorageService<ExamResultEntity>>();
+  var isarQuestionEntityService =
+      getIt.get<IsarStorageService<QuestionEntity>>();
+  await isarExamEntityService.write(
+    ExamResultEntity(
       examId: "670070a830a3c3c1944a9c63",
       correctQuestions: [
-        Question(
+        CheckedQuestion(
             qid: "670082800a5849a4aee16294",
-            question: "What does HTML stand for?")
+            question: "Who is making the Web standards?")
       ],
       wrongQuestions: [
-        Question(
+        CheckedQuestion(
             qid: "6700829e0a5849a4aee16297",
-            question: "Who is making the Web standards?")
+            question: "Choose the correct HTML element for the largest heading")
       ],
     ),
   );
+  await isarQuestionEntityService.write(QuestionEntity(
+      id: "670082800a5849a4aee16294",
+      question: "Who is making the Web standards?",
+      answers: [
+        Answer(answer: "Answer 1", key: "A2"),
+        Answer(answer: "Answer 2", key: "A1")
+      ]));
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

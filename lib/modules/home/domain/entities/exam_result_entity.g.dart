@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'check_question_entity.dart';
+part of 'exam_result_entity.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,14 +9,13 @@ part of 'check_question_entity.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetCheckQuestionEntityCollection on Isar {
-  IsarCollection<CheckQuestionEntity> get checkQuestionEntitys =>
-      this.collection();
+extension GetExamResultEntityCollection on Isar {
+  IsarCollection<ExamResultEntity> get examResultEntitys => this.collection();
 }
 
-const CheckQuestionEntitySchema = CollectionSchema(
-  name: r'CheckQuestionEntity',
-  id: 7538185916391125565,
+const ExamResultEntitySchema = CollectionSchema(
+  name: r'ExamResultEntity',
+  id: -7364272927947082340,
   properties: {
     r'correct': PropertySchema(
       id: 0,
@@ -27,7 +26,7 @@ const CheckQuestionEntitySchema = CollectionSchema(
       id: 1,
       name: r'correctQuestions',
       type: IsarType.objectList,
-      target: r'Question',
+      target: r'CheckedQuestion',
     ),
     r'examId': PropertySchema(
       id: 2,
@@ -39,39 +38,44 @@ const CheckQuestionEntitySchema = CollectionSchema(
       name: r'message',
       type: IsarType.string,
     ),
-    r'total': PropertySchema(
+    r'subjectId': PropertySchema(
       id: 4,
+      name: r'subjectId',
+      type: IsarType.string,
+    ),
+    r'total': PropertySchema(
+      id: 5,
       name: r'total',
       type: IsarType.string,
     ),
     r'wrong': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'wrong',
       type: IsarType.long,
     ),
     r'wrongQuestions': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'wrongQuestions',
       type: IsarType.objectList,
-      target: r'Question',
+      target: r'CheckedQuestion',
     )
   },
-  estimateSize: _checkQuestionEntityEstimateSize,
-  serialize: _checkQuestionEntitySerialize,
-  deserialize: _checkQuestionEntityDeserialize,
-  deserializeProp: _checkQuestionEntityDeserializeProp,
+  estimateSize: _examResultEntityEstimateSize,
+  serialize: _examResultEntitySerialize,
+  deserialize: _examResultEntityDeserialize,
+  deserializeProp: _examResultEntityDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {},
-  embeddedSchemas: {r'Question': QuestionSchema},
-  getId: _checkQuestionEntityGetId,
-  getLinks: _checkQuestionEntityGetLinks,
-  attach: _checkQuestionEntityAttach,
+  embeddedSchemas: {r'CheckedQuestion': CheckedQuestionSchema},
+  getId: _examResultEntityGetId,
+  getLinks: _examResultEntityGetLinks,
+  attach: _examResultEntityAttach,
   version: '3.1.0+1',
 );
 
-int _checkQuestionEntityEstimateSize(
-  CheckQuestionEntity object,
+int _examResultEntityEstimateSize(
+  ExamResultEntity object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -81,10 +85,11 @@ int _checkQuestionEntityEstimateSize(
     if (list != null) {
       bytesCount += 3 + list.length * 3;
       {
-        final offsets = allOffsets[Question]!;
+        final offsets = allOffsets[CheckedQuestion]!;
         for (var i = 0; i < list.length; i++) {
           final value = list[i];
-          bytesCount += QuestionSchema.estimateSize(value, offsets, allOffsets);
+          bytesCount +=
+              CheckedQuestionSchema.estimateSize(value, offsets, allOffsets);
         }
       }
     }
@@ -102,6 +107,12 @@ int _checkQuestionEntityEstimateSize(
     }
   }
   {
+    final value = object.subjectId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
     final value = object.total;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -112,10 +123,11 @@ int _checkQuestionEntityEstimateSize(
     if (list != null) {
       bytesCount += 3 + list.length * 3;
       {
-        final offsets = allOffsets[Question]!;
+        final offsets = allOffsets[CheckedQuestion]!;
         for (var i = 0; i < list.length; i++) {
           final value = list[i];
-          bytesCount += QuestionSchema.estimateSize(value, offsets, allOffsets);
+          bytesCount +=
+              CheckedQuestionSchema.estimateSize(value, offsets, allOffsets);
         }
       }
     }
@@ -123,61 +135,63 @@ int _checkQuestionEntityEstimateSize(
   return bytesCount;
 }
 
-void _checkQuestionEntitySerialize(
-  CheckQuestionEntity object,
+void _examResultEntitySerialize(
+  ExamResultEntity object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.correct);
-  writer.writeObjectList<Question>(
+  writer.writeObjectList<CheckedQuestion>(
     offsets[1],
     allOffsets,
-    QuestionSchema.serialize,
+    CheckedQuestionSchema.serialize,
     object.correctQuestions,
   );
   writer.writeString(offsets[2], object.examId);
   writer.writeString(offsets[3], object.message);
-  writer.writeString(offsets[4], object.total);
-  writer.writeLong(offsets[5], object.wrong);
-  writer.writeObjectList<Question>(
-    offsets[6],
+  writer.writeString(offsets[4], object.subjectId);
+  writer.writeString(offsets[5], object.total);
+  writer.writeLong(offsets[6], object.wrong);
+  writer.writeObjectList<CheckedQuestion>(
+    offsets[7],
     allOffsets,
-    QuestionSchema.serialize,
+    CheckedQuestionSchema.serialize,
     object.wrongQuestions,
   );
 }
 
-CheckQuestionEntity _checkQuestionEntityDeserialize(
+ExamResultEntity _examResultEntityDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = CheckQuestionEntity(
+  final object = ExamResultEntity(
     correct: reader.readLongOrNull(offsets[0]),
-    correctQuestions: reader.readObjectList<Question>(
+    correctQuestions: reader.readObjectList<CheckedQuestion>(
       offsets[1],
-      QuestionSchema.deserialize,
+      CheckedQuestionSchema.deserialize,
       allOffsets,
-      Question(),
+      CheckedQuestion(),
     ),
     examId: reader.readStringOrNull(offsets[2]),
     message: reader.readStringOrNull(offsets[3]),
-    total: reader.readStringOrNull(offsets[4]),
-    wrong: reader.readLongOrNull(offsets[5]),
-    wrongQuestions: reader.readObjectList<Question>(
-      offsets[6],
-      QuestionSchema.deserialize,
+    total: reader.readStringOrNull(offsets[5]),
+    wrong: reader.readLongOrNull(offsets[6]),
+    wrongQuestions: reader.readObjectList<CheckedQuestion>(
+      offsets[7],
+      CheckedQuestionSchema.deserialize,
       allOffsets,
-      Question(),
+      CheckedQuestion(),
     ),
   );
   object.id = id;
+  object.subjectId = reader.readStringOrNull(offsets[4]);
   return object;
 }
 
-P _checkQuestionEntityDeserializeProp<P>(
+P _examResultEntityDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -187,11 +201,11 @@ P _checkQuestionEntityDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readObjectList<Question>(
+      return (reader.readObjectList<CheckedQuestion>(
         offset,
-        QuestionSchema.deserialize,
+        CheckedQuestionSchema.deserialize,
         allOffsets,
-        Question(),
+        CheckedQuestion(),
       )) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
@@ -200,46 +214,47 @@ P _checkQuestionEntityDeserializeProp<P>(
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 6:
-      return (reader.readObjectList<Question>(
+      return (reader.readLongOrNull(offset)) as P;
+    case 7:
+      return (reader.readObjectList<CheckedQuestion>(
         offset,
-        QuestionSchema.deserialize,
+        CheckedQuestionSchema.deserialize,
         allOffsets,
-        Question(),
+        CheckedQuestion(),
       )) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-Id _checkQuestionEntityGetId(CheckQuestionEntity object) {
+Id _examResultEntityGetId(ExamResultEntity object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _checkQuestionEntityGetLinks(
-    CheckQuestionEntity object) {
+List<IsarLinkBase<dynamic>> _examResultEntityGetLinks(ExamResultEntity object) {
   return [];
 }
 
-void _checkQuestionEntityAttach(
-    IsarCollection<dynamic> col, Id id, CheckQuestionEntity object) {
+void _examResultEntityAttach(
+    IsarCollection<dynamic> col, Id id, ExamResultEntity object) {
   object.id = id;
 }
 
-extension CheckQuestionEntityQueryWhereSort
-    on QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QWhere> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterWhere> anyId() {
+extension ExamResultEntityQueryWhereSort
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QWhere> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension CheckQuestionEntityQueryWhere
-    on QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QWhereClause> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterWhereClause>
-      idEqualTo(Id id) {
+extension ExamResultEntityQueryWhere
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QWhereClause> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterWhereClause> idEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -248,7 +263,7 @@ extension CheckQuestionEntityQueryWhere
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterWhereClause>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterWhereClause>
       idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -271,7 +286,7 @@ extension CheckQuestionEntityQueryWhere
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterWhereClause>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterWhereClause>
       idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -280,7 +295,7 @@ extension CheckQuestionEntityQueryWhere
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterWhereClause>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterWhereClause>
       idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -289,8 +304,7 @@ extension CheckQuestionEntityQueryWhere
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterWhereClause>
-      idBetween(
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -307,9 +321,9 @@ extension CheckQuestionEntityQueryWhere
   }
 }
 
-extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
-    CheckQuestionEntity, QFilterCondition> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+extension ExamResultEntityQueryFilter
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QFilterCondition> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -318,7 +332,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -327,7 +341,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -337,7 +351,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctGreaterThan(
     int? value, {
     bool include = false,
@@ -351,7 +365,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctLessThan(
     int? value, {
     bool include = false,
@@ -365,7 +379,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctBetween(
     int? lower,
     int? upper, {
@@ -383,7 +397,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -392,7 +406,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -401,7 +415,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -414,7 +428,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -427,7 +441,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -440,7 +454,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsLengthLessThan(
     int length, {
     bool include = false,
@@ -456,7 +470,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsLengthGreaterThan(
     int length, {
     bool include = false,
@@ -472,7 +486,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       correctQuestionsLengthBetween(
     int lower,
     int upper, {
@@ -490,7 +504,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -499,7 +513,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -508,7 +522,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -522,7 +536,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdGreaterThan(
     String? value, {
     bool include = false,
@@ -538,7 +552,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdLessThan(
     String? value, {
     bool include = false,
@@ -554,7 +568,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdBetween(
     String? lower,
     String? upper, {
@@ -574,7 +588,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -588,7 +602,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -602,7 +616,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -613,7 +627,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -624,7 +638,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -634,7 +648,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       examIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -644,7 +658,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -654,7 +668,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       idGreaterThan(
     Id value, {
     bool include = false,
@@ -668,7 +682,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       idLessThan(
     Id value, {
     bool include = false,
@@ -682,7 +696,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       idBetween(
     Id lower,
     Id upper, {
@@ -700,7 +714,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -709,7 +723,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -718,7 +732,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -732,7 +746,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageGreaterThan(
     String? value, {
     bool include = false,
@@ -748,7 +762,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageLessThan(
     String? value, {
     bool include = false,
@@ -764,7 +778,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageBetween(
     String? lower,
     String? upper, {
@@ -784,7 +798,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -798,7 +812,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -812,7 +826,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -823,7 +837,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -834,7 +848,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -844,7 +858,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       messageIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -854,7 +868,161 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'subjectId',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'subjectId',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subjectId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'subjectId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'subjectId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'subjectId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'subjectId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'subjectId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'subjectId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'subjectId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subjectId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      subjectIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'subjectId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -863,7 +1031,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -872,7 +1040,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -886,7 +1054,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalGreaterThan(
     String? value, {
     bool include = false,
@@ -902,7 +1070,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalLessThan(
     String? value, {
     bool include = false,
@@ -918,7 +1086,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalBetween(
     String? lower,
     String? upper, {
@@ -938,7 +1106,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -952,7 +1120,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -966,7 +1134,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -977,7 +1145,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -988,7 +1156,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -998,7 +1166,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       totalIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1008,7 +1176,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1017,7 +1185,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -1026,7 +1194,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1036,7 +1204,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongGreaterThan(
     int? value, {
     bool include = false,
@@ -1050,7 +1218,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongLessThan(
     int? value, {
     bool include = false,
@@ -1064,7 +1232,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongBetween(
     int? lower,
     int? upper, {
@@ -1082,7 +1250,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1091,7 +1259,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -1100,7 +1268,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -1113,7 +1281,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -1126,7 +1294,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.listLength(
@@ -1139,7 +1307,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsLengthLessThan(
     int length, {
     bool include = false,
@@ -1155,7 +1323,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsLengthGreaterThan(
     int length, {
     bool include = false,
@@ -1171,7 +1339,7 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
       wrongQuestionsLengthBetween(
     int lower,
     int upper, {
@@ -1190,92 +1358,104 @@ extension CheckQuestionEntityQueryFilter on QueryBuilder<CheckQuestionEntity,
   }
 }
 
-extension CheckQuestionEntityQueryObject on QueryBuilder<CheckQuestionEntity,
-    CheckQuestionEntity, QFilterCondition> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
-      correctQuestionsElement(FilterQuery<Question> q) {
+extension ExamResultEntityQueryObject
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QFilterCondition> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      correctQuestionsElement(FilterQuery<CheckedQuestion> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'correctQuestions');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterFilterCondition>
-      wrongQuestionsElement(FilterQuery<Question> q) {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterFilterCondition>
+      wrongQuestionsElement(FilterQuery<CheckedQuestion> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'wrongQuestions');
     });
   }
 }
 
-extension CheckQuestionEntityQueryLinks on QueryBuilder<CheckQuestionEntity,
-    CheckQuestionEntity, QFilterCondition> {}
+extension ExamResultEntityQueryLinks
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QFilterCondition> {}
 
-extension CheckQuestionEntityQuerySortBy
-    on QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QSortBy> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+extension ExamResultEntityQuerySortBy
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QSortBy> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByCorrect() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'correct', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByCorrectDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'correct', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByExamId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'examId', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByExamIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'examId', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByMessage() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'message', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByMessageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'message', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
-      sortByTotal() {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
+      sortBySubjectId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
+      sortBySubjectIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy> sortByTotal() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'total', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByTotalDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'total', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
-      sortByWrong() {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy> sortByWrong() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'wrong', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       sortByWrongDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'wrong', Sort.desc);
@@ -1283,86 +1463,97 @@ extension CheckQuestionEntityQuerySortBy
   }
 }
 
-extension CheckQuestionEntityQuerySortThenBy
-    on QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QSortThenBy> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+extension ExamResultEntityQuerySortThenBy
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QSortThenBy> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByCorrect() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'correct', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByCorrectDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'correct', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByExamId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'examId', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByExamIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'examId', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
-      thenById() {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByMessage() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'message', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByMessageDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'message', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
-      thenByTotal() {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
+      thenBySubjectId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
+      thenBySubjectIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy> thenByTotal() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'total', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByTotalDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'total', Sort.desc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
-      thenByWrong() {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy> thenByWrong() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'wrong', Sort.asc);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QAfterSortBy>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QAfterSortBy>
       thenByWrongDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'wrong', Sort.desc);
@@ -1370,37 +1561,44 @@ extension CheckQuestionEntityQuerySortThenBy
   }
 }
 
-extension CheckQuestionEntityQueryWhereDistinct
-    on QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QDistinct> {
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QDistinct>
+extension ExamResultEntityQueryWhereDistinct
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct> {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct>
       distinctByCorrect() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'correct');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QDistinct>
-      distinctByExamId({bool caseSensitive = true}) {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct> distinctByExamId(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'examId', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QDistinct>
-      distinctByMessage({bool caseSensitive = true}) {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct> distinctByMessage(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'message', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QDistinct>
-      distinctByTotal({bool caseSensitive = true}) {
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct>
+      distinctBySubjectId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'subjectId', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct> distinctByTotal(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'total', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QDistinct>
+  QueryBuilder<ExamResultEntity, ExamResultEntity, QDistinct>
       distinctByWrong() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'wrong');
@@ -1408,54 +1606,59 @@ extension CheckQuestionEntityQueryWhereDistinct
   }
 }
 
-extension CheckQuestionEntityQueryProperty
-    on QueryBuilder<CheckQuestionEntity, CheckQuestionEntity, QQueryProperty> {
-  QueryBuilder<CheckQuestionEntity, int, QQueryOperations> idProperty() {
+extension ExamResultEntityQueryProperty
+    on QueryBuilder<ExamResultEntity, ExamResultEntity, QQueryProperty> {
+  QueryBuilder<ExamResultEntity, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, int?, QQueryOperations> correctProperty() {
+  QueryBuilder<ExamResultEntity, int?, QQueryOperations> correctProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'correct');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, List<Question>?, QQueryOperations>
+  QueryBuilder<ExamResultEntity, List<CheckedQuestion>?, QQueryOperations>
       correctQuestionsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'correctQuestions');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, String?, QQueryOperations>
-      examIdProperty() {
+  QueryBuilder<ExamResultEntity, String?, QQueryOperations> examIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'examId');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, String?, QQueryOperations>
-      messageProperty() {
+  QueryBuilder<ExamResultEntity, String?, QQueryOperations> messageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'message');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, String?, QQueryOperations> totalProperty() {
+  QueryBuilder<ExamResultEntity, String?, QQueryOperations>
+      subjectIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'subjectId');
+    });
+  }
+
+  QueryBuilder<ExamResultEntity, String?, QQueryOperations> totalProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'total');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, int?, QQueryOperations> wrongProperty() {
+  QueryBuilder<ExamResultEntity, int?, QQueryOperations> wrongProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'wrong');
     });
   }
 
-  QueryBuilder<CheckQuestionEntity, List<Question>?, QQueryOperations>
+  QueryBuilder<ExamResultEntity, List<CheckedQuestion>?, QQueryOperations>
       wrongQuestionsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'wrongQuestions');
@@ -1470,9 +1673,9 @@ extension CheckQuestionEntityQueryProperty
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-const QuestionSchema = Schema(
-  name: r'Question',
-  id: -6819722535046815095,
+const CheckedQuestionSchema = Schema(
+  name: r'CheckedQuestion',
+  id: -2261955447124562610,
   properties: {
     r'correctAnswer': PropertySchema(
       id: 0,
@@ -1495,14 +1698,14 @@ const QuestionSchema = Schema(
       type: IsarType.string,
     )
   },
-  estimateSize: _questionEstimateSize,
-  serialize: _questionSerialize,
-  deserialize: _questionDeserialize,
-  deserializeProp: _questionDeserializeProp,
+  estimateSize: _checkedQuestionEstimateSize,
+  serialize: _checkedQuestionSerialize,
+  deserialize: _checkedQuestionDeserialize,
+  deserializeProp: _checkedQuestionDeserializeProp,
 );
 
-int _questionEstimateSize(
-  Question object,
+int _checkedQuestionEstimateSize(
+  CheckedQuestion object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -1534,8 +1737,8 @@ int _questionEstimateSize(
   return bytesCount;
 }
 
-void _questionSerialize(
-  Question object,
+void _checkedQuestionSerialize(
+  CheckedQuestion object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -1546,13 +1749,13 @@ void _questionSerialize(
   writer.writeString(offsets[3], object.question);
 }
 
-Question _questionDeserialize(
+CheckedQuestion _checkedQuestionDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Question(
+  final object = CheckedQuestion(
     correctAnswer: reader.readStringOrNull(offsets[0]),
     inCorrectAnswer: reader.readStringOrNull(offsets[1]),
     qid: reader.readStringOrNull(offsets[2]),
@@ -1561,7 +1764,7 @@ Question _questionDeserialize(
   return object;
 }
 
-P _questionDeserializeProp<P>(
+P _checkedQuestionDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -1581,9 +1784,9 @@ P _questionDeserializeProp<P>(
   }
 }
 
-extension QuestionQueryFilter
-    on QueryBuilder<Question, Question, QFilterCondition> {
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+extension CheckedQuestionQueryFilter
+    on QueryBuilder<CheckedQuestion, CheckedQuestion, QFilterCondition> {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       correctAnswerIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1592,7 +1795,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       correctAnswerIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -1601,7 +1804,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> correctAnswerEqualTo(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      correctAnswerEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1614,7 +1818,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       correctAnswerGreaterThan(
     String? value, {
     bool include = false,
@@ -1630,7 +1834,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> correctAnswerLessThan(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      correctAnswerLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1645,7 +1850,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> correctAnswerBetween(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      correctAnswerBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1664,7 +1870,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       correctAnswerStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1678,7 +1884,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> correctAnswerEndsWith(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      correctAnswerEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1691,9 +1898,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> correctAnswerContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      correctAnswerContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'correctAnswer',
@@ -1703,9 +1909,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> correctAnswerMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      correctAnswerMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'correctAnswer',
@@ -1715,7 +1920,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       correctAnswerIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1725,7 +1930,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       correctAnswerIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1735,7 +1940,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1744,7 +1949,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -1753,7 +1958,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerEqualTo(
     String? value, {
     bool caseSensitive = true,
@@ -1767,7 +1972,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerGreaterThan(
     String? value, {
     bool include = false,
@@ -1783,7 +1988,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerLessThan(
     String? value, {
     bool include = false,
@@ -1799,7 +2004,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerBetween(
     String? lower,
     String? upper, {
@@ -1819,7 +2024,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -1833,7 +2038,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -1847,7 +2052,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1858,7 +2063,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1869,7 +2074,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1879,7 +2084,7 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition>
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
       inCorrectAnswerIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -1889,7 +2094,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidIsNull() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'qid',
@@ -1897,7 +2103,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidIsNotNull() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'qid',
@@ -1905,7 +2112,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidEqualTo(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1918,7 +2126,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidGreaterThan(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1933,7 +2142,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidLessThan(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1948,7 +2158,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidBetween(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1967,7 +2178,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidStartsWith(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1980,7 +2192,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidEndsWith(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1993,9 +2206,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'qid',
@@ -2005,9 +2217,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'qid',
@@ -2017,7 +2228,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidIsEmpty() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'qid',
@@ -2026,7 +2238,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> qidIsNotEmpty() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      qidIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'qid',
@@ -2035,7 +2248,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionIsNull() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'question',
@@ -2043,7 +2257,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionIsNotNull() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'question',
@@ -2051,7 +2266,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionEqualTo(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -2064,7 +2280,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionGreaterThan(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -2079,7 +2296,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionLessThan(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -2094,7 +2312,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionBetween(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2113,7 +2332,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionStartsWith(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -2126,7 +2346,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionEndsWith(
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -2139,9 +2360,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'question',
@@ -2151,9 +2371,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'question',
@@ -2163,7 +2382,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionIsEmpty() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'question',
@@ -2172,7 +2392,8 @@ extension QuestionQueryFilter
     });
   }
 
-  QueryBuilder<Question, Question, QAfterFilterCondition> questionIsNotEmpty() {
+  QueryBuilder<CheckedQuestion, CheckedQuestion, QAfterFilterCondition>
+      questionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'question',
@@ -2182,5 +2403,5 @@ extension QuestionQueryFilter
   }
 }
 
-extension QuestionQueryObject
-    on QueryBuilder<Question, Question, QFilterCondition> {}
+extension CheckedQuestionQueryObject
+    on QueryBuilder<CheckedQuestion, CheckedQuestion, QFilterCondition> {}

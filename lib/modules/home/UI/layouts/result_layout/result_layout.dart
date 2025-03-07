@@ -1,6 +1,7 @@
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
-import 'package:exam_app_group2/modules/home/domain/entities/check_question_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/exam_result_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:exam_app_group2/storage/contracts/isar_storage_service_contract.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,9 @@ class ResultLayout extends StatefulWidget {
 }
 
 class _ResultLayoutState extends State<ResultLayout> {
-  var isarService = getIt.get<IsarStorageService<CheckQuestionEntity>>();
+  var isarExamEntityService = getIt.get<IsarStorageService<ExamResultEntity>>();
+  var isarQuestionEntityService =
+      getIt.get<IsarStorageService<QuestionEntity>>();
 
   @override
   void initState() {
@@ -23,8 +26,11 @@ class _ResultLayoutState extends State<ResultLayout> {
   }
 
   void getAllData() async {
-    var checkQuestionEntities = await isarService.getAllObjects();
-    print(checkQuestionEntities);
+    var checkQuestionEntities = await isarExamEntityService.readAll();
+    print(checkQuestionEntities[0].correctQuestions?[0].question);
+    var question = await isarQuestionEntityService
+        .findBy(checkQuestionEntities[0].correctQuestions?[0].qid ?? "");
+    print(question?.answers?[0].answer);
   }
 
   @override

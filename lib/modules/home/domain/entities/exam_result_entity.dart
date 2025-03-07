@@ -1,10 +1,10 @@
 import 'package:isar/isar.dart';
 
-part 'check_question_entity.g.dart';
+part 'exam_result_entity.g.dart';
 
 @collection
-class CheckQuestionEntity {
-  CheckQuestionEntity({
+class ExamResultEntity {
+  ExamResultEntity({
     this.examId,
     this.total,
     this.correct,
@@ -16,18 +16,27 @@ class CheckQuestionEntity {
 
   Id id = Isar.autoIncrement;
   String? examId;
-
+  String? subjectId;
   String? total;
   int? correct;
-  List<Question>? wrongQuestions;
+  List<CheckedQuestion>? wrongQuestions;
   String? message;
-  List<Question>? correctQuestions;
+  List<CheckedQuestion>? correctQuestions;
   int? wrong;
+
+  void updateEntityWith(ExamResultEntity newEntity) {
+    total = newEntity.total;
+    correct = newEntity.correct;
+    wrongQuestions = newEntity.wrongQuestions;
+    message = newEntity.message;
+    correctQuestions = newEntity.correctQuestions;
+    wrong = newEntity.wrong;
+  }
 }
 
 @embedded
-class Question {
-  Question({
+class CheckedQuestion {
+  CheckedQuestion({
     //this.answers,
     this.question,
     this.correctAnswer,
