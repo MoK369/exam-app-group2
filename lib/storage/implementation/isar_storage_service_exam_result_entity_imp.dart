@@ -12,6 +12,15 @@ class IsarStorageServiceExamResultEntityImp
 
   @override
   Future<void> write(newEntity) async {
+    final int count = await isar.examResultEntitys.count();
+    if (count >= 100) {
+      // find oldest entity
+      final oldestEntity =
+          await isar.examResultEntitys.where().anyId().findFirst();
+      if (oldestEntity != null) {
+        delete(oldestEntity.id);
+      }
+    }
     var existingEntity = await findBy(newEntity.examId ?? "");
     if (existingEntity != null) {
       existingEntity.updateEntityWith(newEntity);
@@ -35,5 +44,14 @@ class IsarStorageServiceExamResultEntityImp
   @override
   Future<List<ExamResultEntity>> readAll() {
     return isar.examResultEntitys.where().findAll();
+  }
+
+  @override
+  Future<void> delete(int id) async {
+    await isar.writeTxn(
+      () async {
+        await isar.examResultEntitys.delete(id);
+      },
+    );
   }
 }

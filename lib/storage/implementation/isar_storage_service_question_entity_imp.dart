@@ -22,6 +22,15 @@ class IsarStorageServiceQuestionEntityImp
 
   @override
   Future<void> write(QuestionEntity newEntity) async {
+    final int count = await isar.questionEntitys.count();
+    if (count >= 100) {
+      // find oldest entity
+      final oldestEntity =
+          await isar.questionEntitys.where().anyEntityId().findFirst();
+      if (oldestEntity != null) {
+        delete(oldestEntity.entityId);
+      }
+    }
     var existingEntity = await findBy(newEntity.id ?? "");
     if (existingEntity != null) {
       existingEntity.updateEntityWith(newEntity);
@@ -33,5 +42,14 @@ class IsarStorageServiceQuestionEntityImp
         await isar.questionEntitys.put(newEntity);
       });
     }
+  }
+
+  @override
+  Future<void> delete(int id) async {
+    await isar.writeTxn(
+      () async {
+        await isar.questionEntitys.delete(id);
+      },
+    );
   }
 }

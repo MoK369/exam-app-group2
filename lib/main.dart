@@ -44,6 +44,21 @@ void main() async {
       ],
     ),
   );
+  await isarExamEntityService.write(
+    ExamResultEntity(
+      examId: "670070a830a3c3c1944a9c63",
+      correctQuestions: [
+        CheckedQuestion(
+            qid: "670082800a5849a4aee16294",
+            question: "Who is making the Web standards?")
+      ],
+      wrongQuestions: [
+        CheckedQuestion(
+            qid: "6700829e0a5849a4aee16297",
+            question: "Choose the correct HTML element for the largest heading")
+      ],
+    ),
+  );
   await isarQuestionEntityService.write(QuestionEntity(
       id: "670082800a5849a4aee16294",
       question: "Who is making the Web standards?",
