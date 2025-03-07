@@ -1,5 +1,7 @@
+import 'package:exam_app_group2/modules/home/data/data_source_contracts/questions_offline_data_source.dart';
 import 'package:exam_app_group2/modules/home/data/models/check_questions/check_question_response.dart';
 import 'package:exam_app_group2/modules/home/data/models/check_questions/check_questions_request.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/repositories_contracts/explore_repository.dart';
 import 'package:injectable/injectable.dart';
@@ -16,8 +18,12 @@ import '../models/all_subjects_response/get_all_subjects_response.dart';
 @Injectable(as: ExploreRepository)
 class HomeRepositoryImp implements ExploreRepository {
   ExploreDataSource homeDataSource;
+  QuestionsOfflineDataSource questionsOfflineDataSource;
 
-  HomeRepositoryImp({required this.homeDataSource});
+  HomeRepositoryImp({
+    required this.homeDataSource,
+    required this.questionsOfflineDataSource,
+  });
 
   @override
   Future<ApiResult<List<SubjectEntity>?>> getAllSubjects() async {
@@ -35,8 +41,7 @@ class HomeRepositoryImp implements ExploreRepository {
   }
 
   @override
-  Future<ApiResult<List<ExamEntity>?>> getAllExamsOnSubject(
-      String subjectId) async {
+  Future<ApiResult<List<ExamEntity>?>> getAllExamsOnSubject(String subjectId) async {
     var result = await homeDataSource.getAllExamsOnSubject(subjectId);
     switch (result) {
       case Success<GetAllExamsOnSubjectResponse>():
@@ -77,5 +82,15 @@ class HomeRepositoryImp implements ExploreRepository {
       case Error<CheckQuestionResponse>():
         return Error(error: result.error);
     }
+  }
+
+  @override
+  Future<CashedQuestions?> getCashedQuestionsAndAnswers(String examId) {
+    return questionsOfflineDataSource.getCashedQuestionsAndAnswers(examId);
+  }
+
+  @override
+  Future<void> saveCashedQuestions(CashedQuestions cashedQuestions) {
+    return questionsOfflineDataSource.saveCashedQuestions(cashedQuestions);
   }
 }

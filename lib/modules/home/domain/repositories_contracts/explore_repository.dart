@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
 
 import '../../../../core/api/api_result/api_result.dart';
@@ -15,4 +16,8 @@ abstract interface class ExploreRepository {
 
   Future<ApiResult<CheckQuestionsResponseEntity>> checkQuestions(
       {required CheckQuestionsRequest checkQuestionRequest});
+
+  Future<CashedQuestions?> getCashedQuestionsAndAnswers(String examId);
+
+  Future<void> saveCashedQuestions(CashedQuestions cashedQuestions);
 }

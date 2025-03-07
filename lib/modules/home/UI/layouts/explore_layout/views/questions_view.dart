@@ -148,6 +148,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
             listener: (context, state) {
               if (state.isEndExam) {
                 cubit.doIntent(GetAnswersList());
+                cubit.doIntent(SaveCashedQuestionIntent());
                 Navigator.pushReplacementNamed(
                   context,
                   DefinedRoutes.examScore,

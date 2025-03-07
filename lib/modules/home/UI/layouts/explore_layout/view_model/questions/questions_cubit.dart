@@ -2,10 +2,13 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/check_questions.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_questions.dart';
+import 'package:exam_app_group2/modules/home/domain/use_cases/get_cashed_question.dart';
+import 'package:exam_app_group2/modules/home/domain/use_cases/save_questions.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../../../core/api/api_result/api_result.dart';
@@ -19,9 +22,13 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   QuestionsCubit({
     required this.getAllQuestionsUseCase,
     required this.checkQuestionsUseCase,
+    required this.saveQuestionsUseCase,
+    required this.getCashedQuestionUseCase,
   }) : super(QuestionsState());
   GetAllQuestionsUseCase getAllQuestionsUseCase;
   CheckQuestionsUseCase checkQuestionsUseCase;
+  SaveQuestionsUseCase saveQuestionsUseCase;
+  GetCashedQuestionUseCase getCashedQuestionUseCase;
 
   void doIntent(QuestionsIntent intent) {
     switch (intent) {
@@ -35,11 +42,16 @@ class QuestionsCubit extends Cubit<QuestionsState> {
         _checkQuestions();
       case GetAnswersList():
         _getCheckedAnswers();
+      case GetCashedQuestionIntent():
+        _getCashedQuestionsAndAnswers();
+      case SaveCashedQuestionIntent():
+        _cashQuestionsAndAnswers();
     }
   }
 
   int currentQuestion = 1;
   List<Answers>? checkedAnswers = [];
+  List<QuestionEntity>? questions = [];
 
   Map<String?, String> answersMap = {};
 
@@ -59,11 +71,27 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     // log(answersMap.toString());
   }
 
+  Future<void> _cashQuestionsAndAnswers() async {
+    await saveQuestionsUseCase.execute(CashedQuestions(
+      questions: questions,
+      answers: checkedAnswers,
+      examId: questions![0].exam?.id,
+    ));
+    log('cash questions and answers');
+    var getResult = await _getCashedQuestionsAndAnswers();
+    log(getResult!.examId!);
+  }
+
+  Future<CashedQuestions?> _getCashedQuestionsAndAnswers() {
+    return getCashedQuestionUseCase.execute(questions![0].exam?.id ?? '');
+  }
+
   Future<void> _getAllQuestions({required String examId}) async {
     emit(state.copyWith(getAllQuestionsStatus: Status.loading));
     var result = await getAllQuestionsUseCase.execute(examId: examId);
     switch (result) {
       case Success<List<QuestionEntity>>():
+        questions = result.data;
         emit(
           state.copyWith(
             getAllQuestionsStatus: Status.success,
@@ -150,3 +178,7 @@ class PreviousQuestionIntent extends QuestionsIntent {}
 class CheckQuestionIntent extends QuestionsIntent {}
 
 class GetAnswersList extends QuestionsIntent {}
+
+class GetCashedQuestionIntent extends QuestionsIntent {}
+
+class SaveCashedQuestionIntent extends QuestionsIntent {}

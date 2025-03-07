@@ -8,6 +8,8 @@ import 'dart:async' as _i3;
 import 'package:exam_app_group2/core/api/api_result/api_result.dart' as _i4;
 import 'package:exam_app_group2/modules/home/data/models/check_questions/check_questions_request.dart'
     as _i10;
+import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart'
+    as _i11;
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart'
     as _i9;
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart'
@@ -115,4 +117,26 @@ class MockExploreRepository extends _i1.Mock implements _i2.ExploreRepository {
           ),
         )),
       ) as _i3.Future<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>>);
+
+  @override
+  _i3.Future<_i11.CashedQuestions?> getCashedQuestionsAndAnswers(
+          String? examId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCashedQuestionsAndAnswers,
+          [examId],
+        ),
+        returnValue: _i3.Future<_i11.CashedQuestions?>.value(),
+      ) as _i3.Future<_i11.CashedQuestions?>);
+
+  @override
+  _i3.Future<void> saveCashedQuestions(_i11.CashedQuestions? cashedQuestions) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #saveCashedQuestions,
+          [cashedQuestions],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
 }

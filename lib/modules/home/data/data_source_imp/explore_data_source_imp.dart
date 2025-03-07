@@ -14,7 +14,9 @@ import '../models/all_subjects_response/get_all_subjects_response.dart';
 class HomeDataSourceImpl implements ExploreDataSource {
   final ExploreApiManager apiManager;
 
-  HomeDataSourceImpl({required this.apiManager});
+  HomeDataSourceImpl({
+    required this.apiManager,
+  });
 
   @override
   Future<ApiResult<GetAllSubjectsResponse>> getAllSubjects() async {

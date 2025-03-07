@@ -1,3 +1,8 @@
+import 'package:isar/isar.dart';
+
+part 'answers.g.dart';
+
+@embedded
 class Answers {
   Answers({
     this.questionId,

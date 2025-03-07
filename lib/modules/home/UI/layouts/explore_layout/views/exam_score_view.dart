@@ -132,7 +132,7 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                                     state.checkQuestionsResponseEntity!.correct
                                         .toString(),
                                     style:
-                                    theme.textTheme.labelMedium?.copyWith(
+                                        theme.textTheme.labelMedium?.copyWith(
                                       color: AppColors.blue,
                                       fontSize: 13.sp,
                                     ),

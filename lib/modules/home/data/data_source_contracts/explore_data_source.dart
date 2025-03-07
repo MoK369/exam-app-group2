@@ -14,6 +14,7 @@ abstract interface class ExploreDataSource {
 
   Future<ApiResult<GetAllQuestionsResponse>> getAllQuestions(String examId);
 
-  Future<ApiResult<CheckQuestionResponse>> checkQuestions(
-      {required CheckQuestionsRequest checkQuestionRequest});
+  Future<ApiResult<CheckQuestionResponse>> checkQuestions({
+    required CheckQuestionsRequest checkQuestionRequest,
+  });
 }

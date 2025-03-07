@@ -4,7 +4,22 @@ allprojects {
         mavenCentral()
     }
 }
+subprojects {
+    // Configure all subprojects
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            // Set the namespace for the isar_flutter_libs module
+            if (project.name == 'isar_flutter_libs') {
+                android {
+                    namespace = 'dev.isar.exam_app_group2'
+                }
+            }
+        }
+    }
 
+    // Set the build directory for all subprojects
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
