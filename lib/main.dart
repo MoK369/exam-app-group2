@@ -21,7 +21,7 @@ void main() async {
   // Initializing local storage (Flutter Secure Storage) and current locale (Stored Locale) happens here
   await configureDependencies();
   // Get Cached Login Info
-  storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
+  storedAuthEntity = await getIt.get<LoginUseCase>().getStoredLoginInfo();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

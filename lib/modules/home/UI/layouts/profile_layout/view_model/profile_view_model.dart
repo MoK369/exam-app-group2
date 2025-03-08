@@ -1,17 +1,40 @@
+import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/core/constants/form_keys/text_form_fields_keys.dart';
-import 'package:exam_app_group2/modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
+import 'package:exam_app_group2/modules/authentication/domain/entities/user/user_entity.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/view_model/profile_intent.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/view_model/profile_state.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/get_logged_user_info/logged_user_info_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/use_cases/get_logged_user_info/get_logged_user_info_use_case.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class ProfileViewModel {
+class ProfileViewModel extends Cubit<ProfileState> {
   final GlobalKey<FormState> formKey = GlobalKey();
-  late final Map<String, TextEditingController> _signUpFieldsControllers;
-  late final Map<String, FocusNode> _signUpFieldsFocusNodes;
+  late Map<String, TextEditingController> _signUpFieldsControllers;
+
   late UserEntity user;
 
-  ProfileViewModel() {
+  GetLoggedUserInfoUseCase _getLoggedUserInfoUseCase;
+
+  ProfileViewModel(this._getLoggedUserInfoUseCase) : super(ProfileState()) {
+    _initControllers();
+  }
+
+  void doIntent(ProfileIntent intent) {
+    switch (intent) {
+      case GetLoggedUserInfo():
+        _getLoggedUserInfo();
+        break;
+      case DisposeControllers():
+        _disposeControllers();
+        break;
+    }
+  }
+
+  void _initControllers() {
     user = authEntity.user!;
     _signUpFieldsControllers = {
       TextFormFieldsKeys.userName: TextEditingController(text: user.username),
@@ -21,22 +44,25 @@ class ProfileViewModel {
       TextFormFieldsKeys.password: TextEditingController(text: "******"),
       TextFormFieldsKeys.phoneNumber: TextEditingController(text: user.phone)
     };
-    _signUpFieldsFocusNodes = {
-      TextFormFieldsKeys.userName: FocusNode(),
-      TextFormFieldsKeys.firstName: FocusNode(),
-      TextFormFieldsKeys.lastName: FocusNode(),
-      TextFormFieldsKeys.email: FocusNode(),
-      TextFormFieldsKeys.password: FocusNode(),
-      TextFormFieldsKeys.phoneNumber: FocusNode()
-    };
   }
 
-  void disposeControllersAndFocusNodes() {
+  void _getLoggedUserInfo() async {
+    emit(ProfileState(profileStatus: ProfileStatus.loading));
+    var useCaseResult = await _getLoggedUserInfoUseCase();
+    switch (useCaseResult) {
+      case Success<LoggedUserInfoEntity>():
+        authEntity.user = useCaseResult.data.user;
+        _initControllers();
+        emit(ProfileState(profileStatus: ProfileStatus.success));
+      case Error<LoggedUserInfoEntity>():
+        emit(ProfileState(
+            profileStatus: ProfileStatus.error, error: useCaseResult.error));
+    }
+  }
+
+  void _disposeControllers() {
     _signUpFieldsControllers.forEach(
       (key, controller) => controller.dispose(),
-    );
-    _signUpFieldsFocusNodes.forEach(
-      (key, focusNode) => focusNode.dispose,
     );
   }
 
@@ -61,26 +87,4 @@ class ProfileViewModel {
 
   TextEditingController get phoneNumberController =>
       _signUpFieldsControllers[TextFormFieldsKeys.phoneNumber]!;
-
-  // focusNodes getters
-  FocusNode get userNameFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.userName]!;
-
-  FocusNode get firstNameFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.firstName]!;
-
-  FocusNode get lastNameFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.lastName]!;
-
-  FocusNode get emailFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.email]!;
-
-  FocusNode get passwordFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.password]!;
-
-  FocusNode get confirmPasswordFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.confirmPassword]!;
-
-  FocusNode get phoneNumberFocusNode =>
-      _signUpFieldsFocusNodes[TextFormFieldsKeys.phoneNumber]!;
 }

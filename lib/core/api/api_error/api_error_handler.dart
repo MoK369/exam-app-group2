@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/api/api_error/api_error_model.dart';
+import 'package:exam_app_group2/core/custom_exception/profile_not_changed_exception.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApiErrorHandler {
@@ -20,6 +21,9 @@ class ApiErrorHandler {
   }
 
   ApiErrorModel handle(Object error) {
+    if (error is ProfileNotChangeException) {
+      return ApiErrorModel(message: appLocalizations.profileNotChangeMessage);
+    }
     if (error is DioException) {
       switch (error.type) {
         case DioExceptionType.connectionTimeout:

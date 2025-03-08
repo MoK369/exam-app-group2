@@ -204,9 +204,9 @@ class _ProfileFormWidgetState
                   readOnly: true,
                   // make it always read only cause it only will change when we go the reset password screen
                   controller: widget.passwordController,
-                  validator: (inputText) {
-                    return validateFunctions.validationOfPassword(inputText);
-                  },
+                  // validator: (inputText) {
+                  //   return validateFunctions.validationOfPassword(inputText);
+                  // },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,

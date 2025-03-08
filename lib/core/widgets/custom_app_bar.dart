@@ -7,13 +7,14 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showLeadingIcon;
   final bool showLocaleButton;
-  final void Function()? onChangeLocaleButtonClick;
+  final void Function()? onChangeLocaleButtonClick, onLeadingIconButtonClick;
 
   CustomAppBar(
       {super.key,
       required this.title,
       this.showLeadingIcon = true,
       this.showLocaleButton = false,
+      this.onLeadingIconButtonClick,
       this.onChangeLocaleButtonClick});
 
   @override
@@ -27,7 +28,11 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
           ? null
           : IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                if (onLeadingIconButtonClick != null) {
+                  onLeadingIconButtonClick!();
+                } else {
+                  Navigator.pop(context);
+                }
               },
               icon: const Icon(
                 Icons.arrow_back_ios,

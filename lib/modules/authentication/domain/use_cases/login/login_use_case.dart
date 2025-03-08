@@ -1,5 +1,6 @@
 import 'package:exam_app_group2/modules/authentication/domain/repositories_contracts/login/login_repo.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../../core/api/api_result/api_result.dart';
 import '../../../data/models/login/login_request.dart';
 import '../../entities/authentication/authentication_response_entity.dart';
@@ -18,8 +19,8 @@ class LoginUseCase {
     );
   }
 
-  Future<AuthenticationResponseEntity?> getLoginInfo() {
-    return _authRepo.getLoginInfo();
+  Future<AuthenticationResponseEntity?> getStoredLoginInfo() {
+    return _authRepo.getStoredLoginInfo();
   }
 
   Future<void> deleteUserInfo() {

@@ -13,7 +13,8 @@ class _ExploreLayoutState extends State<ExploreLayout> {
   void initState() {
     super.initState();
     print("In Explore");
-    print("${authEntity.token} & ${authEntity.user?.email}");
+    print(
+        "${authEntity.token} & ${authEntity.user?.email} \n ${authEntity.user?.username}");
   }
 
   @override

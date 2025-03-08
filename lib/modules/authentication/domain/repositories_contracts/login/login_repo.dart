@@ -7,7 +7,7 @@ abstract class LoginRepo {
     required LoginRequest loginRequest,
   });
 
-  Future<AuthenticationResponseEntity?> getLoginInfo();
+  Future<AuthenticationResponseEntity?> getStoredLoginInfo();
 
   Future<void> deleteLoginInfo();
 }

@@ -76,5 +76,7 @@
   "loggedOutSuccessfully": "Logged Out Successfully!",
   "confirm": "Confirm",
   "deletingAccountAlertMessage": "Are you sure you want to delete your account permanently?\uD83E\uDD28",
-  "deletedAccountSuccessfully": "Deleted Account Successfully!"
+  "deletedAccountSuccessfully": "Deleted Account Successfully!",
+  "editedProfileSuccessfully": "Profile Edited Successfully!",
+  "profileNotChangeMessage": "Profile has not been changed!"
 }

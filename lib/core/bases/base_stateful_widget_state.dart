@@ -123,6 +123,6 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   }
 
   void hideAlertDialog() {
-    Navigator.pop(context);
+    Navigator.of(context, rootNavigator: true).pop();
   }
 }
