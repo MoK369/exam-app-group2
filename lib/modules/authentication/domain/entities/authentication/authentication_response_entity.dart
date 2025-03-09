@@ -8,9 +8,16 @@ class AuthenticationResponseEntity {
     this.token,
     this.user,
   });
+
   String? message;
   String? token;
   UserEntity? user;
+
+  AuthenticationResponseEntity.fromJson(dynamic json) {
+    message = json['message'];
+    token = json['token'];
+    user = json['user'] != null ? UserEntity.fromJson(json['user']) : null;
+  }
 }
 
 /// username : "mk11233"
@@ -45,4 +52,16 @@ class UserEntity {
   bool? isVerified;
   String? id;
   String? createdAt;
+
+  UserEntity.fromJson(dynamic json) {
+    username = json['username'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    email = json['email'];
+    phone = json['phone'];
+    role = json['role'];
+    isVerified = json['isVerified'];
+    id = json['_id'];
+    createdAt = json['createdAt'];
+  }
 }

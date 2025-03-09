@@ -12,12 +12,8 @@ class IsarStorageServiceCashedQuestionEntityImpl
   IsarStorageServiceCashedQuestionEntityImpl({required this.isar});
 
   @override
-  Future<CashedQuestions?> get(String examId) {
-    return isar.cashedQuestions
-        .where()
-        .filter()
-        .examIdEqualTo(examId)
-        .findFirst();
+  Future<List<CashedQuestions>?> get() {
+    return isar.cashedQuestions.where().findAll();
   }
 
   @override

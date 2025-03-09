@@ -12,12 +12,16 @@ part 'cashed_questions_entity.g.dart';
 class CashedQuestions {
   List<QuestionEntity>? questions;
   List<Answers>? answers;
-  String? examId;
+  String? subjectName;
 
   // List<String>
   Id id = Isar.autoIncrement;
 
-  CashedQuestions({this.questions, this.answers, this.examId});
+  CashedQuestions({
+    this.questions,
+    this.answers,
+    this.subjectName,
+  });
 
   CashedQuestions.fromJson(dynamic json) {
     if (json['questions'] != null) {
@@ -32,7 +36,7 @@ class CashedQuestions {
         answers?.add(Answers.fromJson(v));
       });
     }
-    json['examId'] = examId;
+    json['examId'] = subjectName;
   }
 
   Map<String, dynamic> toJson() {
@@ -44,7 +48,7 @@ class CashedQuestions {
     if (answers != null) {
       map['answers'] = answers?.map((v) => v.toJson()).toList();
     }
-    map['examId'] = examId;
+    map['examId'] = subjectName;
 
     return map;
   }

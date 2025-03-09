@@ -139,6 +139,11 @@ extension GetItInjectableX on _i1.GetIt {
               gh<_i9.FlutterSecureStorage>(),
             ));
     await gh.factoryAsync<String>(
+      () => dioService
+          .getToken(gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
+      preResolve: true,
+    );
+    await gh.factoryAsync<String>(
       () => localeInitializer.initCurrentLocal(
           gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
       instanceName: 'initCurrentLocal',

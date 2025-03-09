@@ -75,7 +75,7 @@ int _cashedQuestionsEstimateSize(
     }
   }
   {
-    final value = object.examId;
+    final value = object.subjectName;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -109,7 +109,7 @@ void _cashedQuestionsSerialize(
     AnswersSchema.serialize,
     object.answers,
   );
-  writer.writeString(offsets[1], object.examId);
+  writer.writeString(offsets[1], object.subjectName);
   writer.writeObjectList<QuestionEntity>(
     offsets[2],
     allOffsets,
@@ -131,7 +131,7 @@ CashedQuestions _cashedQuestionsDeserialize(
       allOffsets,
       Answers(),
     ),
-    examId: reader.readStringOrNull(offsets[1]),
+    subjectName: reader.readStringOrNull(offsets[1]),
     questions: reader.readObjectList<QuestionEntity>(
       offsets[2],
       QuestionEntitySchema.deserialize,

@@ -75,15 +75,15 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     await saveQuestionsUseCase.execute(CashedQuestions(
       questions: questions,
       answers: checkedAnswers,
-      examId: questions![0].exam?.id,
+      subjectName: questions![0].subject?.name,
     ));
     log('cash questions and answers');
     var getResult = await _getCashedQuestionsAndAnswers();
-    log(getResult!.examId!);
+    log(getResult![0].subjectName!);
   }
 
-  Future<CashedQuestions?> _getCashedQuestionsAndAnswers() {
-    return getCashedQuestionUseCase.execute(questions![0].exam?.id ?? '');
+  Future<List<CashedQuestions>?> _getCashedQuestionsAndAnswers() {
+    return getCashedQuestionUseCase.execute();
   }
 
   Future<void> _getAllQuestions({required String examId}) async {

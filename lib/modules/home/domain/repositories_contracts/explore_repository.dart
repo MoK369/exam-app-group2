@@ -17,7 +17,7 @@ abstract interface class ExploreRepository {
   Future<ApiResult<CheckQuestionsResponseEntity>> checkQuestions(
       {required CheckQuestionsRequest checkQuestionRequest});
 
-  Future<CashedQuestions?> getCashedQuestionsAndAnswers(String examId);
+  Future<List<CashedQuestions>?> getCashedQuestionsAndAnswers();
 
   Future<void> saveCashedQuestions(CashedQuestions cashedQuestions);
 }

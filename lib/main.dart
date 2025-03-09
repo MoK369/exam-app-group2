@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
+import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/injectable_initializer.dart';
@@ -21,6 +25,11 @@ void main() async {
   // Initializing local storage (Flutter Secure Storage) and current locale (Stored Locale) happens here
   await configureDependencies();
   // Get Cached Login Info
+  if (!getIt.isRegistered<StorageService<FlutterSecureStorage>>()) {
+    log('StorageService<FlutterSecureStorage> is not registered!');
+  } else {
+    log('StorageService<FlutterSecureStorage> is registered.');
+  }
   storedAuthEntity = await getIt.get<LoginUseCase>().getLoginInfo();
 
   runApp(MultiProvider(providers: [

@@ -9,7 +9,7 @@ class GetCashedQuestionUseCase {
 
   GetCashedQuestionUseCase({required this.exploreRepository});
 
-  Future<CashedQuestions?> execute(String examId) {
-    return exploreRepository.getCashedQuestionsAndAnswers(examId);
+  Future<List<CashedQuestions>?> execute() {
+    return exploreRepository.getCashedQuestionsAndAnswers();
   }
 }

@@ -16,7 +16,7 @@ class QuestionsOfflineDataSourceImpl implements QuestionsOfflineDataSource {
   }
 
   @override
-  Future<CashedQuestions?> getCashedQuestionsAndAnswers(String examId) {
-    return database.get(examId);
+  Future<List<CashedQuestions>?> getCashedQuestionsAndAnswers() {
+    return database.get();
   }
 }

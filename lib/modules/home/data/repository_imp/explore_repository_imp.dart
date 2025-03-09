@@ -41,7 +41,8 @@ class HomeRepositoryImp implements ExploreRepository {
   }
 
   @override
-  Future<ApiResult<List<ExamEntity>?>> getAllExamsOnSubject(String subjectId) async {
+  Future<ApiResult<List<ExamEntity>?>> getAllExamsOnSubject(
+      String subjectId) async {
     var result = await homeDataSource.getAllExamsOnSubject(subjectId);
     switch (result) {
       case Success<GetAllExamsOnSubjectResponse>():
@@ -85,12 +86,12 @@ class HomeRepositoryImp implements ExploreRepository {
   }
 
   @override
-  Future<CashedQuestions?> getCashedQuestionsAndAnswers(String examId) {
-    return questionsOfflineDataSource.getCashedQuestionsAndAnswers(examId);
+  Future<void> saveCashedQuestions(CashedQuestions cashedQuestions) {
+    return questionsOfflineDataSource.saveCashedQuestions(cashedQuestions);
   }
 
   @override
-  Future<void> saveCashedQuestions(CashedQuestions cashedQuestions) {
-    return questionsOfflineDataSource.saveCashedQuestions(cashedQuestions);
+  Future<List<CashedQuestions>?> getCashedQuestionsAndAnswers() {
+    return questionsOfflineDataSource.getCashedQuestionsAndAnswers();
   }
 }
