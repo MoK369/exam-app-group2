@@ -201,7 +201,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i771.LogoutDeleteAccountLocalDataSource>(() =>
         _i993.LogoutDeleteAccountLocalDataSourceImp(
             gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<bool>(() => dioService.updateDioWithToken(gh<String>()));
+    gh.factory<bool>(() => _i678.DioService.updateDioWithToken(gh<String>()));
     gh.factory<_i691.LogoutRemoteDataSource>(
         () => _i111.LogoutRemoteDataSourceImp(
               gh<_i293.HomeApiClient>(),
