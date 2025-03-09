@@ -54,8 +54,18 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
                   phoneNumberController: profileViewModel.phoneNumberController,
                   onAvatarTap: () => navigateToEditScreen(),
                   onTextFieldTap: () => navigateToEditScreen(),
-                  onChangePasswordClick: () => Navigator.pushNamed(
-                      context, DefinedRoutes.resetPasswordRoutName),
+                  onChangePasswordClick: () {
+                    Navigator.pushNamed<String>(
+                            context, DefinedRoutes.resetPasswordRoutName)
+                        .then(
+                      (newToken) {
+                        if (newToken != null) {
+                          print("New Token $newToken");
+                          authEntity.token = newToken;
+                        }
+                      },
+                    );
+                  },
                 );
               case ProfileStatus.error:
                 return ErrorStateWidget(error: state.error!);

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/api/apis_endpoints/apis_endpoints.dart';
+import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -27,4 +28,26 @@ abstract class DioService {
     );
     return dio;
   }
+
+  @factoryMethod
+  static bool updateDioWithToken(String token) {
+    Dio dio = getIt.get<Dio>();
+    BaseOptions newBaseOptions = BaseOptions(
+        connectTimeout: const Duration(seconds: 30),
+        baseUrl: ApisEndpoints.baseUrl,
+        headers: {"token": token});
+    dio.options = newBaseOptions;
+    return true;
+  }
 }
+
+// extension DioServiceFunctionsUnrelatedToInjectable on DioService {
+//   static void updateDioWithToken(String token) {
+//     Dio dio = getIt.get<Dio>();
+//     BaseOptions newBaseOptions = BaseOptions(
+//         connectTimeout: const Duration(seconds: 30),
+//         baseUrl: ApisEndpoints.baseUrl,
+//         headers: {"token": token});
+//     dio.options = newBaseOptions;
+//   }
+// }

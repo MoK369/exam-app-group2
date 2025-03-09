@@ -78,5 +78,7 @@
   "deletingAccountAlertMessage": "Are you sure you want to delete your account permanently?\uD83E\uDD28",
   "deletedAccountSuccessfully": "Deleted Account Successfully!",
   "editedProfileSuccessfully": "Profile Edited Successfully!",
-  "profileNotChangeMessage": "Profile has not been changed!"
+  "profileNotChangeMessage": "Profile has not been changed!",
+  "changedPasswordSuccessfully": "Password Changed Successfully!",
+  "oldPasswordSameAsNewPassword": "Old password and new password are the same!"
 }

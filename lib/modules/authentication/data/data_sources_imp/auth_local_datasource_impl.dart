@@ -22,7 +22,7 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
     if (stringAuthDto != null) {
       AuthenticationResponseDto authDto =
           AuthenticationResponseDto.fromJson(jsonDecode(stringAuthDto));
-      return authDto.convertIntoAuthenticationEntity();
+      return authDto.convertIntoEntity();
     }
     return null;
   }

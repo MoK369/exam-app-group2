@@ -34,7 +34,7 @@ class AuthenticationResponseDto {
   String? token;
   UserDto? user;
 
-  AuthenticationResponseEntity convertIntoAuthenticationEntity() {
+  AuthenticationResponseEntity convertIntoEntity() {
     return AuthenticationResponseEntity(
         message: message, token: token, user: user?.convertIntoUserEntity());
   }

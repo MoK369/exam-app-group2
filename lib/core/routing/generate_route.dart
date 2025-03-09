@@ -1,7 +1,7 @@
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
+import 'package:exam_app_group2/modules/change_password/ui/change_password_screen.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
-import 'package:exam_app_group2/modules/reset_password/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
@@ -38,8 +38,8 @@ class GenerateRoute {
           ),
         );
       case DefinedRoutes.resetPasswordRoutName:
-        return MaterialPageRoute(
-          builder: (context) => ResetPasswordScreen(),
+        return MaterialPageRoute<String>(
+          builder: (context) => ChangePasswordScreen(),
         );
       default:
         return _errorRoute();

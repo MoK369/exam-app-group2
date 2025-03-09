@@ -30,4 +30,9 @@ class UserEntity {
   bool? isVerified;
   String? id;
   String? createdAt;
+
+  @override
+  String toString() {
+    return "username: $username,firstName: $firstName,lastName: $lastName,email: $email,phone: $phone, ";
+  }
 }

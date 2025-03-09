@@ -47,12 +47,36 @@ import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
     as _i108;
 import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
     as _i399;
+import '../../modules/change_password/data/api/api_client/change_password_api_client.dart'
+    as _i18;
+import '../../modules/change_password/data/api/api_client_provider/change_password_api_client_provider.dart'
+    as _i1050;
+import '../../modules/change_password/data/data_source_contracts/change_password/change_password_local_data_source.dart'
+    as _i820;
+import '../../modules/change_password/data/data_source_contracts/change_password/change_password_remote_data_source.dart'
+    as _i324;
+import '../../modules/change_password/data/data_source_imps/change_password/change_password_local_data_source_imp.dart'
+    as _i850;
+import '../../modules/change_password/data/data_source_imps/change_password/change_password_remote_data_source_imp.dart'
+    as _i1002;
+import '../../modules/change_password/data/repositories_imp/change_password/change_password_repository_imp.dart'
+    as _i767;
+import '../../modules/change_password/domain/repositories_contracts/change_password/change_password_repository.dart'
+    as _i27;
+import '../../modules/change_password/domain/use_cases/change_password/change_password_use_case.dart'
+    as _i299;
+import '../../modules/change_password/ui/view_model/change_password_screen_view_model.dart'
+    as _i211;
 import '../../modules/edit_profile/data/api/api_client/edit_profile_api_client.dart'
     as _i328;
 import '../../modules/edit_profile/data/api/api_client_provider/edit_profile_api_client_provider.dart'
     as _i737;
+import '../../modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_local_data_source.dart'
+    as _i500;
 import '../../modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_remote_data_source.dart'
     as _i1032;
+import '../../modules/edit_profile/data/data_source_imps/edit_profile/edit_profile_local_data_source_imp.dart'
+    as _i909;
 import '../../modules/edit_profile/data/data_source_imps/edit_profile/edit_profile_remote_data_source_imp.dart'
     as _i184;
 import '../../modules/edit_profile/data/repositories_imp/edit_profile/edit_profile_repository_imp.dart'
@@ -106,8 +130,6 @@ import '../../modules/home/domain/use_cases/get_logged_user_info/get_logged_user
     as _i972;
 import '../../modules/home/domain/use_cases/logout/logout_use_case.dart'
     as _i142;
-import '../../modules/reset_password/view_model/reset_password_screen_view_model.dart'
-    as _i749;
 import '../../storage/contracts/storage_service_contract.dart' as _i70;
 import '../../storage/implementation/storage_service_imp.dart' as _i622;
 import '../../storage/initializer/storage_initializer.dart' as _i661;
@@ -128,10 +150,9 @@ extension GetItInjectableX on _i174.GetIt {
     final dioService = _$DioService();
     final homeApiClientProvider = _$HomeApiClientProvider();
     final editProfileApiClientProvider = _$EditProfileApiClientProvider();
+    final changePasswordApiClientProvider = _$ChangePasswordApiClientProvider();
     final localeInitializer = _$LocaleInitializer();
     gh.factory<_i907.HomeViewModel>(() => _i907.HomeViewModel());
-    gh.factory<_i749.ResetPasswordScreenViewModel>(
-        () => _i749.ResetPasswordScreenViewModel());
     await gh.factoryAsync<_i558.FlutterSecureStorage>(
       () => storageInitializer.initFlutterSecureStorage(),
       preResolve: true,
@@ -150,25 +171,37 @@ extension GetItInjectableX on _i174.GetIt {
         () => homeApiClientProvider.provideApiClient(gh<_i361.Dio>()));
     gh.factory<_i328.EditProfileApiClient>(
         () => editProfileApiClientProvider.provideApiClient(gh<_i361.Dio>()));
+    gh.factory<_i18.ChangePasswordApiClient>(
+        () => changePasswordApiClientProvider.provideClient(gh<_i361.Dio>()));
     gh.factory<_i422.LoginRemoteDataSource>(() =>
         _i712.LoginRemoteDataSourceImpl(
             apiManager: gh<_i208.AuthApiManager>()));
     gh.factory<_i747.DeleteAccountRemoteDataSource>(() =>
         _i100.DeleteAccountRemoteDataSourceImp(gh<_i293.HomeApiClient>()));
+    gh.factory<_i324.ChangePasswordRemoteDataSource>(() =>
+        _i1002.ChangePasswordRemoteDataSourceImp(
+            gh<_i18.ChangePasswordApiClient>()));
     gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
         () => _i622.StorageServiceImp(
               gh<_i393.ErrorNotifier>(),
               gh<_i558.FlutterSecureStorage>(),
             ));
+    gh.factory<_i500.EditProfileLocalDataSource>(() =>
+        _i909.EditProfileLocalDataSourceImp(
+            gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
     await gh.factoryAsync<String>(
       () => localeInitializer.initCurrentLocal(
           gh<_i70.StorageService<_i558.FlutterSecureStorage>>()),
       instanceName: 'initCurrentLocal',
       preResolve: true,
     );
+    gh.factory<_i820.ChangePasswordLocalDataSource>(() =>
+        _i850.ChangePasswordLocalDataSourceImp(
+            gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
     gh.factory<_i771.LogoutDeleteAccountLocalDataSource>(() =>
         _i993.LogoutDeleteAccountLocalDataSourceImp(
             gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
+    gh.factory<bool>(() => dioService.updateDioWithToken(gh<String>()));
     gh.factory<_i691.LogoutRemoteDataSource>(
         () => _i111.LogoutRemoteDataSourceImp(
               gh<_i293.HomeApiClient>(),
@@ -202,9 +235,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i410.LoggedUserInfoRepository>(() =>
         _i219.LoggedUserInfoRepositoryImp(
             gh<_i902.LoggedUserInfoRemoteDataSource>()));
-    gh.factory<_i586.EditProfileRepository>(() =>
-        _i235.EditProfileRepositoryImp(
-            gh<_i1032.EditProfileRemoteDataSource>()));
     gh.factory<_i399.SignUpViewModel>(
         () => _i399.SignUpViewModel(gh<_i367.SignUpUseCase>()));
     gh.factory<_i443.DeleteAccountUseCase>(
@@ -217,18 +247,32 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i972.GetLoggedUserInfoUseCase>(() =>
         _i972.GetLoggedUserInfoUseCase(gh<_i410.LoggedUserInfoRepository>()));
-    gh.factory<_i525.EditProfileUseCase>(
-        () => _i525.EditProfileUseCase(gh<_i586.EditProfileRepository>()));
     gh.factory<_i543.LoginUseCase>(
         () => _i543.LoginUseCase(authRepo: gh<_i450.LoginRepo>()));
     gh.factory<_i108.LoginViewModel>(
         () => _i108.LoginViewModel(loginUseCase: gh<_i543.LoginUseCase>()));
+    gh.factory<_i27.ChangePasswordRepository>(
+        () => _i767.ChangePasswordRepositoryImp(
+              gh<_i324.ChangePasswordRemoteDataSource>(),
+              gh<_i820.ChangePasswordLocalDataSource>(),
+            ));
+    gh.factory<_i586.EditProfileRepository>(
+        () => _i235.EditProfileRepositoryImp(
+              gh<_i1032.EditProfileRemoteDataSource>(),
+              gh<_i500.EditProfileLocalDataSource>(),
+            ));
     gh.factory<_i203.SettingsViewModel>(() => _i203.SettingsViewModel(
           gh<_i142.LogoutUseCase>(),
           gh<_i443.DeleteAccountUseCase>(),
         ));
+    gh.factory<_i299.ChangePasswordUseCase>(
+        () => _i299.ChangePasswordUseCase(gh<_i27.ChangePasswordRepository>()));
     gh.factory<_i1063.ProfileViewModel>(
         () => _i1063.ProfileViewModel(gh<_i972.GetLoggedUserInfoUseCase>()));
+    gh.factory<_i211.ChangePasswordScreenViewModel>(() =>
+        _i211.ChangePasswordScreenViewModel(gh<_i299.ChangePasswordUseCase>()));
+    gh.factory<_i525.EditProfileUseCase>(
+        () => _i525.EditProfileUseCase(gh<_i586.EditProfileRepository>()));
     gh.factory<_i958.EditProfileScreenViewModel>(
         () => _i958.EditProfileScreenViewModel(gh<_i525.EditProfileUseCase>()));
     return this;
@@ -243,5 +287,8 @@ class _$HomeApiClientProvider extends _i939.HomeApiClientProvider {}
 
 class _$EditProfileApiClientProvider
     extends _i737.EditProfileApiClientProvider {}
+
+class _$ChangePasswordApiClientProvider
+    extends _i1050.ChangePasswordApiClientProvider {}
 
 class _$LocaleInitializer extends _i852.LocaleInitializer {}
