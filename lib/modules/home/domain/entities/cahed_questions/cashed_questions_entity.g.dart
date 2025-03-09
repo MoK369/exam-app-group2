@@ -23,16 +23,16 @@ const CashedQuestionsSchema = CollectionSchema(
       type: IsarType.objectList,
       target: r'Answers',
     ),
-    r'examId': PropertySchema(
-      id: 1,
-      name: r'examId',
-      type: IsarType.string,
-    ),
     r'questions': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'questions',
       type: IsarType.objectList,
       target: r'QuestionEntity',
+    ),
+    r'subjectName': PropertySchema(
+      id: 2,
+      name: r'subjectName',
+      type: IsarType.string,
     )
   },
   estimateSize: _cashedQuestionsEstimateSize,
@@ -75,12 +75,6 @@ int _cashedQuestionsEstimateSize(
     }
   }
   {
-    final value = object.subjectName;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
-  {
     final list = object.questions;
     if (list != null) {
       bytesCount += 3 + list.length * 3;
@@ -92,6 +86,12 @@ int _cashedQuestionsEstimateSize(
               QuestionEntitySchema.estimateSize(value, offsets, allOffsets);
         }
       }
+    }
+  }
+  {
+    final value = object.subjectName;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
     }
   }
   return bytesCount;
@@ -109,13 +109,13 @@ void _cashedQuestionsSerialize(
     AnswersSchema.serialize,
     object.answers,
   );
-  writer.writeString(offsets[1], object.subjectName);
   writer.writeObjectList<QuestionEntity>(
-    offsets[2],
+    offsets[1],
     allOffsets,
     QuestionEntitySchema.serialize,
     object.questions,
   );
+  writer.writeString(offsets[2], object.subjectName);
 }
 
 CashedQuestions _cashedQuestionsDeserialize(
@@ -131,13 +131,13 @@ CashedQuestions _cashedQuestionsDeserialize(
       allOffsets,
       Answers(),
     ),
-    subjectName: reader.readStringOrNull(offsets[1]),
     questions: reader.readObjectList<QuestionEntity>(
-      offsets[2],
+      offsets[1],
       QuestionEntitySchema.deserialize,
       allOffsets,
       QuestionEntity(),
     ),
+    subjectName: reader.readStringOrNull(offsets[2]),
   );
   object.id = id;
   return object;
@@ -158,14 +158,14 @@ P _cashedQuestionsDeserializeProp<P>(
         Answers(),
       )) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
-    case 2:
       return (reader.readObjectList<QuestionEntity>(
         offset,
         QuestionEntitySchema.deserialize,
         allOffsets,
         QuestionEntity(),
       )) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -374,160 +374,6 @@ extension CashedQuestionsQueryFilter
   }
 
   QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'examId',
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'examId',
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'examId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'examId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'examId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'examId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'examId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'examId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'examId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'examId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'examId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
-      examIdIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'examId',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
       idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -689,6 +535,160 @@ extension CashedQuestionsQueryFilter
       );
     });
   }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'subjectName',
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'subjectName',
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subjectName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'subjectName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'subjectName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'subjectName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'subjectName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'subjectName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'subjectName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'subjectName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'subjectName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      subjectNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'subjectName',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension CashedQuestionsQueryObject
@@ -713,35 +713,23 @@ extension CashedQuestionsQueryLinks
 
 extension CashedQuestionsQuerySortBy
     on QueryBuilder<CashedQuestions, CashedQuestions, QSortBy> {
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy> sortByExamId() {
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy>
+      sortBySubjectName() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'examId', Sort.asc);
+      return query.addSortBy(r'subjectName', Sort.asc);
     });
   }
 
   QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy>
-      sortByExamIdDesc() {
+      sortBySubjectNameDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'examId', Sort.desc);
+      return query.addSortBy(r'subjectName', Sort.desc);
     });
   }
 }
 
 extension CashedQuestionsQuerySortThenBy
     on QueryBuilder<CashedQuestions, CashedQuestions, QSortThenBy> {
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy> thenByExamId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'examId', Sort.asc);
-    });
-  }
-
-  QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy>
-      thenByExamIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'examId', Sort.desc);
-    });
-  }
-
   QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -753,14 +741,28 @@ extension CashedQuestionsQuerySortThenBy
       return query.addSortBy(r'id', Sort.desc);
     });
   }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy>
+      thenBySubjectName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterSortBy>
+      thenBySubjectNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'subjectName', Sort.desc);
+    });
+  }
 }
 
 extension CashedQuestionsQueryWhereDistinct
     on QueryBuilder<CashedQuestions, CashedQuestions, QDistinct> {
-  QueryBuilder<CashedQuestions, CashedQuestions, QDistinct> distinctByExamId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<CashedQuestions, CashedQuestions, QDistinct>
+      distinctBySubjectName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'examId', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'subjectName', caseSensitive: caseSensitive);
     });
   }
 }
@@ -780,16 +782,17 @@ extension CashedQuestionsQueryProperty
     });
   }
 
-  QueryBuilder<CashedQuestions, String?, QQueryOperations> examIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'examId');
-    });
-  }
-
   QueryBuilder<CashedQuestions, List<QuestionEntity>?, QQueryOperations>
       questionsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'questions');
+    });
+  }
+
+  QueryBuilder<CashedQuestions, String?, QQueryOperations>
+      subjectNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'subjectName');
     });
   }
 }

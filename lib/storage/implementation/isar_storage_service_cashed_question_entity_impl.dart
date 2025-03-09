@@ -17,7 +17,21 @@ class IsarStorageServiceCashedQuestionEntityImpl
   }
 
   @override
-  Future<void> write(cashedQuestions) async {
-    isar.writeTxn(() => isar.cashedQuestions.put(cashedQuestions));
+  Future<void> write(CashedQuestions cashedQuestions) async {
+    var currentEntity = await findBy(cashedQuestions.subjectName!);
+    if (currentEntity != null) {
+      currentEntity.updateEntityWith(cashedQuestions);
+      isar.writeTxn(() => isar.cashedQuestions.put(currentEntity));
+    } else {
+      isar.writeTxn(() => isar.cashedQuestions.put(cashedQuestions));
+    }
+  }
+
+  @override
+  Future<CashedQuestions?> findBy(String subjectName) {
+    return isar.cashedQuestions
+        .filter()
+        .subjectNameEqualTo(subjectName)
+        .findFirst();
   }
 }

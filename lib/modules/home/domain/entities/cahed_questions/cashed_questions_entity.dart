@@ -52,4 +52,10 @@ class CashedQuestions {
 
     return map;
   }
+
+  void updateEntityWith(CashedQuestions cashedQuestions) {
+    questions = cashedQuestions.questions;
+    answers = cashedQuestions.answers;
+    subjectName = cashedQuestions.subjectName;
+  }
 }

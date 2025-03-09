@@ -119,15 +119,14 @@ class MockExploreRepository extends _i1.Mock implements _i2.ExploreRepository {
       ) as _i3.Future<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>>);
 
   @override
-  _i3.Future<_i11.CashedQuestions?> getCashedQuestionsAndAnswers(
-          String? examId) =>
+  _i3.Future<List<_i11.CashedQuestions>?> getCashedQuestionsAndAnswers() =>
       (super.noSuchMethod(
         Invocation.method(
           #getCashedQuestionsAndAnswers,
-          [examId],
+          [],
         ),
-        returnValue: _i3.Future<_i11.CashedQuestions?>.value(),
-      ) as _i3.Future<_i11.CashedQuestions?>);
+        returnValue: _i3.Future<List<_i11.CashedQuestions>?>.value(),
+      ) as _i3.Future<List<_i11.CashedQuestions>?>);
 
   @override
   _i3.Future<void> saveCashedQuestions(_i11.CashedQuestions? cashedQuestions) =>
