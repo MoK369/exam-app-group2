@@ -43,7 +43,7 @@ dependencies:
   # screen util
   flutter_screenutil: ^5.9.3
   # native splash
-  flutter_native_splash: ^2.4.4
+  flutter_native_splash: 2.4.4
   # app icon
   flutter_launcher_icons: ^0.14.3
   # state management
@@ -70,8 +70,8 @@ dependencies:
   image_picker: ^1.1.2
 
   # local database
-  isar: ^3.1.0+1
-  isar_flutter_libs: ^3.1.0+1
+  isar: any #^3.1.0+1
+  isar_flutter_libs: any #^3.1.0+1
   path_provider: ^2.1.5
 
 dev_dependencies:
@@ -80,13 +80,13 @@ dev_dependencies:
 
 
   # local database devs
-  isar_generator: ^3.1.0+1
+  isar_generator: any #^3.1.0+1
   # injectable div
-  injectable_generator: 2.4.2
-  build_runner: 2.4.13
+  injectable_generator: any #2.4.2
+  build_runner: any #2.4.13
   # retrofit dev
-  retrofit_generator: 8.2.1
-  json_serializable: ^6.8.0
+  retrofit_generator: any #8.2.1
+  json_serializable: any #6.8.0
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
