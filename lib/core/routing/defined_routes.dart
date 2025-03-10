@@ -3,5 +3,5 @@ class DefinedRoutes {
   static const String homeRouteName = "HomeScreen";
   static const String login = "/login";
   static const String editProfileRoutName = "EditProfileScreen";
-  static const String resetPasswordRoutName = "ResetPasswordScreen";
+  static const String changePasswordRoutName = "ResetPasswordScreen";
 }

@@ -55,13 +55,13 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
                   onAvatarTap: () => navigateToEditScreen(),
                   onTextFieldTap: () => navigateToEditScreen(),
                   onChangePasswordClick: () {
-                    Navigator.pushNamed<String>(
-                            context, DefinedRoutes.resetPasswordRoutName)
+                    Navigator.pushNamed<ProfileBackValues>(
+                            context, DefinedRoutes.changePasswordRoutName)
                         .then(
-                      (newToken) {
-                        if (newToken != null) {
-                          print("New Token $newToken");
-                          authEntity.token = newToken;
+                      (profileBackValues) {
+                        if (profileBackValues?.newToken != null) {
+                          whenThereIsANewTokenBack(
+                              profileBackValues!.newToken!);
                         }
                       },
                     );
@@ -77,16 +77,25 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
   }
 
   void navigateToEditScreen() async {
-    Navigator.pushNamed<bool>(context, DefinedRoutes.editProfileRoutName,
+    Navigator.pushNamed<ProfileBackValues>(
+            context, DefinedRoutes.editProfileRoutName,
             arguments: authEntity)
         .then(
-      (result) {
-        if (result == true) {
+      (editScreenBackValues) {
+        if (editScreenBackValues?.profileUpdatedAtLeastOnce == true) {
           print("Getting User info========");
           profileViewModel.doIntent(GetLoggedUserInfo());
         }
+        if (editScreenBackValues?.newToken != null) {
+          whenThereIsANewTokenBack(editScreenBackValues!.newToken!);
+        }
       },
     );
+  }
+
+  void whenThereIsANewTokenBack(String newToken) {
+    print("New Token $newToken");
+    authEntity.token = newToken;
   }
 
   @override
@@ -94,4 +103,11 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
     super.dispose();
     profileViewModel.doIntent(DisposeControllers());
   }
+}
+
+class ProfileBackValues {
+  bool? profileUpdatedAtLeastOnce;
+  String? newToken;
+
+  ProfileBackValues({this.profileUpdatedAtLeastOnce, this.newToken});
 }

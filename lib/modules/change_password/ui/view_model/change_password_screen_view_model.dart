@@ -65,7 +65,7 @@ class ChangePasswordScreenViewModel extends Cubit<ChangePasswordState> {
     switch (useCaseResult) {
       case Success<ChangePasswordResponseEntity>():
         newToken = useCaseResult.data.token;
-        _updateDioWithToke(newToken ?? "");
+        _updateDioWithToken(newToken ?? "");
         emit(
             state.copyWith(changePasswordStatus: ChangePasswordStatus.success));
       case Error<ChangePasswordResponseEntity>():
@@ -86,23 +86,25 @@ class ChangePasswordScreenViewModel extends Cubit<ChangePasswordState> {
   }
 
   void _onChangePasswordButtonClick() {
+    _unFocusKeyboard();
     if (_validateForm()) {
       if (currentPasswordController.text == newPasswordController.text) {
         emit(state.copyWith(
             changePasswordStatus: ChangePasswordStatus.error,
             error: OldPasswordSameAsNewPassword()));
+      } else {
+        _changePassword(
+          ChangePasswordRequestEntity(
+            oldPassword: currentPasswordController.text,
+            password: newPasswordController.text,
+            rePassword: confirmPasswordController.text,
+          ),
+        );
       }
-      _changePassword(
-        ChangePasswordRequestEntity(
-          oldPassword: currentPasswordController.text,
-          password: newPasswordController.text,
-          rePassword: confirmPasswordController.text,
-        ),
-      );
     }
   }
 
-  void _updateDioWithToke(String newToken) {
+  void _updateDioWithToken(String newToken) {
     DioService.updateDioWithToken(newToken);
   }
 
@@ -131,6 +133,10 @@ class ChangePasswordScreenViewModel extends Cubit<ChangePasswordState> {
         focusNode.dispose();
       },
     );
+  }
+
+  void _unFocusKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   TextEditingController get currentPasswordController =>

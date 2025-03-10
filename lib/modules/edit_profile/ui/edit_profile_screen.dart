@@ -9,9 +9,11 @@ import 'package:exam_app_group2/modules/authentication/domain/entities/authentic
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_intent.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_state.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final AuthenticationResponseEntity authEntity;
@@ -32,6 +34,13 @@ class _EditProfileScreenState
     super.initState();
     editProfileViewModel
         .doIntent(InitControllersAndFocusNodes(authEntity: widget.authEntity));
+  }
+
+  void pickImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      image.readAsBytes();
+    }
   }
 
   @override
@@ -66,8 +75,11 @@ class _EditProfileScreenState
             appBar: CustomAppBar(
               title: appLocalizations.editProfile,
               onLeadingIconButtonClick: () {
-                Navigator.pop<bool>(
-                    context, editProfileViewModel.profileUpdatedAtLeastOnce);
+                Navigator.pop<ProfileBackValues>(
+                    context,
+                    ProfileBackValues(
+                        profileUpdatedAtLeastOnce:
+                            editProfileViewModel.profileUpdatedAtLeastOnce));
               },
             ),
             body: BlocBuilder<EditProfileScreenViewModel, EditProfileState>(
@@ -98,8 +110,19 @@ class _EditProfileScreenState
                     phoneNumberFocusNode:
                         editProfileViewModel.phoneNumberFocusNode,
                     areTextFieldsReadOnly: false,
-                    onChangePasswordClick: () => Navigator.pushReplacementNamed(
-                        context, DefinedRoutes.resetPasswordRoutName),
+                    onChangePasswordClick: () {
+                      Navigator.pushNamed<ProfileBackValues>(
+                        context,
+                        DefinedRoutes.changePasswordRoutName,
+                      ).then((profileBackValues) {
+                        print(
+                            "ProfileBackValues: ${profileBackValues != null}");
+                        if (profileBackValues != null) {
+                          Navigator.pop<ProfileBackValues>(
+                              context, profileBackValues);
+                        }
+                      });
+                    },
                     onFormChanged: () =>
                         editProfileViewModel.doIntent(ValidateForm()),
                     onUpdateButtonClick: state.editFormStatus ==

@@ -10,6 +10,7 @@ import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/modules/change_password/ui/view_model/change_password_intent.dart';
 import 'package:exam_app_group2/modules/change_password/ui/view_model/change_password_screen_view_model.dart';
 import 'package:exam_app_group2/modules/change_password/ui/view_model/change_password_state.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -55,8 +56,9 @@ class _ChangePasswordScreenState
                     ),
                     showOkButton: true);
               case ChangePasswordStatus.error:
-                if (state.error! is OldPasswordSameAsNewPassword)
+                if (state.error is! OldPasswordSameAsNewPassword) {
                   hideAlertDialog();
+                }
                 displayAlertDialog(
                     title: ErrorStateWidget(error: state.error!),
                     showOkButton: true);
@@ -66,7 +68,10 @@ class _ChangePasswordScreenState
             appBar: CustomAppBar(
               title: appLocalizations.resetPassword,
               onLeadingIconButtonClick: () {
-                Navigator.pop(context, changePasswordViewModel.newToken);
+                Navigator.pop<ProfileBackValues>(
+                    context,
+                    ProfileBackValues(
+                        newToken: changePasswordViewModel.newToken));
               },
             ),
             body:
