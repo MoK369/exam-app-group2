@@ -69,12 +69,20 @@ dependencies:
   # pick image
   image_picker: ^1.1.2
 
+  # local database
+  isar: ^3.1.0
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
+  # local database devs
+  isar_generator: ^3.1.0
   # injectable div
-  injectable_generator: 2.6.2
+  injectable_generator: 2.4.2
   build_runner: 2.4.13
   # retrofit dev
   retrofit_generator: 9.1.5
