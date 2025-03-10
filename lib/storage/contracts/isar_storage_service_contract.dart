@@ -3,7 +3,7 @@ abstract interface class IsarStorageService<T> {
 
   Future<T?> findBy(String id);
 
-  Future<List<T>> readAll();
+  Future<void> updateEmail(String emailId);
 
   Future<void> delete(int id);
 }

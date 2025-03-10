@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/core/constants/form_keys/text_form_fields_keys.dart';
 import 'package:exam_app_group2/core/custom_exception/profile_not_changed_exception.dart';
+import 'package:exam_app_group2/image_picking/contracts/image_picking_service_contract.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/edit_profile/request/edit_profile_request_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/edit_profile/response/edit_profile_response_entity.dart';
@@ -21,11 +24,14 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
   bool profileUpdatedAtLeastOnce = false;
 
   EditProfileUseCase editProfileUseCase;
+  ImagePickingService imagePickingService;
 
-  EditProfileScreenViewModel(this.editProfileUseCase)
+  Uint8List? avatarImage;
+
+  EditProfileScreenViewModel(this.editProfileUseCase, this.imagePickingService)
       : super(EditProfileState());
 
-  void doIntent(EditProfileIntent intent) {
+  void doIntent(EditProfileIntent intent) async {
     switch (intent) {
       case InitControllersAndFocusNodes():
         _initControllersAndFocusNodes(authEntity: intent.authEntity);
@@ -39,7 +45,17 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
       case DisposeControllersAndFocusNodes():
         _disposeControllersAndFocusNodes();
         break;
+      case OnAvatarTap():
+        await _onAvatarTap(intent.emailId);
+        break;
+      case InitAvatarImage():
+        _initAvatarImage(intent.image);
+        break;
     }
+  }
+
+  void _initAvatarImage(Uint8List? newImage) {
+    avatarImage = newImage;
   }
 
   void _editProfile(EditProfileRequestEntity editProfileRequestEntity) async {
@@ -130,6 +146,18 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
     _signUpFieldsFocusNodes.forEach(
       (key, focusNode) => focusNode.dispose,
     );
+  }
+
+  Future<void> _onAvatarTap(String email) async {
+    final imageFile = await imagePickingService.pickImageFromGallery();
+    if (imageFile != null) {
+      await imagePickingService.saveImageLocallyAsBinary(
+          imageFile: imageFile, emailId: email);
+      final imageBytes = await imageFile.readAsBytes();
+      if (!profileUpdatedAtLeastOnce) profileUpdatedAtLeastOnce = true;
+      _initAvatarImage(imageBytes);
+      emit(state.copyWith(avatarImage: imageBytes));
+    }
   }
 
   // controllers getters

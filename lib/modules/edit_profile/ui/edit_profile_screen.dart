@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
@@ -5,6 +7,7 @@ import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/profile_form_widget.dart';
+import 'package:exam_app_group2/image_picking/contracts/image_picking_service_contract.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_intent.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart';
@@ -13,12 +16,12 @@ import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_l
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  final AuthenticationResponseEntity authEntity;
+  final EditProfileScreenParameters editProfileScreenParameters;
 
-  const EditProfileScreen({super.key, required this.authEntity});
+  const EditProfileScreen(
+      {super.key, required this.editProfileScreenParameters});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -29,18 +32,16 @@ class _EditProfileScreenState
   final EditProfileScreenViewModel editProfileViewModel =
       getIt.get<EditProfileScreenViewModel>();
 
+  final ImagePickingService imagePickingService =
+      getIt.get<ImagePickingService>();
+
   @override
   void initState() {
     super.initState();
-    editProfileViewModel
-        .doIntent(InitControllersAndFocusNodes(authEntity: widget.authEntity));
-  }
-
-  void pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      image.readAsBytes();
-    }
+    editProfileViewModel.doIntent(InitControllersAndFocusNodes(
+        authEntity: widget.editProfileScreenParameters.authEntity));
+    editProfileViewModel.doIntent(
+        InitAvatarImage(image: widget.editProfileScreenParameters.avatarImage));
   }
 
   @override
@@ -84,15 +85,18 @@ class _EditProfileScreenState
             ),
             body: BlocBuilder<EditProfileScreenViewModel, EditProfileState>(
               buildWhen: (previous, current) {
-                if (previous.editFormStatus != current.editFormStatus) {
+                if ((previous.editFormStatus != current.editFormStatus) ||
+                    (previous.avatarImage != current.avatarImage)) {
                   return true;
                 }
+
                 return false;
               },
               builder: (context, state) {
                 return RPadding(
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   child: ProfileFormWidget(
+                    avatarImage: editProfileViewModel.avatarImage,
                     formKey: editProfileViewModel.formKey,
                     userNameController: editProfileViewModel.userNameController,
                     firstNameController:
@@ -110,6 +114,12 @@ class _EditProfileScreenState
                     phoneNumberFocusNode:
                         editProfileViewModel.phoneNumberFocusNode,
                     areTextFieldsReadOnly: false,
+                    onAvatarTap: () {
+                      editProfileViewModel.doIntent(OnAvatarTap(
+                          emailId: widget.editProfileScreenParameters.authEntity
+                                  .user?.email ??
+                              ""));
+                    },
                     onChangePasswordClick: () {
                       Navigator.pushNamed<ProfileBackValues>(
                         context,
@@ -130,7 +140,8 @@ class _EditProfileScreenState
                         ? null
                         : () {
                             editProfileViewModel.doIntent(OnUpdateButtonClick(
-                                oldAuthEntity: widget.authEntity));
+                                oldAuthEntity: widget
+                                    .editProfileScreenParameters.authEntity));
                           },
                   ),
                 );
@@ -148,4 +159,13 @@ class _EditProfileScreenState
     print(editProfileViewModel.profileUpdatedAtLeastOnce);
     editProfileViewModel.doIntent(DisposeControllersAndFocusNodes());
   }
+}
+
+class EditProfileScreenParameters {
+  final AuthenticationResponseEntity authEntity;
+
+  final Uint8List? avatarImage;
+
+  EditProfileScreenParameters(
+      {required this.authEntity, required this.avatarImage});
 }

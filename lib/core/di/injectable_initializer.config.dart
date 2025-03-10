@@ -8,287 +8,318 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:dio/dio.dart' as _i361;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
-import 'package:get_it/get_it.dart' as _i174;
-import 'package:injectable/injectable.dart' as _i526;
+import 'package:dio/dio.dart' as _i4;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i9;
+import 'package:get_it/get_it.dart' as _i1;
+import 'package:image_picker/image_picker.dart' as _i12;
+import 'package:injectable/injectable.dart' as _i2;
+import 'package:isar/isar.dart' as _i13;
 
-import '../../dio_service/dio_service.dart' as _i678;
-import '../../localization/initializer/locale_initializer.dart' as _i852;
-import '../../localization/l10n_manager/localization_manager.dart' as _i375;
-import '../../localization/use_case/localization_use_case.dart' as _i964;
+import '../../dio_service/dio_service.dart' as _i72;
+import '../../image_picking/contracts/image_picking_service_contract.dart'
+    as _i49;
+import '../../image_picking/image_picker_provider/image_picker_provider.dart'
+    as _i76;
+import '../../image_picking/implementation/image_picking_service_imp.dart'
+    as _i50;
+import '../../localization/initializer/locale_initializer.dart' as _i77;
+import '../../localization/l10n_manager/localization_manager.dart' as _i51;
+import '../../localization/use_case/localization_use_case.dart' as _i52;
 import '../../modules/authentication/data/api_manager/auth_api_manager.dart'
-    as _i208;
+    as _i3;
 import '../../modules/authentication/data/data_sources_contracts/auth_local_datasource.dart'
-    as _i74;
+    as _i31;
 import '../../modules/authentication/data/data_sources_contracts/login/login_remote_datasource.dart'
-    as _i422;
+    as _i21;
 import '../../modules/authentication/data/data_sources_contracts/sign_up/sign_up_remote_data_source.dart'
-    as _i186;
+    as _i23;
 import '../../modules/authentication/data/data_sources_imp/auth_local_datasource_impl.dart'
-    as _i907;
+    as _i32;
 import '../../modules/authentication/data/data_sources_imp/login/login_remote_data_source_impl.dart'
-    as _i712;
+    as _i22;
 import '../../modules/authentication/data/data_sources_imp/sign_up/sign_up_data_source_imp.dart'
-    as _i522;
+    as _i24;
 import '../../modules/authentication/data/repositories_imp/login/login_repo_impl.dart'
-    as _i914;
+    as _i54;
 import '../../modules/authentication/data/repositories_imp/sign_up/sign_up_repository_imp.dart'
-    as _i1059;
+    as _i26;
 import '../../modules/authentication/domain/repositories_contracts/login/login_repo.dart'
-    as _i450;
+    as _i53;
 import '../../modules/authentication/domain/repositories_contracts/sign_up/sign_up_repository.dart'
-    as _i1011;
+    as _i25;
 import '../../modules/authentication/domain/use_cases/login/login_use_case.dart'
-    as _i543;
+    as _i55;
 import '../../modules/authentication/domain/use_cases/sign_up/sign_up_use_case.dart'
-    as _i367;
-import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
-    as _i108;
-import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
-    as _i399;
-import '../../modules/change_password/data/api/api_client/change_password_api_client.dart'
-    as _i18;
-import '../../modules/change_password/data/api/api_client_provider/change_password_api_client_provider.dart'
-    as _i1050;
-import '../../modules/change_password/data/data_source_contracts/change_password/change_password_local_data_source.dart'
-    as _i820;
-import '../../modules/change_password/data/data_source_contracts/change_password/change_password_remote_data_source.dart'
-    as _i324;
-import '../../modules/change_password/data/data_source_imps/change_password/change_password_local_data_source_imp.dart'
-    as _i850;
-import '../../modules/change_password/data/data_source_imps/change_password/change_password_remote_data_source_imp.dart'
-    as _i1002;
-import '../../modules/change_password/data/repositories_imp/change_password/change_password_repository_imp.dart'
-    as _i767;
-import '../../modules/change_password/domain/repositories_contracts/change_password/change_password_repository.dart'
     as _i27;
+import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
+    as _i56;
+import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
+    as _i28;
+import '../../modules/change_password/data/api/api_client/change_password_api_client.dart'
+    as _i33;
+import '../../modules/change_password/data/api/api_client_provider/change_password_api_client_provider.dart'
+    as _i78;
+import '../../modules/change_password/data/data_source_contracts/change_password/change_password_local_data_source.dart'
+    as _i34;
+import '../../modules/change_password/data/data_source_contracts/change_password/change_password_remote_data_source.dart'
+    as _i36;
+import '../../modules/change_password/data/data_source_imps/change_password/change_password_local_data_source_imp.dart'
+    as _i35;
+import '../../modules/change_password/data/data_source_imps/change_password/change_password_remote_data_source_imp.dart'
+    as _i37;
+import '../../modules/change_password/data/repositories_imp/change_password/change_password_repository_imp.dart'
+    as _i39;
+import '../../modules/change_password/domain/repositories_contracts/change_password/change_password_repository.dart'
+    as _i38;
 import '../../modules/change_password/domain/use_cases/change_password/change_password_use_case.dart'
-    as _i299;
+    as _i40;
 import '../../modules/change_password/ui/view_model/change_password_screen_view_model.dart'
-    as _i211;
+    as _i65;
 import '../../modules/edit_profile/data/api/api_client/edit_profile_api_client.dart'
-    as _i328;
+    as _i5;
 import '../../modules/edit_profile/data/api/api_client_provider/edit_profile_api_client_provider.dart'
-    as _i737;
+    as _i73;
 import '../../modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_local_data_source.dart'
-    as _i500;
+    as _i43;
 import '../../modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_remote_data_source.dart'
-    as _i1032;
+    as _i6;
 import '../../modules/edit_profile/data/data_source_imps/edit_profile/edit_profile_local_data_source_imp.dart'
-    as _i909;
+    as _i44;
 import '../../modules/edit_profile/data/data_source_imps/edit_profile/edit_profile_remote_data_source_imp.dart'
-    as _i184;
+    as _i7;
 import '../../modules/edit_profile/data/repositories_imp/edit_profile/edit_profile_repository_imp.dart'
-    as _i235;
+    as _i46;
+import '../../modules/edit_profile/domain/entities/image_entity/image_entity.dart'
+    as _i15;
 import '../../modules/edit_profile/domain/repositories_contracts/edit_profile/edit_profile_repository.dart'
-    as _i586;
+    as _i45;
 import '../../modules/edit_profile/domain/use_cases/edit_profile/edit_profile_use_case.dart'
-    as _i525;
+    as _i47;
 import '../../modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart'
-    as _i958;
+    as _i69;
 import '../../modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart'
-    as _i1063;
+    as _i64;
 import '../../modules/home/UI/layouts/settings_layout/view_model/settings_view_model.dart'
-    as _i203;
-import '../../modules/home/UI/view_model/home_view_model.dart' as _i907;
-import '../../modules/home/data/api/api_client/home_api_client.dart' as _i293;
+    as _i71;
+import '../../modules/home/UI/view_model/home_view_model.dart' as _i70;
+import '../../modules/home/data/api/api_client/home_api_client.dart' as _i10;
 import '../../modules/home/data/api/api_client_provider/home_api_client_provider.dart'
-    as _i939;
-import '../../modules/home/data/api_manager/home_api_manager.dart' as _i945;
+    as _i75;
+import '../../modules/home/data/api_manager/home_api_manager.dart' as _i11;
 import '../../modules/home/data/data_source_contracts/delete_account/delete_account_remote_data_source.dart'
-    as _i747;
+    as _i41;
 import '../../modules/home/data/data_source_contracts/get_logged_user_info/logged_user_info_remote_data_source.dart'
-    as _i902;
+    as _i17;
 import '../../modules/home/data/data_source_contracts/logout/logout_remote_data_source.dart'
-    as _i691;
+    as _i59;
 import '../../modules/home/data/data_source_contracts/logout_delete_account_local_data_source.dart'
-    as _i771;
+    as _i57;
 import '../../modules/home/data/data_source_imp/delete_account/delete_account_remote_data_source_imp.dart'
-    as _i100;
+    as _i42;
 import '../../modules/home/data/data_source_imp/get_logged_user_info/logged_user_info_remote_data_source_imp.dart'
-    as _i975;
+    as _i18;
 import '../../modules/home/data/data_source_imp/logout/logout_remote_data_source_imp.dart'
-    as _i111;
+    as _i60;
 import '../../modules/home/data/data_source_imp/logout_delete_account_local_data_source_imp.dart'
-    as _i993;
+    as _i58;
 import '../../modules/home/data/repository_imp/delete_account/delete_account_repository_imp.dart'
-    as _i813;
+    as _i67;
 import '../../modules/home/data/repository_imp/get_logged_user_info/logged_user_info_repository_imp.dart'
-    as _i219;
+    as _i20;
 import '../../modules/home/data/repository_imp/logout/logout_repository_imp.dart'
-    as _i976;
+    as _i62;
 import '../../modules/home/domain/repositories_contracts/delete_account/delete_account_repository.dart'
-    as _i1062;
+    as _i66;
 import '../../modules/home/domain/repositories_contracts/get_logged_user_info/logged_user_info_repository.dart'
-    as _i410;
+    as _i19;
 import '../../modules/home/domain/repositories_contracts/logout/logout_repository.dart'
-    as _i936;
+    as _i61;
 import '../../modules/home/domain/use_cases/delete_account/delete_account_use_case.dart'
-    as _i443;
+    as _i68;
 import '../../modules/home/domain/use_cases/get_logged_user_info/get_logged_user_info_use_case.dart'
-    as _i972;
+    as _i48;
 import '../../modules/home/domain/use_cases/logout/logout_use_case.dart'
-    as _i142;
-import '../../storage/contracts/storage_service_contract.dart' as _i70;
-import '../../storage/implementation/storage_service_imp.dart' as _i622;
-import '../../storage/initializer/storage_initializer.dart' as _i661;
-import '../providers/error/error_notifier.dart' as _i393;
+    as _i63;
+import '../../storage/contracts/isar_storage_service_contract.dart' as _i14;
+import '../../storage/contracts/storage_service_contract.dart' as _i29;
+import '../../storage/implementation/isar_storage_service_image_entity_imp.dart'
+    as _i16;
+import '../../storage/implementation/storage_service_imp.dart' as _i30;
+import '../../storage/initializer/storage_initializer.dart' as _i74;
+import '../providers/error/error_notifier.dart' as _i8;
 
-extension GetItInjectableX on _i174.GetIt {
+extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
-  Future<_i174.GetIt> init({
+  Future<_i1.GetIt> init({
     String? environment,
-    _i526.EnvironmentFilter? environmentFilter,
+    _i2.EnvironmentFilter? environmentFilter,
   }) async {
-    final gh = _i526.GetItHelper(
+    final gh = _i2.GetItHelper(
       this,
       environment,
       environmentFilter,
     );
-    final storageInitializer = _$StorageInitializer();
     final dioService = _$DioService();
-    final homeApiClientProvider = _$HomeApiClientProvider();
     final editProfileApiClientProvider = _$EditProfileApiClientProvider();
-    final changePasswordApiClientProvider = _$ChangePasswordApiClientProvider();
+    final storageInitializer = _$StorageInitializer();
+    final homeApiClientProvider = _$HomeApiClientProvider();
+    final imagePickerProvider = _$ImagePickerProvider();
     final localeInitializer = _$LocaleInitializer();
-    gh.factory<_i907.HomeViewModel>(() => _i907.HomeViewModel());
-    await gh.factoryAsync<_i558.FlutterSecureStorage>(
-      () => storageInitializer.initFlutterSecureStorage(),
-      preResolve: true,
-    );
-    await gh.factoryAsync<_i361.Dio>(
+    final changePasswordApiClientProvider = _$ChangePasswordApiClientProvider();
+    gh.lazySingleton<_i3.AuthApiManager>(() => _i3.AuthApiManager());
+    await gh.factoryAsync<_i4.Dio>(
       () => dioService.provideDio(),
       preResolve: true,
     );
-    gh.singleton<_i393.ErrorNotifier>(() => _i393.ErrorNotifier());
-    gh.lazySingleton<_i945.HomeApiManager>(() => _i945.HomeApiManager());
-    gh.lazySingleton<_i208.AuthApiManager>(() => _i208.AuthApiManager());
-    gh.factory<_i186.SignUpRemoteDataSource>(() =>
-        _i522.SignUpRemoteDataSourceImp(
-            apiManager: gh<_i208.AuthApiManager>()));
-    gh.singleton<_i293.HomeApiClient>(
-        () => homeApiClientProvider.provideApiClient(gh<_i361.Dio>()));
-    gh.factory<_i328.EditProfileApiClient>(
-        () => editProfileApiClientProvider.provideApiClient(gh<_i361.Dio>()));
-    gh.factory<_i18.ChangePasswordApiClient>(
-        () => changePasswordApiClientProvider.provideClient(gh<_i361.Dio>()));
-    gh.factory<_i422.LoginRemoteDataSource>(() =>
-        _i712.LoginRemoteDataSourceImpl(
-            apiManager: gh<_i208.AuthApiManager>()));
-    gh.factory<_i747.DeleteAccountRemoteDataSource>(() =>
-        _i100.DeleteAccountRemoteDataSourceImp(gh<_i293.HomeApiClient>()));
-    gh.factory<_i324.ChangePasswordRemoteDataSource>(() =>
-        _i1002.ChangePasswordRemoteDataSourceImp(
-            gh<_i18.ChangePasswordApiClient>()));
-    gh.singleton<_i70.StorageService<_i558.FlutterSecureStorage>>(
-        () => _i622.StorageServiceImp(
-              gh<_i393.ErrorNotifier>(),
-              gh<_i558.FlutterSecureStorage>(),
+    gh.factory<_i5.EditProfileApiClient>(
+        () => editProfileApiClientProvider.provideApiClient(gh<_i4.Dio>()));
+    gh.factory<_i6.EditProfileRemoteDataSource>(() =>
+        _i7.EditProfileRemoteDataSourceImp(gh<_i5.EditProfileApiClient>()));
+    gh.lazySingleton<_i8.ErrorNotifier>(() => _i8.ErrorNotifier());
+    await gh.factoryAsync<_i9.FlutterSecureStorage>(
+      () => storageInitializer.initFlutterSecureStorage(),
+      preResolve: true,
+    );
+    gh.singleton<_i10.HomeApiClient>(
+        () => homeApiClientProvider.provideApiClient(gh<_i4.Dio>()));
+    gh.lazySingleton<_i11.HomeApiManager>(() => _i11.HomeApiManager());
+    gh.lazySingleton<_i12.ImagePicker>(
+        () => imagePickerProvider.providerInstance());
+    await gh.factoryAsync<_i13.Isar>(
+      () => storageInitializer.initIsarInstance(),
+      preResolve: true,
+    );
+    gh.factory<_i14.IsarStorageService<_i15.ImageEntity>>(
+        () => _i16.IsarStorageServiceQuestionEntityImp(gh<_i13.Isar>()));
+    gh.factory<_i17.LoggedUserInfoRemoteDataSource>(
+        () => _i18.LoggedUserInfoRemoteDataSourceImp(gh<_i10.HomeApiClient>()));
+    gh.factory<_i19.LoggedUserInfoRepository>(() =>
+        _i20.LoggedUserInfoRepositoryImp(
+            gh<_i17.LoggedUserInfoRemoteDataSource>()));
+    gh.factory<_i21.LoginRemoteDataSource>(() =>
+        _i22.LoginRemoteDataSourceImpl(apiManager: gh<_i3.AuthApiManager>()));
+    gh.factory<_i23.SignUpRemoteDataSource>(() =>
+        _i24.SignUpRemoteDataSourceImp(apiManager: gh<_i3.AuthApiManager>()));
+    gh.factory<_i25.SignUpRepository>(() => _i26.SignUpRepositoryImp(
+        signUpRemoteDataSource: gh<_i23.SignUpRemoteDataSource>()));
+    gh.factory<_i27.SignUpUseCase>(() =>
+        _i27.SignUpUseCase(signUpRepository: gh<_i25.SignUpRepository>()));
+    gh.factory<_i28.SignUpViewModel>(
+        () => _i28.SignUpViewModel(gh<_i27.SignUpUseCase>()));
+    gh.singleton<_i29.StorageService<_i9.FlutterSecureStorage>>(
+        () => _i30.StorageServiceImp(
+              gh<_i8.ErrorNotifier>(),
+              gh<_i9.FlutterSecureStorage>(),
             ));
-    gh.factory<_i500.EditProfileLocalDataSource>(() =>
-        _i909.EditProfileLocalDataSourceImp(
-            gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
     await gh.factoryAsync<String>(
       () => localeInitializer.initCurrentLocal(
-          gh<_i70.StorageService<_i558.FlutterSecureStorage>>()),
+          gh<_i29.StorageService<_i9.FlutterSecureStorage>>()),
       instanceName: 'initCurrentLocal',
       preResolve: true,
     );
-    gh.factory<_i820.ChangePasswordLocalDataSource>(() =>
-        _i850.ChangePasswordLocalDataSourceImp(
-            gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<_i771.LogoutDeleteAccountLocalDataSource>(() =>
-        _i993.LogoutDeleteAccountLocalDataSourceImp(
-            gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<bool>(() => _i678.DioService.updateDioWithToken(gh<String>()));
-    gh.factory<_i691.LogoutRemoteDataSource>(
-        () => _i111.LogoutRemoteDataSourceImp(
-              gh<_i293.HomeApiClient>(),
-              gh<_i70.StorageService<_i558.FlutterSecureStorage>>(),
+    gh.factory<_i31.AuthLocalDataSource>(() => _i32.AuthLocalDataSourceImpl(
+        storageService: gh<_i29.StorageService<_i9.FlutterSecureStorage>>()));
+    gh.factory<_i33.ChangePasswordApiClient>(
+        () => changePasswordApiClientProvider.provideClient(gh<_i4.Dio>()));
+    gh.factory<_i34.ChangePasswordLocalDataSource>(() =>
+        _i35.ChangePasswordLocalDataSourceImp(
+            gh<_i29.StorageService<_i9.FlutterSecureStorage>>()));
+    gh.factory<_i36.ChangePasswordRemoteDataSource>(() =>
+        _i37.ChangePasswordRemoteDataSourceImp(
+            gh<_i33.ChangePasswordApiClient>()));
+    gh.factory<_i38.ChangePasswordRepository>(
+        () => _i39.ChangePasswordRepositoryImp(
+              gh<_i36.ChangePasswordRemoteDataSource>(),
+              gh<_i34.ChangePasswordLocalDataSource>(),
             ));
-    gh.factory<_i1062.DeleteAccountRepository>(
-        () => _i813.DeleteAccountRepositoryImp(
-              gh<_i747.DeleteAccountRemoteDataSource>(),
-              gh<_i771.LogoutDeleteAccountLocalDataSource>(),
-            ));
-    gh.factory<_i1032.EditProfileRemoteDataSource>(() =>
-        _i184.EditProfileRemoteDataSourceImp(gh<_i328.EditProfileApiClient>()));
-    gh.factory<_i902.LoggedUserInfoRemoteDataSource>(() =>
-        _i975.LoggedUserInfoRemoteDataSourceImp(gh<_i293.HomeApiClient>()));
-    gh.factory<_i1011.SignUpRepository>(() => _i1059.SignUpRepositoryImp(
-        signUpRemoteDataSource: gh<_i186.SignUpRemoteDataSource>()));
-    gh.singleton<_i375.LocalizationManager>(() => _i375.LocalizationManager(
-          gh<_i70.StorageService<_i558.FlutterSecureStorage>>(),
+    gh.factory<_i40.ChangePasswordUseCase>(
+        () => _i40.ChangePasswordUseCase(gh<_i38.ChangePasswordRepository>()));
+    gh.factory<_i41.DeleteAccountRemoteDataSource>(
+        () => _i42.DeleteAccountRemoteDataSourceImp(gh<_i10.HomeApiClient>()));
+    gh.factory<_i43.EditProfileLocalDataSource>(() =>
+        _i44.EditProfileLocalDataSourceImp(
+            gh<_i29.StorageService<_i9.FlutterSecureStorage>>()));
+    gh.factory<_i45.EditProfileRepository>(() => _i46.EditProfileRepositoryImp(
+          gh<_i6.EditProfileRemoteDataSource>(),
+          gh<_i43.EditProfileLocalDataSource>(),
+        ));
+    gh.factory<_i47.EditProfileUseCase>(
+        () => _i47.EditProfileUseCase(gh<_i45.EditProfileRepository>()));
+    gh.factory<_i48.GetLoggedUserInfoUseCase>(() =>
+        _i48.GetLoggedUserInfoUseCase(gh<_i19.LoggedUserInfoRepository>()));
+    gh.factory<_i49.ImagePickingService>(() => _i50.ImagePickingServiceImp(
+          gh<_i12.ImagePicker>(),
+          gh<_i8.ErrorNotifier>(),
+          gh<_i14.IsarStorageService<_i15.ImageEntity>>(),
+        ));
+    gh.singleton<_i51.LocalizationManager>(() => _i51.LocalizationManager(
+          gh<_i29.StorageService<_i9.FlutterSecureStorage>>(),
           gh<String>(instanceName: 'initCurrentLocal'),
         ));
-    gh.factory<_i74.AuthLocalDataSource>(() => _i907.AuthLocalDataSourceImpl(
-        storageService: gh<_i70.StorageService<_i558.FlutterSecureStorage>>()));
-    gh.factory<_i936.LogoutRepository>(() => _i976.LogoutRepositoryImp(
-          gh<_i691.LogoutRemoteDataSource>(),
-          gh<_i771.LogoutDeleteAccountLocalDataSource>(),
+    gh.factory<_i52.LocalizationUseCase>(
+        () => _i52.LocalizationUseCase(gh<_i51.LocalizationManager>()));
+    gh.factory<_i53.LoginRepo>(() => _i54.LoginRepoImpl(
+          authRemoteDataSource: gh<_i21.LoginRemoteDataSource>(),
+          authLocalDataSource: gh<_i31.AuthLocalDataSource>(),
         ));
-    gh.factory<_i142.LogoutUseCase>(
-        () => _i142.LogoutUseCase(gh<_i936.LogoutRepository>()));
-    gh.factory<_i367.SignUpUseCase>(() =>
-        _i367.SignUpUseCase(signUpRepository: gh<_i1011.SignUpRepository>()));
-    gh.factory<_i410.LoggedUserInfoRepository>(() =>
-        _i219.LoggedUserInfoRepositoryImp(
-            gh<_i902.LoggedUserInfoRemoteDataSource>()));
-    gh.factory<_i399.SignUpViewModel>(
-        () => _i399.SignUpViewModel(gh<_i367.SignUpUseCase>()));
-    gh.factory<_i443.DeleteAccountUseCase>(
-        () => _i443.DeleteAccountUseCase(gh<_i1062.DeleteAccountRepository>()));
-    gh.factory<_i964.LocalizationUseCase>(
-        () => _i964.LocalizationUseCase(gh<_i375.LocalizationManager>()));
-    gh.factory<_i450.LoginRepo>(() => _i914.LoginRepoImpl(
-          authRemoteDataSource: gh<_i422.LoginRemoteDataSource>(),
-          authLocalDataSource: gh<_i74.AuthLocalDataSource>(),
-        ));
-    gh.factory<_i972.GetLoggedUserInfoUseCase>(() =>
-        _i972.GetLoggedUserInfoUseCase(gh<_i410.LoggedUserInfoRepository>()));
-    gh.factory<_i543.LoginUseCase>(
-        () => _i543.LoginUseCase(authRepo: gh<_i450.LoginRepo>()));
-    gh.factory<_i108.LoginViewModel>(
-        () => _i108.LoginViewModel(loginUseCase: gh<_i543.LoginUseCase>()));
-    gh.factory<_i27.ChangePasswordRepository>(
-        () => _i767.ChangePasswordRepositoryImp(
-              gh<_i324.ChangePasswordRemoteDataSource>(),
-              gh<_i820.ChangePasswordLocalDataSource>(),
+    gh.factory<_i55.LoginUseCase>(
+        () => _i55.LoginUseCase(authRepo: gh<_i53.LoginRepo>()));
+    gh.factory<_i56.LoginViewModel>(
+        () => _i56.LoginViewModel(loginUseCase: gh<_i55.LoginUseCase>()));
+    gh.factory<_i57.LogoutDeleteAccountLocalDataSource>(() =>
+        _i58.LogoutDeleteAccountLocalDataSourceImp(
+            gh<_i29.StorageService<_i9.FlutterSecureStorage>>()));
+    gh.factory<_i59.LogoutRemoteDataSource>(
+        () => _i60.LogoutRemoteDataSourceImp(
+              gh<_i10.HomeApiClient>(),
+              gh<_i29.StorageService<_i9.FlutterSecureStorage>>(),
             ));
-    gh.factory<_i586.EditProfileRepository>(
-        () => _i235.EditProfileRepositoryImp(
-              gh<_i1032.EditProfileRemoteDataSource>(),
-              gh<_i500.EditProfileLocalDataSource>(),
-            ));
-    gh.factory<_i203.SettingsViewModel>(() => _i203.SettingsViewModel(
-          gh<_i142.LogoutUseCase>(),
-          gh<_i443.DeleteAccountUseCase>(),
+    gh.factory<_i61.LogoutRepository>(() => _i62.LogoutRepositoryImp(
+          gh<_i59.LogoutRemoteDataSource>(),
+          gh<_i57.LogoutDeleteAccountLocalDataSource>(),
         ));
-    gh.factory<_i299.ChangePasswordUseCase>(
-        () => _i299.ChangePasswordUseCase(gh<_i27.ChangePasswordRepository>()));
-    gh.factory<_i1063.ProfileViewModel>(
-        () => _i1063.ProfileViewModel(gh<_i972.GetLoggedUserInfoUseCase>()));
-    gh.factory<_i211.ChangePasswordScreenViewModel>(() =>
-        _i211.ChangePasswordScreenViewModel(gh<_i299.ChangePasswordUseCase>()));
-    gh.factory<_i525.EditProfileUseCase>(
-        () => _i525.EditProfileUseCase(gh<_i586.EditProfileRepository>()));
-    gh.factory<_i958.EditProfileScreenViewModel>(
-        () => _i958.EditProfileScreenViewModel(gh<_i525.EditProfileUseCase>()));
+    gh.factory<_i63.LogoutUseCase>(
+        () => _i63.LogoutUseCase(gh<_i61.LogoutRepository>()));
+    gh.factory<_i64.ProfileViewModel>(() => _i64.ProfileViewModel(
+          gh<_i48.GetLoggedUserInfoUseCase>(),
+          gh<_i49.ImagePickingService>(),
+        ));
+    gh.factory<_i65.ChangePasswordScreenViewModel>(() =>
+        _i65.ChangePasswordScreenViewModel(gh<_i40.ChangePasswordUseCase>()));
+    gh.factory<_i66.DeleteAccountRepository>(
+        () => _i67.DeleteAccountRepositoryImp(
+              gh<_i41.DeleteAccountRemoteDataSource>(),
+              gh<_i57.LogoutDeleteAccountLocalDataSource>(),
+            ));
+    gh.factory<_i68.DeleteAccountUseCase>(
+        () => _i68.DeleteAccountUseCase(gh<_i66.DeleteAccountRepository>()));
+    gh.factory<_i69.EditProfileScreenViewModel>(
+        () => _i69.EditProfileScreenViewModel(
+              gh<_i47.EditProfileUseCase>(),
+              gh<_i49.ImagePickingService>(),
+            ));
+    gh.factory<_i70.HomeViewModel>(
+        () => _i70.HomeViewModel(gh<_i49.ImagePickingService>()));
+    gh.factory<_i71.SettingsViewModel>(() => _i71.SettingsViewModel(
+          gh<_i63.LogoutUseCase>(),
+          gh<_i68.DeleteAccountUseCase>(),
+        ));
     return this;
   }
 }
 
-class _$StorageInitializer extends _i661.StorageInitializer {}
-
-class _$DioService extends _i678.DioService {}
-
-class _$HomeApiClientProvider extends _i939.HomeApiClientProvider {}
+class _$DioService extends _i72.DioService {}
 
 class _$EditProfileApiClientProvider
-    extends _i737.EditProfileApiClientProvider {}
+    extends _i73.EditProfileApiClientProvider {}
+
+class _$StorageInitializer extends _i74.StorageInitializer {}
+
+class _$HomeApiClientProvider extends _i75.HomeApiClientProvider {}
+
+class _$ImagePickerProvider extends _i76.ImagePickerProvider {}
+
+class _$LocaleInitializer extends _i77.LocaleInitializer {}
 
 class _$ChangePasswordApiClientProvider
-    extends _i1050.ChangePasswordApiClientProvider {}
-
-class _$LocaleInitializer extends _i852.LocaleInitializer {}
+    extends _i78.ChangePasswordApiClientProvider {}

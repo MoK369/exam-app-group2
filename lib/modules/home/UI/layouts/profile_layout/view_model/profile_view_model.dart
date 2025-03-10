@@ -1,5 +1,6 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/core/constants/form_keys/text_form_fields_keys.dart';
+import 'package:exam_app_group2/image_picking/contracts/image_picking_service_contract.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entities/user/user_entity.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/view_model/profile_intent.dart';
@@ -19,7 +20,10 @@ class ProfileViewModel extends Cubit<ProfileState> {
 
   GetLoggedUserInfoUseCase _getLoggedUserInfoUseCase;
 
-  ProfileViewModel(this._getLoggedUserInfoUseCase) : super(ProfileState()) {
+  ImagePickingService imagePickingService;
+
+  ProfileViewModel(this._getLoggedUserInfoUseCase, this.imagePickingService)
+      : super(ProfileState()) {
     _initControllers();
   }
 
@@ -47,15 +51,15 @@ class ProfileViewModel extends Cubit<ProfileState> {
   }
 
   void _getLoggedUserInfo() async {
-    emit(ProfileState(profileStatus: ProfileStatus.loading));
+    emit(state.copyWith(profileStatus: ProfileStatus.loading));
     var useCaseResult = await _getLoggedUserInfoUseCase();
     switch (useCaseResult) {
       case Success<LoggedUserInfoEntity>():
         authEntity.user = useCaseResult.data.user;
         _initControllers();
-        emit(ProfileState(profileStatus: ProfileStatus.success));
+        emit(state.copyWith(profileStatus: ProfileStatus.success));
       case Error<LoggedUserInfoEntity>():
-        emit(ProfileState(
+        emit(state.copyWith(
             profileStatus: ProfileStatus.error, error: useCaseResult.error));
     }
   }

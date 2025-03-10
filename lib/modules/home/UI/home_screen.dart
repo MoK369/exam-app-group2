@@ -8,6 +8,7 @@ import 'package:exam_app_group2/modules/home/UI/layouts/settings_layout/settings
 import 'package:exam_app_group2/modules/home/UI/view_model/home_view_model.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../authentication/domain/entities/authentication/authentication_response_entity.dart';
 
@@ -26,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
   int currentSelectedItemIndex = 0;
   final PageController pageViewController = PageController(initialPage: 0);
-  HomeViewModel homeViewModel = getIt.get<HomeViewModel>();
+  late HomeViewModel homeViewModel;
   List<Widget> layouts = [
     ExploreLayout(),
     ResultLayout(),
@@ -38,6 +39,7 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
   void initState() {
     super.initState();
     authEntity = widget.authEntity;
+    homeViewModel = getIt.get<HomeViewModel>();
     homeViewModel.updateDioWithToken(authEntity.token ?? "");
   }
 
@@ -60,48 +62,51 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: currentSelectedItemIndex,
-        onDestinationSelected: (value) {
-          setState(() {
-            currentSelectedItemIndex = value;
-            pageViewController.jumpToPage(currentSelectedItemIndex);
-          });
-        },
-        destinations: [
-          NavigationDestination(
-            icon: const ImageIcon(AssetImage(AssetsPaths.homeIcon)),
-            label: appLocalizations.explore,
-          ),
-          NavigationDestination(
-            icon: Transform.scale(
-              scale: 1.3,
-              child: const ImageIcon(AssetImage(AssetsPaths.resultsIcon)),
+    return ChangeNotifierProvider(
+      create: (context) => homeViewModel,
+      child: Scaffold(
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: currentSelectedItemIndex,
+          onDestinationSelected: (value) {
+            setState(() {
+              currentSelectedItemIndex = value;
+              pageViewController.jumpToPage(currentSelectedItemIndex);
+            });
+          },
+          destinations: [
+            NavigationDestination(
+              icon: const ImageIcon(AssetImage(AssetsPaths.homeIcon)),
+              label: appLocalizations.explore,
             ),
-            label: appLocalizations.result,
-          ),
-          NavigationDestination(
-            icon: const ImageIcon(AssetImage(AssetsPaths.profileIcon)),
-            label: appLocalizations.profile,
-          ),
-          NavigationDestination(
-            icon: const Icon(
-              Icons.settings,
-              size: 25,
+            NavigationDestination(
+              icon: Transform.scale(
+                scale: 1.3,
+                child: const ImageIcon(AssetImage(AssetsPaths.resultsIcon)),
+              ),
+              label: appLocalizations.result,
             ),
-            label: appLocalizations.settings,
-          ),
-        ],
-      ),
-      body: PageView(
-        controller: pageViewController,
-        onPageChanged: (value) {
-          setState(() {
-            currentSelectedItemIndex = value;
-          });
-        },
-        children: layouts,
+            NavigationDestination(
+              icon: const ImageIcon(AssetImage(AssetsPaths.profileIcon)),
+              label: appLocalizations.profile,
+            ),
+            NavigationDestination(
+              icon: const Icon(
+                Icons.settings,
+                size: 25,
+              ),
+              label: appLocalizations.settings,
+            ),
+          ],
+        ),
+        body: PageView(
+          controller: pageViewController,
+          onPageChanged: (value) {
+            setState(() {
+              currentSelectedItemIndex = value;
+            });
+          },
+          children: layouts,
+        ),
       ),
     );
   }

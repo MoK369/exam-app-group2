@@ -105,7 +105,7 @@ class ChangePasswordScreenViewModel extends Cubit<ChangePasswordState> {
   }
 
   void _updateDioWithToken(String newToken) {
-    DioService.updateDioWithToken(newToken);
+    DioServiceExtension.updateDioWithToken(newToken);
   }
 
   void _onOneOfThePasswordsVisibilityClick(String passwordFormKey) {

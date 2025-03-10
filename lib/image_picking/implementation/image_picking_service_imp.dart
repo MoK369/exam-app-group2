@@ -1,6 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/image_picking/constants/image_picking_constants.dart';
 import 'package:exam_app_group2/image_picking/contracts/image_picking_service_contract.dart';
+import 'package:exam_app_group2/modules/edit_profile/domain/entities/image_entity/image_entity.dart';
+import 'package:exam_app_group2/storage/contracts/isar_storage_service_contract.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,8 +12,10 @@ import 'package:injectable/injectable.dart';
 class ImagePickingServiceImp implements ImagePickingService {
   final ImagePicker picker;
   final ErrorNotifier errorNotifier;
+  final IsarStorageService<ImageEntity> isarImageStorageService;
 
-  ImagePickingServiceImp(this.picker, this.errorNotifier);
+  ImagePickingServiceImp(
+      this.picker, this.errorNotifier, this.isarImageStorageService);
 
   @override
   Future<XFile?> pickImageFromGallery() async {
@@ -24,11 +30,23 @@ class ImagePickingServiceImp implements ImagePickingService {
   }
 
   @override
-  Future<void> saveImageLocallyAsBinary(XFile? imageFile) async {
+  Future<void> saveImageLocallyAsBinary(
+      {XFile? imageFile, required String emailId}) async {
     if (imageFile == null) {
       errorNotifier.setError(ImagePickingConstants.noImageSelected);
     } else {
-      final imageData = await imageFile.readAsBytes();
+      final imageData = (await imageFile.readAsBytes()).toList();
+      isarImageStorageService
+          .write(ImageEntity(imageData: imageData, emailId: emailId));
     }
+  }
+
+  @override
+  Future<Uint8List?> getImageBytes(String emailId) async {
+    final imageBytes = await isarImageStorageService.findBy(emailId);
+    if (imageBytes?.imageData != null) {
+      return Uint8List.fromList(imageBytes!.imageData);
+    }
+    return null;
   }
 }

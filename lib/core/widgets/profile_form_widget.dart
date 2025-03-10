@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/constants/assets/assets_paths.dart';
@@ -28,6 +30,8 @@ class ProfileFormWidget extends StatefulWidget {
 
   final bool areTextFieldsReadOnly;
 
+  final Uint8List? avatarImage;
+
   const ProfileFormWidget(
       {super.key,
       this.formKey,
@@ -36,6 +40,7 @@ class ProfileFormWidget extends StatefulWidget {
       this.onTextFieldTap,
       this.onAvatarTap,
       this.onChangePasswordClick,
+      this.avatarImage,
       this.userNameController,
       this.firstNameController,
       this.lastNameController,
@@ -83,9 +88,12 @@ class _ProfileFormWidgetState
                   child: Stack(
                     alignment: Alignment.bottomRight,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 48,
-                        child: Icon(
+                        foregroundImage: widget.avatarImage != null
+                            ? MemoryImage(widget.avatarImage!)
+                            : null,
+                        child: const Icon(
                           Icons.person,
                           size: 40,
                         ),

@@ -28,26 +28,15 @@ abstract class DioService {
     );
     return dio;
   }
+}
 
-  @factoryMethod
-  static bool updateDioWithToken(String token) {
+extension DioServiceExtension on DioService {
+  static void updateDioWithToken(String token) {
     Dio dio = getIt.get<Dio>();
     BaseOptions newBaseOptions = BaseOptions(
         connectTimeout: const Duration(seconds: 30),
         baseUrl: ApisEndpoints.baseUrl,
         headers: {"token": token});
     dio.options = newBaseOptions;
-    return true;
   }
 }
-
-// extension DioServiceFunctionsUnrelatedToInjectable on DioService {
-//   static void updateDioWithToken(String token) {
-//     Dio dio = getIt.get<Dio>();
-//     BaseOptions newBaseOptions = BaseOptions(
-//         connectTimeout: const Duration(seconds: 30),
-//         baseUrl: ApisEndpoints.baseUrl,
-//         headers: {"token": token});
-//     dio.options = newBaseOptions;
-//   }
-// }

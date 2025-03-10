@@ -35,7 +35,7 @@ class GenerateRoute {
       case DefinedRoutes.editProfileRoutName:
         return MaterialPageRoute<ProfileBackValues>(
           builder: (context) => EditProfileScreen(
-            authEntity: (args as AuthenticationResponseEntity),
+            editProfileScreenParameters: (args as EditProfileScreenParameters),
           ),
         );
       case DefinedRoutes.changePasswordRoutName:

@@ -5,12 +5,15 @@ import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/profile_form_widget.dart';
+import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/view_model/profile_intent.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/view_model/profile_state.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart';
+import 'package:exam_app_group2/modules/home/UI/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class ProfileLayout extends StatefulWidget {
   const ProfileLayout({super.key});
@@ -21,7 +24,7 @@ class ProfileLayout extends StatefulWidget {
 
 class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
   ProfileViewModel profileViewModel = getIt.get<ProfileViewModel>();
-
+  late HomeViewModel homeViewModel;
   @override
   void initState() {
     super.initState();
@@ -31,6 +34,7 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
 
   @override
   Widget build(BuildContext context) {
+    homeViewModel = Provider.of<HomeViewModel>(context);
     return BlocProvider(
       create: (context) => profileViewModel,
       child: Scaffold(
@@ -46,6 +50,7 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
               case ProfileStatus.idle:
               case ProfileStatus.success:
                 return ProfileFormWidget(
+                  avatarImage: homeViewModel.avatarImage,
                   userNameController: profileViewModel.userNameController,
                   firstNameController: profileViewModel.firstNameController,
                   lastNameController: profileViewModel.lastNameController,
@@ -79,12 +84,14 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
   void navigateToEditScreen() async {
     Navigator.pushNamed<ProfileBackValues>(
             context, DefinedRoutes.editProfileRoutName,
-            arguments: authEntity)
+            arguments: EditProfileScreenParameters(
+                authEntity: authEntity, avatarImage: homeViewModel.avatarImage))
         .then(
       (editScreenBackValues) {
         if (editScreenBackValues?.profileUpdatedAtLeastOnce == true) {
           print("Getting User info========");
           profileViewModel.doIntent(GetLoggedUserInfo());
+          homeViewModel.getAvatarImage(authEntity.user?.email ?? "");
         }
         if (editScreenBackValues?.newToken != null) {
           whenThereIsANewTokenBack(editScreenBackValues!.newToken!);
