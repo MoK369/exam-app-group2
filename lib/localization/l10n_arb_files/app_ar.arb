@@ -69,6 +69,16 @@
   "currentPassword": "كلمة المرور الحالية",
   "newPassword": "كلمة المرور الجديدة",
   "language": "اللغة",
-  "cancelWord": "إلغاء"
+  "cancelWord": "إلغاء",
+  "logout": "تسجيل الخروج",
+  "deleteAccount": "حذف الحساب",
+  "loggedOutSuccessfully": "تم تسجيل الخروج بنجاح!",
+  "confirm": "تأكيد",
+  "deletingAccountAlertMessage": "هل أنت متأكد أنك تريد حذف حسابك نهائيًا؟\uD83E\uDD28",
+  "deletedAccountSuccessfully": "تم حذف الحساب بنجاح!",
+  "editedProfileSuccessfully": "تم تعديل الملف الشخصي بنجاح!",
+  "profileNotChangeMessage": "لم يتم تغيير الملف الشخصي!",
+  "changedPasswordSuccessfully": "تم تغيير كلمة المرور بنجاح!",
+  "oldPasswordSameAsNewPassword": "كلمة المرور القديمة والجديدة هي نفسها!"
 
 }
