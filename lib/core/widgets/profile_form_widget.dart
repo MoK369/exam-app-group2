@@ -1,10 +1,9 @@
-import 'dart:typed_data';
-
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/constants/assets/assets_paths.dart';
 import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
+import 'package:exam_app_group2/modules/home/UI/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,7 +29,7 @@ class ProfileFormWidget extends StatefulWidget {
 
   final bool areTextFieldsReadOnly;
 
-  final Uint8List? avatarImage;
+  final AvatarState? avatarState;
 
   const ProfileFormWidget(
       {super.key,
@@ -40,7 +39,7 @@ class ProfileFormWidget extends StatefulWidget {
       this.onTextFieldTap,
       this.onAvatarTap,
       this.onChangePasswordClick,
-      this.avatarImage,
+      this.avatarState,
       this.userNameController,
       this.firstNameController,
       this.lastNameController,
@@ -80,40 +79,51 @@ class _ProfileFormWidgetState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              InkWell(
-                onTap: widget.onAvatarTap,
-                hoverColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                child: Center(
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      CircleAvatar(
+              Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    InkWell(
+                      onTap: widget.onAvatarTap,
+                      hoverColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      child: CircleAvatar(
                         radius: 48,
-                        foregroundImage: widget.avatarImage != null
-                            ? MemoryImage(widget.avatarImage!)
+                        foregroundImage: widget.avatarState?.avatarImage != null
+                            ? MemoryImage(widget.avatarState!.avatarImage!)
                             : null,
-                        child: const Icon(
-                          Icons.person,
-                          size: 40,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            const Icon(
+                              Icons.person,
+                              size: 40,
+                            ),
+                            if (widget.avatarState?.avatarLoading == true)
+                              Transform.scale(
+                                  scale: 1.4,
+                                  child: const CircularProgressIndicator(
+                                    strokeWidth: 2.5,
+                                  ))
+                          ],
                         ),
                       ),
-                      Positioned(
-                        bottom: 6,
-                        child: Container(
-                          padding: EdgeInsets.all(4.r),
-                          decoration: BoxDecoration(
-                              color: AppColors.blue[40],
-                              borderRadius: BorderRadius.circular(6)),
-                          child: const ImageIcon(
-                            AssetImage(AssetsPaths.cameraIcon),
-                            size: 18,
-                            color: AppColors.white,
-                          ),
+                    ),
+                    Positioned(
+                      bottom: 6,
+                      child: Container(
+                        padding: EdgeInsets.all(4.r),
+                        decoration: BoxDecoration(
+                            color: AppColors.blue[40],
+                            borderRadius: BorderRadius.circular(6)),
+                        child: const ImageIcon(
+                          AssetImage(AssetsPaths.cameraIcon),
+                          size: 18,
+                          color: AppColors.white,
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
               SizedBox(

@@ -8,8 +8,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class HomeViewModel extends ChangeNotifier {
-  Uint8List? avatarImage;
-
+  AvatarState avatarState = AvatarState();
   ImagePickingService imagePickingService;
 
   HomeViewModel(this.imagePickingService) {
@@ -21,10 +20,20 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   Future<void> getAvatarImage(String email) async {
+    avatarState.avatarLoading = true;
+    notifyListeners();
     final imageBytes = await imagePickingService.getImageBytes(email);
     if (imageBytes != null) {
-      avatarImage = imageBytes;
-      notifyListeners();
+      avatarState.avatarImage = imageBytes;
     }
+    avatarState.avatarLoading = false;
+    notifyListeners();
   }
+}
+
+class AvatarState {
+  Uint8List? avatarImage;
+  bool avatarLoading;
+
+  AvatarState({this.avatarImage, this.avatarLoading = false});
 }

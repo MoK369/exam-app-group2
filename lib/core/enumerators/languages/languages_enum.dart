@@ -5,7 +5,7 @@ enum LanguagesEnum {
 
 extension LanguagesEnumExtension on LanguagesEnum {
   String getLanguageCode() {
-    var result = this.toString().split(".").toList()[1];
+    var result = toString().split(".").toList()[1];
     return result;
   }
 }

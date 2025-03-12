@@ -48,10 +48,11 @@ class IsarStorageServiceQuestionEntityImp
   }
 
   @override
-  Future<void> updateEmail(String emailId) async {
-    var existingEntity = await findBy(emailId);
+  Future<void> updateEmail(
+      {required String oldEmailId, required String newEmailId}) async {
+    var existingEntity = await findBy(oldEmailId);
     if (existingEntity != null) {
-      existingEntity.emailId = emailId;
+      existingEntity.emailId = newEmailId;
       await isar.writeTxn(() async {
         await isar.imageEntitys.put(existingEntity);
       });

@@ -21,7 +21,7 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
   late final Map<String, FocusNode> _signUpFieldsFocusNodes;
 
   bool profileHasChanged = false;
-  bool profileUpdatedAtLeastOnce = false;
+  bool profileUpdatedAtLeastOnce = false, avatarUpdatedAtLeastOnce = false;
 
   EditProfileUseCase editProfileUseCase;
   ImagePickingService imagePickingService;
@@ -58,7 +58,9 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
     avatarImage = newImage;
   }
 
-  void _editProfile(EditProfileRequestEntity editProfileRequestEntity) async {
+  void _editProfile(
+      {required EditProfileRequestEntity editProfileRequestEntity,
+      required AuthenticationResponseEntity oldAuthEntity}) async {
     FocusManager.instance.primaryFocus?.unfocus();
     if (!profileHasChanged) {
       emit(
@@ -72,9 +74,16 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
       var useCaseResult = await editProfileUseCase(editProfileRequestEntity);
       switch (useCaseResult) {
         case Success<EditProfileResponseEntity>():
-          emit(state.copyWith(editProfileState: EditStatus.success));
           profileHasChanged = false;
           if (!profileUpdatedAtLeastOnce) profileUpdatedAtLeastOnce = true;
+          print(
+              "Email changed ${oldAuthEntity.user!.email != editProfileRequestEntity.email}");
+          if (oldAuthEntity.user!.email != editProfileRequestEntity.email) {
+            await _whenEmailChanges(
+                oldEmailId: oldAuthEntity.user!.email!,
+                newEmailId: editProfileRequestEntity.email!);
+          }
+          emit(state.copyWith(editProfileState: EditStatus.success));
         case Error<EditProfileResponseEntity>():
           emit(state.copyWith(
               editProfileState: EditStatus.error, error: useCaseResult.error));
@@ -96,7 +105,7 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
     if (_validateForm()) {
       final oldUser = oldAuthEntity.user;
       _editProfile(
-        EditProfileRequestEntity(
+        editProfileRequestEntity: EditProfileRequestEntity(
           username: _checkEquality(oldUser?.username, userNameController.text),
           firstName:
               _checkEquality(oldUser?.firstName, firstNameController.text),
@@ -104,8 +113,15 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
           email: _checkEquality(oldUser?.email, emailController.text),
           phone: _checkEquality(oldUser?.phone, phoneNumberController.text),
         ),
+        oldAuthEntity: oldAuthEntity,
       );
     }
+  }
+
+  Future<void> _whenEmailChanges(
+      {required String oldEmailId, required String newEmailId}) {
+    return imagePickingService.updateImageEmailId(
+        oldEmailId: oldEmailId, newEmailId: newEmailId);
   }
 
   String? _checkEquality(
@@ -154,7 +170,7 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
       await imagePickingService.saveImageLocallyAsBinary(
           imageFile: imageFile, emailId: email);
       final imageBytes = await imageFile.readAsBytes();
-      if (!profileUpdatedAtLeastOnce) profileUpdatedAtLeastOnce = true;
+      if (!avatarUpdatedAtLeastOnce) avatarUpdatedAtLeastOnce = true;
       _initAvatarImage(imageBytes);
       emit(state.copyWith(avatarImage: imageBytes));
     }

@@ -4,16 +4,13 @@ import 'package:exam_app_group2/modules/home/data/api/api_client/home_api_client
 import 'package:exam_app_group2/modules/home/data/data_source_contracts/logout/logout_remote_data_source.dart';
 import 'package:exam_app_group2/modules/home/data/models/logout_and_delete/logout_and_delete_response_dto.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/logout_and_delete/logout_delete_entity.dart';
-import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: LogoutRemoteDataSource)
 class LogoutRemoteDataSourceImp implements LogoutRemoteDataSource {
   HomeApiClient _homeApiClient;
-  StorageService<FlutterSecureStorage> _storageService;
 
-  LogoutRemoteDataSourceImp(this._homeApiClient, this._storageService);
+  LogoutRemoteDataSourceImp(this._homeApiClient);
 
   @override
   Future<ApiResult<LogoutAndDeleteEntity>> logout() async {

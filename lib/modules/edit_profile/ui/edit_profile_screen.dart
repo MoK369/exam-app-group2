@@ -13,6 +13,7 @@ import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_state.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_layout.dart';
+import 'package:exam_app_group2/modules/home/UI/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,7 +81,9 @@ class _EditProfileScreenState
                     context,
                     ProfileBackValues(
                         profileUpdatedAtLeastOnce:
-                            editProfileViewModel.profileUpdatedAtLeastOnce));
+                            editProfileViewModel.profileUpdatedAtLeastOnce,
+                        avatarUpdatedAtLeastOnce:
+                            editProfileViewModel.avatarUpdatedAtLeastOnce));
               },
             ),
             body: BlocBuilder<EditProfileScreenViewModel, EditProfileState>(
@@ -96,7 +99,8 @@ class _EditProfileScreenState
                 return RPadding(
                   padding: const EdgeInsets.symmetric(vertical: 18),
                   child: ProfileFormWidget(
-                    avatarImage: editProfileViewModel.avatarImage,
+                    avatarState: AvatarState(
+                        avatarImage: editProfileViewModel.avatarImage),
                     formKey: editProfileViewModel.formKey,
                     userNameController: editProfileViewModel.userNameController,
                     firstNameController:

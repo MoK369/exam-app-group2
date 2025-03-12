@@ -27,10 +27,10 @@ class ProfileViewModel extends Cubit<ProfileState> {
     _initControllers();
   }
 
-  void doIntent(ProfileIntent intent) {
+  Future<void> doIntent(ProfileIntent intent) async {
     switch (intent) {
       case GetLoggedUserInfo():
-        _getLoggedUserInfo();
+        await _getLoggedUserInfo();
         break;
       case DisposeControllers():
         _disposeControllers();
@@ -50,7 +50,7 @@ class ProfileViewModel extends Cubit<ProfileState> {
     };
   }
 
-  void _getLoggedUserInfo() async {
+  Future<void> _getLoggedUserInfo() async {
     emit(state.copyWith(profileStatus: ProfileStatus.loading));
     var useCaseResult = await _getLoggedUserInfoUseCase();
     switch (useCaseResult) {

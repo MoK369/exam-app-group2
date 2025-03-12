@@ -40,7 +40,7 @@ class GenerateRoute {
         );
       case DefinedRoutes.changePasswordRoutName:
         return MaterialPageRoute<ProfileBackValues>(
-          builder: (context) => ChangePasswordScreen(),
+          builder: (context) => const ChangePasswordScreen(),
         );
       default:
         return _errorRoute();

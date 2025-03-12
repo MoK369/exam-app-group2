@@ -9,4 +9,7 @@ abstract interface class ImagePickingService {
       {XFile? imageFile, required String emailId});
 
   Future<Uint8List?> getImageBytes(String emailId);
+
+  Future<void> updateImageEmailId(
+      {required String oldEmailId, required String newEmailId});
 }

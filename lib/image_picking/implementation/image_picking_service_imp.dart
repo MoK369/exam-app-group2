@@ -49,4 +49,11 @@ class ImagePickingServiceImp implements ImagePickingService {
     }
     return null;
   }
+
+  @override
+  Future<void> updateImageEmailId(
+      {required String oldEmailId, required String newEmailId}) {
+    return isarImageStorageService.updateEmail(
+        oldEmailId: oldEmailId, newEmailId: newEmailId);
+  }
 }

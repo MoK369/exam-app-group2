@@ -50,7 +50,7 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
               case ProfileStatus.idle:
               case ProfileStatus.success:
                 return ProfileFormWidget(
-                  avatarImage: homeViewModel.avatarImage,
+                  avatarState: homeViewModel.avatarState,
                   userNameController: profileViewModel.userNameController,
                   firstNameController: profileViewModel.firstNameController,
                   lastNameController: profileViewModel.lastNameController,
@@ -85,13 +85,17 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
     Navigator.pushNamed<ProfileBackValues>(
             context, DefinedRoutes.editProfileRoutName,
             arguments: EditProfileScreenParameters(
-                authEntity: authEntity, avatarImage: homeViewModel.avatarImage))
+                authEntity: authEntity,
+                avatarImage: homeViewModel.avatarState.avatarImage))
         .then(
-      (editScreenBackValues) {
+      (editScreenBackValues) async {
         if (editScreenBackValues?.profileUpdatedAtLeastOnce == true) {
           print("Getting User info========");
-          profileViewModel.doIntent(GetLoggedUserInfo());
-          homeViewModel.getAvatarImage(authEntity.user?.email ?? "");
+          await profileViewModel.doIntent(GetLoggedUserInfo());
+        }
+        if (editScreenBackValues?.avatarUpdatedAtLeastOnce == true) {
+          print("Updating Avatar =========");
+          await homeViewModel.getAvatarImage(authEntity.user?.email ?? "");
         }
         if (editScreenBackValues?.newToken != null) {
           whenThereIsANewTokenBack(editScreenBackValues!.newToken!);
@@ -114,7 +118,11 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
 
 class ProfileBackValues {
   bool? profileUpdatedAtLeastOnce;
+  bool? avatarUpdatedAtLeastOnce;
   String? newToken;
 
-  ProfileBackValues({this.profileUpdatedAtLeastOnce, this.newToken});
+  ProfileBackValues(
+      {this.profileUpdatedAtLeastOnce,
+      this.avatarUpdatedAtLeastOnce,
+      this.newToken});
 }
