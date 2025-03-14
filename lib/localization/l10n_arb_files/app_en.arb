@@ -82,5 +82,18 @@
   "profileNotChangeMessage": "Profile has not been changed!",
   "changedPasswordSuccessfully": "Password Changed Successfully!",
   "oldPasswordSameAsNewPassword": "Old password and new password are the same!",
-  "photosPermissionDenied": "Photos Permission has not been granted!"
+  "photosPermissionDenied": "Photos Permission has not been granted!",
+  "survey": "Survey",
+  "browseBySubject": "Browse by Subject",
+  "noExamsFound": "No exams found",
+  "search": "Search",
+  "exam": "Exam",
+  "viewScore": "View Score",
+  "examTimeOut": "Time out !! ",
+  "examScore" : "Exam Score",
+  "correct" : "Correct",
+  "inCorrect" : "InCorrect",
+  "showResult" : "Show Result",
+  "startAgain" : "Start Again",
+  "yourScore" : "Your Score"
 }

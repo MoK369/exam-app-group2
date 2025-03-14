@@ -7,4 +7,5 @@ abstract interface class IsarStorageService<T> {
       {required String oldEmailId, required String newEmailId});
 
   Future<void> delete(int id);
+  Future<List<T>?> get();
 }

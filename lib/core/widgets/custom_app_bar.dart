@@ -11,15 +11,22 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   /// initialize this parameter when using onChangeLocaleButtonClick()
   final String? widgetNameForErrorNotifier;
   final void Function()? onChangeLocaleButtonClick, onLeadingIconButtonClick;
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
+  final List<Widget>? actions;
 
-  CustomAppBar(
-      {super.key,
-      required this.title,
-      this.showLeadingIcon = true,
-      this.showLocaleButton = false,
-      this.widgetNameForErrorNotifier,
+  CustomAppBar({
+    this.padding,
+    this.textStyle,
+    this.actions,
+    super.key,
+    required this.title,
+    this.showLeadingIcon = true,
+    this.showLocaleButton = false,
+    this.widgetNameForErrorNotifier,
       this.onLeadingIconButtonClick,
-      this.onChangeLocaleButtonClick});
+      this.onChangeLocaleButtonClick,
+  });
 
   @override
   Widget customBuild(BuildContext context) {
@@ -46,7 +53,8 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
         title,
         style: theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
       ),
-      actions: !showLocaleButton
+      actions: actions ??
+          (!showLocaleButton
           ? null
           : [
               TextButton(
@@ -56,15 +64,16 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
                             ? LanguagesCodes.arabic
                             : LanguagesCodes.english,
                         widgetNameForErrorNotifier ?? "");
-                    if (onChangeLocaleButtonClick != null) {
-                      onChangeLocaleButtonClick!();
-                    }
-                  },
-                  child: Text(
-                    currentLocal.toString().toUpperCase(),
-                    style: theme.textTheme.labelMedium,
-                  ))
-            ],
+                      if (onChangeLocaleButtonClick != null) {
+                        onChangeLocaleButtonClick!();
+                      }
+                    },
+                    child: Text(
+                      currentLocal.toString().toUpperCase(),
+                      style: theme.textTheme.labelMedium,
+                    ),
+                  )
+                ]),
     );
   }
 

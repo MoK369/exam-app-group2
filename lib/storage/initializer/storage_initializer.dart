@@ -3,6 +3,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
+
+import '../../modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 
 @module
 abstract class StorageInitializer {
@@ -19,7 +23,7 @@ abstract class StorageInitializer {
   Future<Isar> initIsarInstance() async {
     final dir = await getApplicationDocumentsDirectory();
     final isar = await Isar.open(
-      [ImageEntitySchema],
+      [ImageEntitySchema,CashedQuestionsSchema],
       directory: dir.path,
     );
     return isar;

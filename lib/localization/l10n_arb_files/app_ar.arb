@@ -81,5 +81,19 @@
   "profileNotChangeMessage": "لم يتم تغيير الملف الشخصي!",
   "changedPasswordSuccessfully": "تم تغيير كلمة المرور بنجاح!",
   "oldPasswordSameAsNewPassword": "كلمة المرور القديمة والجديدة هي نفسها!",
-  "photosPermissionDenied": "لم يتم منح إذن الصور!"
+  "photosPermissionDenied": "لم يتم منح إذن الصور!",
+  "survey": "استطلاع",
+  "browseBySubject": "تصفح حسب الموضوع",
+  "noExamsFound": "لم يتم العثور على امتحانات",
+  "search": "بحث",
+  "exam": "امتحان",
+  "viewScore": "عرض النتيجة",
+  "examTimeOut": "انتهت مهلة الامتحان",
+  "examScore": "نتيجة الامتحان",
+  "correct": "صحيح",
+  "inCorrect": "خاطئ",
+  "showResult": "اظهار النتيجة",
+  "startAgain": "بدء مرة اخرى",
+  "yourScore": "نتيجتك"
+
 }

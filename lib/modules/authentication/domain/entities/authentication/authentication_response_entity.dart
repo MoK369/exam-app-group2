@@ -10,6 +10,7 @@ class AuthenticationResponseEntity {
     this.token,
     this.user,
   });
+
   String? message;
   String? token;
   UserEntity? user;
