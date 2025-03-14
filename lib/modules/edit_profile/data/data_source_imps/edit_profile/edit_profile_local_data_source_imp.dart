@@ -5,6 +5,7 @@ import 'package:exam_app_group2/modules/authentication/domain/entities/authentic
 import 'package:exam_app_group2/modules/authentication/domain/entities/user/user_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_local_data_source.dart';
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/edit_profile/request/edit_profile_request_entity.dart';
+import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class EditProfileLocalDataSourceImp implements EditProfileLocalDataSource {
 
   @override
   Future<AuthenticationResponseEntity> getCachedUser() async {
-    var authDtoString =
-        await storageService.getStringValue(StorageConstants.authModelKey);
+    var authDtoString = await storageService.getStringValue(
+        StorageConstants.authModelKey, EditProfileScreen.widgetName);
     var authDto =
         AuthenticationResponseDto.fromJson(jsonDecode(authDtoString ?? "{}"));
     return authDto.convertIntoEntity();
@@ -49,7 +50,7 @@ class EditProfileLocalDataSourceImp implements EditProfileLocalDataSource {
   Future<void> cacheUser(AuthenticationResponseEntity authEntity) async {
     var authDto =
         AuthenticationResponseDto.convertIntoAuthenticationDto(authEntity);
-    return storageService.setStringValue(
-        StorageConstants.authModelKey, jsonEncode(authDto.toJson()));
+    return storageService.setStringValue(StorageConstants.authModelKey,
+        jsonEncode(authDto.toJson()), EditProfileScreen.widgetName);
   }
 }

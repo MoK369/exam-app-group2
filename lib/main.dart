@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import 'core/di/injectable_initializer.dart';
@@ -14,7 +13,6 @@ import 'modules/authentication/domain/entities/authentication/authentication_res
 import 'modules/authentication/domain/use_cases/login/login_use_case.dart';
 
 AuthenticationResponseEntity? storedAuthEntity;
-PermissionStatus? storagePermissionStatus;
 
 void main() async {
   FlutterNativeSplash.preserve(
@@ -23,12 +21,8 @@ void main() async {
   // Initializing local storage (Flutter Secure Storage) and current locale (Stored Locale) happens here
   await configureDependencies();
 
-  storagePermissionStatus = await Permission.storage.status;
-  if ((!storagePermissionStatus!.isDenied) &&
-      (!storagePermissionStatus!.isDenied)) {
-    // Get Cached Login Info
-    storedAuthEntity = await getIt.get<LoginUseCase>().getStoredLoginInfo();
-  }
+  // Get Cached Login Info
+  storedAuthEntity = await getIt.get<LoginUseCase>().getStoredLoginInfo();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(

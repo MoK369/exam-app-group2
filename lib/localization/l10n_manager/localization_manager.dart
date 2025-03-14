@@ -12,19 +12,20 @@ class LocalizationManager extends ChangeNotifier {
   LocalizationManager(
       this._storageService, @Named("initCurrentLocal") this.currentLocale);
 
-  void changeLocal(String languageCode) {
+  void changeLocal(String languageCode, String widgetName) {
     currentLocale = languageCode;
-    saveLocal(languageCode);
+    saveLocal(languageCode, widgetName);
     notifyListeners();
   }
 
-  void saveLocal(String languageCode) {
-    _storageService.setStringValue(StorageConstants.localKey, languageCode);
+  void saveLocal(String languageCode, String widgetName) {
+    _storageService.setStringValue(
+        StorageConstants.localKey, languageCode, widgetName);
   }
 
-  Future<String?> getSavedLocal() async {
-    var savedLocale =
-        await _storageService.getStringValue(StorageConstants.localKey);
+  Future<String?> getSavedLocal(String widgetName) async {
+    var savedLocale = await _storageService.getStringValue(
+        StorageConstants.localKey, widgetName);
     return savedLocale;
   }
 }

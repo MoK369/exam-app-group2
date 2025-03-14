@@ -17,67 +17,13 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   late AppLocalizations appLocalizations;
   final LocalizationUseCase localizationUseCase =
       getIt.get<LocalizationUseCase>();
-
   late ErrorNotifier errorNotifier;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     theme = Theme.of(context);
     appLocalizations = localizationUseCase.get(context);
-    errorNotifier = Provider.of(context, listen: false);
-
-    if (errorNotifier.errorMessage != null) {
-      Future.microtask(
-        () {
-          if (!mounted) return;
-          showAnimatedSnackBar();
-        },
-      );
-    }
-  }
-
-  void showAnimatedSnackBar() {
-    AnimatedSnackBar(
-      duration: const Duration(seconds: 10),
-      builder: (context) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: AppColors.black[50],
-          ),
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: AppColors.white,
-                child: Icon(
-                  Icons.warning,
-                  color: Colors.orange,
-                ),
-              ),
-              SizedBox(
-                width: 8.r,
-              ),
-              Expanded(
-                child: Text(
-                  errorNotifier.errorMessage ?? appLocalizations.noError,
-                  maxLines: 3,
-                  textDirection: TextDirection.ltr,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelSmall!
-                      .copyWith(color: AppColors.white),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    ).show(context);
-    Future.delayed(
-      const Duration(seconds: 11),
-      () => errorNotifier.clearError(),
-    );
+    errorNotifier = Provider.of(context);
   }
 
   Future<void> displayAlertDialog(
@@ -120,6 +66,64 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
         );
       },
     );
+  }
+
+  Future<void> initErrorNotifier(
+      BuildContext context, String widgetName) async {
+    if (errorNotifier.errorMessage != null &&
+        errorNotifier.widgetName == widgetName) {
+      var errorMessage = errorNotifier.errorMessage;
+      print("Show Error snack bar");
+      WidgetsBinding.instance.addPostFrameCallback(
+        (timeStamp) async {
+          if (errorMessage == null) return;
+          await showAnimatedSnackBar(errorMessage);
+        },
+      );
+    }
+  }
+
+  Future<void> showAnimatedSnackBar(String errorMessage) async {
+    print("Showing Error snack bar");
+    AnimatedSnackBar(
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: AppColors.black[50],
+          ),
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            children: [
+              const CircleAvatar(
+                backgroundColor: AppColors.white,
+                child: Icon(
+                  Icons.warning,
+                  color: Colors.orange,
+                ),
+              ),
+              SizedBox(
+                width: 8.r,
+              ),
+              Expanded(
+                child: Text(
+                  errorMessage ?? "No Error",
+                  maxLines: 3,
+                  textDirection: TextDirection.ltr,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.labelSmall!
+                      .copyWith(color: AppColors.white),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    ).show(context);
+    // Future.delayed(
+    //   const Duration(seconds: 12),
+    //   () => errorNotifier.clearError(),
+    // );
   }
 
   void hideAlertDialog() {

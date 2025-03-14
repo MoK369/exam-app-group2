@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/di/injectable_initializer.dart';
 
 class SignUpScreen extends StatefulWidget {
+  static const String widgetName = "SignUpScreen";
   const SignUpScreen({super.key});
 
   @override
@@ -66,6 +67,7 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
             appBar: CustomAppBar(
               title: appLocalizations.signUp,
               showLocaleButton: true,
+              widgetNameForErrorNotifier: SignUpScreen.widgetName,
               onChangeLocaleButtonClick: () {
                 if (signUpViewModel.state.signUpFormStatus ==
                     SignUpFormStatus.unValid) {

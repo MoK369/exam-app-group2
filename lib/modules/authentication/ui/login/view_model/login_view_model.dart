@@ -60,11 +60,15 @@ class LoginViewModel extends Cubit<LoginState> {
 
   bool _validateForm() {
     if (formKey.currentState!.validate() == false) {
-      emit(
-        state.copyWith(
-          loginFormStatus: LoginFormStatus.unValid,
-        ),
-      );
+      // remove this so when writing wrong email or password and
+      // after that when trying to change the form fields to write the right email or password
+      // the old error gets emitted again which makes unnecessary pop happens.
+      // ==> emit(
+      //   state.copyWith(
+      //     loginFormStatus: LoginFormStatus.unValid,
+      //   ),
+      // );
+      emit(LoginState(loginFormStatus: LoginFormStatus.unValid));
       return false;
     } else {
       emit(

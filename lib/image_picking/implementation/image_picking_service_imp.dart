@@ -18,22 +18,27 @@ class ImagePickingServiceImp implements ImagePickingService {
       this.picker, this.errorNotifier, this.isarImageStorageService);
 
   @override
-  Future<XFile?> pickImageFromGallery() async {
+  Future<XFile?> pickImageFromGallery(String widgetName) async {
     try {
       final image = await picker.pickImage(source: ImageSource.gallery);
       return image;
     } catch (e) {
       errorNotifier.setError(
-          ImagePickingConstants.errorPickingImageFromGallery + e.toString());
+          message:
+              ImagePickingConstants.errorPickingImageFromGallery + e.toString(),
+          widgetName: widgetName);
       return null;
     }
   }
 
   @override
-  Future<void> saveImageLocallyAsBinary(
-      {XFile? imageFile, required String emailId}) async {
+  Future<void> saveImageLocallyAsBinary({XFile? imageFile,
+    required String emailId,
+    required String widgetName}) async {
     if (imageFile == null) {
-      errorNotifier.setError(ImagePickingConstants.noImageSelected);
+      errorNotifier.setError(
+          message: ImagePickingConstants.noImageSelected,
+          widgetName: widgetName);
     } else {
       final imageData = (await imageFile.readAsBytes()).toList();
       isarImageStorageService

@@ -14,17 +14,21 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
   StorageServiceImp(this.errorNotifier, this.storageInstance);
 
   @override
-  void setStringValue(String key, String value) async {
+  void setStringValue(String key, String value,
+      [String widgetName = ""]) async {
     var result = await StorageExecutionHandler.execute<void>(
         () => storageInstance.write(key: key, value: value));
     if (result is StorageErrorResult) {
+      print("Error setting string value flutter secure storage");
       errorNotifier.setError(
-          StorageConstants.errorStoringMessage(result.error.toString()));
+          message:
+              StorageConstants.errorStoringMessage(result.error.toString()),
+          widgetName: widgetName);
     }
   }
 
   @override
-  Future<String?> getStringValue(String key) async {
+  Future<String?> getStringValue(String key, [String widgetName = ""]) async {
     var storageResult = await StorageExecutionHandler.execute(
       () => storageInstance.read(key: key),
     );
@@ -32,20 +36,24 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
       case StorageSuccessResult<String?>():
         return storageResult.data;
       case StorageErrorResult<String?>():
-        errorNotifier.setError(StorageConstants.errorDeletingMessage(
-            storageResult.error.toString()));
+        errorNotifier.setError(
+            message: StorageConstants.errorDeletingMessage(
+                storageResult.error.toString()),
+            widgetName: widgetName);
     }
     return null;
   }
 
   @override
-  Future<void> deleteValue(String key) async {
+  Future<void> deleteValue(String key, [String widgetName = ""]) async {
     var storageResult = await StorageExecutionHandler.execute(
       () => storageInstance.delete(key: key),
     );
     if (storageResult is StorageErrorResult) {
-      errorNotifier.setError(StorageConstants.errorDeletingMessage(
-          storageResult.error.toString()));
+      errorNotifier.setError(
+          message: StorageConstants.errorDeletingMessage(
+              storageResult.error.toString()),
+          widgetName: widgetName);
     }
   }
 }

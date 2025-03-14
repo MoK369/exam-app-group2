@@ -1,19 +1,15 @@
-import 'dart:io';
-
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
-import 'package:exam_app_group2/main.dart';
 import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_view_model.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
-import 'package:exam_app_group2/storage/permissions/storage_permission.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../core/di/injectable_initializer.dart';
 import '../../../../../core/routing/defined_routes.dart';
@@ -23,6 +19,8 @@ import '../../../data/models/login/login_request.dart';
 import '../../../domain/entities/authentication/authentication_response_entity.dart';
 
 class LoginView extends StatefulWidget {
+  static const String widgetName = "LoginView";
+
   const LoginView({super.key});
 
   @override
@@ -40,43 +38,14 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
   @override
   void initState() {
     super.initState();
-    askForPermissions();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-  }
-
-  void askForPermissions() async {
-    storagePermissionStatus = await StoragePermission.askForPermission();
-    if (storagePermissionStatus!.isDenied ||
-        storagePermissionStatus!.isPermanentlyDenied) {
-      await displayAlertDialog(
-        title: Text(
-          appLocalizations.storagePermissionDenied,
-          textAlign: TextAlign.center,
-        ),
-        showOkButton: true,
-        isDismissible: false,
-        onOkButtonClick: () {
-          exit(0);
-        },
-      );
-    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // if (permissionStatus != null && permissionStatus!.isPermanentlyDenied) {
-    //   displayAlertDialog(
-    //     title: Text(
-    //         "Please we need this permission to let the application work properly."),
-    //     showOkButton: true,
-    //     onOkButtonClick: () async {
-    //       await openAppSettings();
-    //       hideAlertDialog();
-    //     },
-    //   );
-    // }
+    initErrorNotifier(context, LoginView.widgetName);
     validateFunctions = ValidateFunctions.getInstance(appLocalizations);
   }
 
@@ -100,6 +69,10 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
         appBar: CustomAppBar(
           title: appLocalizations.login,
           showLocaleButton: true,
+          onLeadingIconButtonClick: () {
+            SystemNavigator.pop();
+          },
+          widgetNameForErrorNotifier: LoginView.widgetName,
           onChangeLocaleButtonClick: () {
             if (loginViewModel.state.isUnValid) {
               WidgetsBinding.instance.addPostFrameCallback(

@@ -1,6 +1,7 @@
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
+import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
@@ -18,9 +19,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  static const String widgetName = "EditProfileScreen";
   final EditProfileScreenParameters editProfileScreenParameters;
 
   const EditProfileScreen(
@@ -54,7 +55,14 @@ class _EditProfileScreenState
   }
 
   @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    await initErrorNotifier(context, EditProfileScreen.widgetName);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var widgetName = context.widget.toString(minLevel: DiagnosticLevel.hint);
     return BlocProvider(
       create: (context) => editProfileViewModel,
       child: GestureDetector(
@@ -123,19 +131,19 @@ class _EditProfileScreenState
                     onAvatarTap: () async {
                       var photosPermissionStatus =
                           await ImagePickingPermission.askForPermission();
-                      print(photosPermissionStatus.isDenied ||
-                          photosPermissionStatus.isPermanentlyDenied);
-                      if (photosPermissionStatus.isDenied ||
-                          photosPermissionStatus.isPermanentlyDenied) {
-                        errorNotifier
-                            .setError(appLocalizations.photosPermissionDenied);
+                      if (!photosPermissionStatus) {
+                        getIt.get<ErrorNotifier>().setError(
+                            message: appLocalizations.photosPermissionDenied,
+                            widgetName: EditProfileScreen.widgetName);
                         return;
                       }
+                      print("picking an image-===========");
                       editProfileViewModel.doIntent(
                         OnAvatarTap(
-                            emailId: widget.editProfileScreenParameters
-                                    .authEntity.user?.email ??
-                                ""),
+                          emailId: widget.editProfileScreenParameters.authEntity
+                                  .user?.email ??
+                              "",
+                        ),
                       );
                     },
                     onChangePasswordClick: () {

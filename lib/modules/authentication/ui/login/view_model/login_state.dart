@@ -21,9 +21,6 @@ enum LoginFormStatus { valid, unValid }
 
 extension LoginFormStatusEx on LoginState {
   bool get isValid => loginFormStatus == LoginFormStatus.valid;
-
-  // bool get isValid => state == LoginStatus.initial;
-  // bool get isUnValid => state == LoginStatus.loading;
   bool get isUnValid => loginFormStatus == LoginFormStatus.unValid;
 }
 

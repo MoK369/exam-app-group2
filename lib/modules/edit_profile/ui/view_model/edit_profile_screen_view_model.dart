@@ -8,6 +8,7 @@ import 'package:exam_app_group2/modules/authentication/domain/entities/authentic
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/edit_profile/request/edit_profile_request_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/edit_profile/response/edit_profile_response_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/domain/use_cases/edit_profile/edit_profile_use_case.dart';
+import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_intent.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_state.dart';
 import 'package:flutter/material.dart';
@@ -168,10 +169,13 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
   }
 
   Future<void> _onAvatarTap(String email) async {
-    final imageFile = await imagePickingService.pickImageFromGallery();
+    final imageFile = await imagePickingService
+        .pickImageFromGallery(EditProfileScreen.widgetName);
     if (imageFile != null) {
       await imagePickingService.saveImageLocallyAsBinary(
-          imageFile: imageFile, emailId: email);
+          imageFile: imageFile,
+          emailId: email,
+          widgetName: EditProfileScreen.widgetName);
       final imageBytes = await imageFile.readAsBytes();
       if (!avatarUpdatedAtLeastOnce) avatarUpdatedAtLeastOnce = true;
       _initAvatarImage(imageBytes);

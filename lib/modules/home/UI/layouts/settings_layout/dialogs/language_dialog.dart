@@ -4,6 +4,8 @@ import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:flutter/material.dart';
 
 class LanguageDialog extends StatefulWidget {
+  static const String widgetName = "LanguageDialog";
+
   const LanguageDialog({super.key});
 
   @override
@@ -48,6 +50,7 @@ class _LanguageDialogState extends BaseStatefulWidgetState<LanguageDialog> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    initErrorNotifier(context, LanguageDialog.widgetName);
     chosenLanguage = localizationUseCase.currentLocale == LanguagesCodes.english
         ? LanguagesEnum.en
         : LanguagesEnum.ar;
@@ -127,7 +130,8 @@ class _LanguageDialogState extends BaseStatefulWidgetState<LanguageDialog> {
 
   void onOkButtonClick() {
     if (localizationUseCase.currentLocale != chosenLanguage.getLanguageCode()) {
-      localizationUseCase.changeLocale(chosenLanguage.getLanguageCode());
+      localizationUseCase.changeLocale(
+          chosenLanguage.getLanguageCode(), LanguageDialog.widgetName);
     }
     hideAlertDialog();
   }

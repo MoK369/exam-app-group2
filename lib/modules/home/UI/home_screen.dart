@@ -15,6 +15,7 @@ import '../../authentication/domain/entities/authentication/authentication_respo
 late AuthenticationResponseEntity authEntity;
 
 class HomeScreen extends StatefulWidget {
+  static const String widgetName = "HomeScreen";
   final bool? rememberMe;
   final AuthenticationResponseEntity authEntity;
 
@@ -46,6 +47,7 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    initErrorNotifier(context, HomeScreen.widgetName);
     if (widget.authEntity.message == StorageConstants.successMessage) {
       WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) {

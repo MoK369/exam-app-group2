@@ -7,6 +7,9 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showLeadingIcon;
   final bool showLocaleButton;
+
+  /// initialize this parameter when using onChangeLocaleButtonClick()
+  final String? widgetNameForErrorNotifier;
   final void Function()? onChangeLocaleButtonClick, onLeadingIconButtonClick;
 
   CustomAppBar(
@@ -14,6 +17,7 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
       required this.title,
       this.showLeadingIcon = true,
       this.showLocaleButton = false,
+      this.widgetNameForErrorNotifier,
       this.onLeadingIconButtonClick,
       this.onChangeLocaleButtonClick});
 
@@ -48,10 +52,10 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
               TextButton(
                   onPressed: () {
                     localizationUseCase.changeLocale(
-                      currentLocal.toString() == LanguagesCodes.english
-                          ? LanguagesCodes.arabic
-                          : LanguagesCodes.english,
-                    );
+                        currentLocal.toString() == LanguagesCodes.english
+                            ? LanguagesCodes.arabic
+                            : LanguagesCodes.english,
+                        widgetNameForErrorNotifier ?? "");
                     if (onChangeLocaleButtonClick != null) {
                       onChangeLocaleButtonClick!();
                     }

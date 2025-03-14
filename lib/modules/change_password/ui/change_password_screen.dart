@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
+  static const String widgetName = "ChangePasswordScreen";
   const ChangePasswordScreen({super.key});
 
   @override
@@ -43,6 +44,7 @@ class _ChangePasswordScreenState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    initErrorNotifier(context, ChangePasswordScreen.widgetName);
     validateFunctions = ValidateFunctions.getInstance(appLocalizations);
   }
 
