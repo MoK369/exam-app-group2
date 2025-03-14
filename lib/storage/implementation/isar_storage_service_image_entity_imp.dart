@@ -1,14 +1,14 @@
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/image_entity/image_entity.dart';
-import 'package:exam_app_group2/storage/contracts/isar_storage_service_contract.dart';
+import 'package:exam_app_group2/storage/contracts/isar_storage_service_image_entity_contract.dart';
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 
-@Injectable(as: IsarStorageService<ImageEntity>)
-class IsarStorageServiceQuestionEntityImp
-    implements IsarStorageService<ImageEntity> {
+@Injectable(as: IsarStorageServiceImageEntity<ImageEntity>)
+class IsarStorageServiceImageEntityImp
+    implements IsarStorageServiceImageEntity<ImageEntity> {
   Isar isar;
 
-  IsarStorageServiceQuestionEntityImp(this.isar);
+  IsarStorageServiceImageEntityImp(this.isar);
 
   @override
   Future<ImageEntity?> findBy(String emailId) async {

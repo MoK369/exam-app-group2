@@ -2,11 +2,11 @@ import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cas
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
 
-import '../contracts/isar_storage_service_contract.dart';
+import '../contracts/isar_storage_service_cashed_question_entity_contract.dart';
 
-@Injectable(as: IsarStorageService<CashedQuestions>)
+@Injectable(as: IsarStorageServiceCachedQuestionEntity<CashedQuestions>)
 class IsarStorageServiceCashedQuestionEntityImpl
-    implements IsarStorageService<CashedQuestions> {
+    implements IsarStorageServiceCachedQuestionEntity<CashedQuestions> {
   Isar isar;
 
   IsarStorageServiceCashedQuestionEntityImpl({required this.isar});

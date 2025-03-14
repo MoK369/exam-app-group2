@@ -4,7 +4,7 @@ import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/image_picking/constants/image_picking_constants.dart';
 import 'package:exam_app_group2/image_picking/contracts/image_picking_service_contract.dart';
 import 'package:exam_app_group2/modules/edit_profile/domain/entities/image_entity/image_entity.dart';
-import 'package:exam_app_group2/storage/contracts/isar_storage_service_contract.dart';
+import 'package:exam_app_group2/storage/contracts/isar_storage_service_image_entity_contract.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
@@ -12,7 +12,7 @@ import 'package:injectable/injectable.dart';
 class ImagePickingServiceImp implements ImagePickingService {
   final ImagePicker picker;
   final ErrorNotifier errorNotifier;
-  final IsarStorageService<ImageEntity> isarImageStorageService;
+  final IsarStorageServiceImageEntity<ImageEntity> isarImageStorageService;
 
   ImagePickingServiceImp(
       this.picker, this.errorNotifier, this.isarImageStorageService);
@@ -32,9 +32,10 @@ class ImagePickingServiceImp implements ImagePickingService {
   }
 
   @override
-  Future<void> saveImageLocallyAsBinary({XFile? imageFile,
-    required String emailId,
-    required String widgetName}) async {
+  Future<void> saveImageLocallyAsBinary(
+      {XFile? imageFile,
+      required String emailId,
+      required String widgetName}) async {
     if (imageFile == null) {
       errorNotifier.setError(
           message: ImagePickingConstants.noImageSelected,
