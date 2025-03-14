@@ -60,6 +60,19 @@
   "explore": "استكشاف",
   "result": "النتيجة",
   "profile": "الملف الشخصي",
-  "noError": "لا يوجد خطأ"
+  "noError": "لا يوجد خطأ",
+  "survey": "استطلاع",
+  "browseBySubject": "تصفح حسب الموضوع",
+  "noExamsFound": "لم يتم العثور على امتحانات",
+  "search": "بحث",
+  "exam": "امتحان",
+  "viewScore": "عرض النتيجة",
+  "examTimeOut": "انتهت مهلة الامتحان",
+  "examScore": "نتيجة الامتحان",
+  "correct": "صحيح",
+  "inCorrect": "خاطئ",
+  "showResult": "اظهار النتيجة",
+  "startAgain": "بدء مرة اخرى",
+  "yourScore": "نتيجتك"
 
 }

@@ -31,6 +31,16 @@ class AppThemes {
         color: Colors.black,
         fontSize: 20.sp,
       ),
+      bodyLarge: GoogleFonts.inter(
+        color: Colors.black,
+        fontSize: 20.sp,
+        fontWeight: FontWeight.w600,
+      ),
+      titleSmall: GoogleFonts.roboto(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.w500,
+        color: AppColors.darkGray,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -104,5 +114,23 @@ class AppThemes {
                 color: chooseColor);
           },
         )),
+    cardTheme: CardTheme(
+      color: AppColors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      elevation: 0.8,
+      margin: EdgeInsets.symmetric(vertical: 8.h),
+    ),
+    listTileTheme: ListTileThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10.r),
+        ),
+      ),
+      tileColor: AppColors.moreLightBlue,
+      selectedTileColor: AppColors.lightBlue2,
+      selectedColor: Colors.black,
+    ),
   );
 }

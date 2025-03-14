@@ -62,12 +62,23 @@ dependencies:
   animated_snack_bar: ^0.4.0
   # pretty logger
   pretty_dio_logger: ^1.4.0
+  percent_indicator: ^4.2.4
+  choice: ^2.3.2
+  flutter_timer_countdown: ^1.0.7
+  step_progress_indicator: ^1.0.2
+  mockito: ^5.4.4
+  bloc_test: ^10.0.0
+  isar: ^3.1.0
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.1.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  isar_generator: ^3.1.0
   # add the generator to your dev_dependencies
-  injectable_generator: 2.6.2
+  injectable_generator: 2.4.2
   # add build runner if not already added
   build_runner: 2.4.13
 
@@ -92,9 +103,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-  - assets/images/
-  - assets/icons/
-  - assets/animations/
+    - assets/images/
+    - assets/icons/
+    - assets/animations/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
