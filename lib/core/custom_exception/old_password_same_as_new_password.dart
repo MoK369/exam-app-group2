@@ -1,0 +1,1 @@
+class OldPasswordSameAsNewPassword implements Exception {}

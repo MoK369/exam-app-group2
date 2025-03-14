@@ -1,9 +1,9 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
+import 'package:exam_app_group2/core/constants/form_keys/text_form_fields_keys.dart';
 import 'package:exam_app_group2/core/extensions/string_extension_methods/title_case_extension_method.dart';
 import 'package:exam_app_group2/modules/authentication/data/models/sign_up/request/sign_up_request_parameters.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/domain/use_cases/sign_up/sign_up_use_case.dart';
-import 'package:exam_app_group2/modules/authentication/ui/sign_up/constants/sign_up_fields_names.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/view_model/sign_up_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,22 +20,22 @@ class SignUpViewModel extends Cubit<SignUpState> {
   SignUpViewModel(this._signUpUseCase)
       : super(const SignUpState(signUpStatus: SignUpStatus.initial)) {
     _signUpFieldsControllers = {
-      SignUpFieldsKeys.userName: TextEditingController(),
-      SignUpFieldsKeys.firstName: TextEditingController(),
-      SignUpFieldsKeys.lastName: TextEditingController(),
-      SignUpFieldsKeys.email: TextEditingController(),
-      SignUpFieldsKeys.password: TextEditingController(),
-      SignUpFieldsKeys.confirmPassword: TextEditingController(),
-      SignUpFieldsKeys.phoneNumber: TextEditingController()
+      TextFormFieldsKeys.userName: TextEditingController(),
+      TextFormFieldsKeys.firstName: TextEditingController(),
+      TextFormFieldsKeys.lastName: TextEditingController(),
+      TextFormFieldsKeys.email: TextEditingController(),
+      TextFormFieldsKeys.password: TextEditingController(),
+      TextFormFieldsKeys.confirmPassword: TextEditingController(),
+      TextFormFieldsKeys.phoneNumber: TextEditingController()
     };
     _signUpFieldsFocusNodes = {
-      SignUpFieldsKeys.userName: FocusNode(),
-      SignUpFieldsKeys.firstName: FocusNode(),
-      SignUpFieldsKeys.lastName: FocusNode(),
-      SignUpFieldsKeys.email: FocusNode(),
-      SignUpFieldsKeys.password: FocusNode(),
-      SignUpFieldsKeys.confirmPassword: FocusNode(),
-      SignUpFieldsKeys.phoneNumber: FocusNode()
+      TextFormFieldsKeys.userName: FocusNode(),
+      TextFormFieldsKeys.firstName: FocusNode(),
+      TextFormFieldsKeys.lastName: FocusNode(),
+      TextFormFieldsKeys.email: FocusNode(),
+      TextFormFieldsKeys.password: FocusNode(),
+      TextFormFieldsKeys.confirmPassword: FocusNode(),
+      TextFormFieldsKeys.phoneNumber: FocusNode()
     };
   }
 
@@ -82,18 +82,18 @@ class SignUpViewModel extends Cubit<SignUpState> {
     if (validateForm()) {
       signUp(
           signUpParameters: SignUpRequestParameters(
-        username: _signUpFieldsControllers[SignUpFieldsKeys.userName]?.text,
-        firstName: _signUpFieldsControllers[SignUpFieldsKeys.firstName]
+        username: _signUpFieldsControllers[TextFormFieldsKeys.userName]?.text,
+        firstName: _signUpFieldsControllers[TextFormFieldsKeys.firstName]
             ?.text
             .toTitleCase(),
-        lastName: _signUpFieldsControllers[SignUpFieldsKeys.lastName]
+        lastName: _signUpFieldsControllers[TextFormFieldsKeys.lastName]
             ?.text
             .toTitleCase(),
-        email: _signUpFieldsControllers[SignUpFieldsKeys.email]?.text,
-        password: _signUpFieldsControllers[SignUpFieldsKeys.password]?.text,
+        email: _signUpFieldsControllers[TextFormFieldsKeys.email]?.text,
+        password: _signUpFieldsControllers[TextFormFieldsKeys.password]?.text,
         rePassword:
-            _signUpFieldsControllers[SignUpFieldsKeys.confirmPassword]?.text,
-        phone: _signUpFieldsControllers[SignUpFieldsKeys.phoneNumber]?.text,
+            _signUpFieldsControllers[TextFormFieldsKeys.confirmPassword]?.text,
+        phone: _signUpFieldsControllers[TextFormFieldsKeys.phoneNumber]?.text,
       ));
     }
   }
@@ -109,33 +109,33 @@ class SignUpViewModel extends Cubit<SignUpState> {
 
   // controllers getters
   TextEditingController get userNameController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.userName]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.userName]!;
   TextEditingController get firstNameController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.firstName]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.firstName]!;
   TextEditingController get lastNameController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.lastName]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.lastName]!;
   TextEditingController get emailController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.email]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.email]!;
   TextEditingController get passwordController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.password]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.password]!;
   TextEditingController get confirmPasswordController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.confirmPassword]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.confirmPassword]!;
   TextEditingController get phoneNumberController =>
-      _signUpFieldsControllers[SignUpFieldsKeys.phoneNumber]!;
+      _signUpFieldsControllers[TextFormFieldsKeys.phoneNumber]!;
 
   // focusNodes getters
   FocusNode get userNameFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.userName]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.userName]!;
   FocusNode get firstNameFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.firstName]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.firstName]!;
   FocusNode get lastNameFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.lastName]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.lastName]!;
   FocusNode get emailFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.email]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.email]!;
   FocusNode get passwordFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.password]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.password]!;
   FocusNode get confirmPasswordFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.confirmPassword]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.confirmPassword]!;
   FocusNode get phoneNumberFocusNode =>
-      _signUpFieldsFocusNodes[SignUpFieldsKeys.phoneNumber]!;
+      _signUpFieldsFocusNodes[TextFormFieldsKeys.phoneNumber]!;
 }

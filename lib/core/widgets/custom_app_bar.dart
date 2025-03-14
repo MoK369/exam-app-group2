@@ -7,7 +7,10 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showLeadingIcon;
   final bool showLocaleButton;
-  final void Function()? onChangeLocaleButtonClick;
+
+  /// initialize this parameter when using onChangeLocaleButtonClick()
+  final String? widgetNameForErrorNotifier;
+  final void Function()? onChangeLocaleButtonClick, onLeadingIconButtonClick;
   final TextStyle? textStyle;
   final EdgeInsets? padding;
   final List<Widget>? actions;
@@ -20,7 +23,9 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.showLeadingIcon = true,
     this.showLocaleButton = false,
-    this.onChangeLocaleButtonClick,
+    this.widgetNameForErrorNotifier,
+      this.onLeadingIconButtonClick,
+      this.onChangeLocaleButtonClick,
   });
 
   @override
@@ -29,36 +34,36 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
     return AppBar(
       forceMaterialTransparency: true,
       leadingWidth: 35,
-      titleSpacing: 0,
+      titleSpacing: showLeadingIcon ? 0 : 16.w,
       leading: !showLeadingIcon
           ? null
           : IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                if (onLeadingIconButtonClick != null) {
+                  onLeadingIconButtonClick!();
+                } else {
+                  Navigator.pop(context);
+                }
               },
               icon: const Icon(
                 Icons.arrow_back_ios,
                 size: 25,
               )),
-      title: Padding(
-        padding: padding ?? EdgeInsets.zero,
-        child: Text(
-          title,
-          style: textStyle ??
-              theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
-        ),
+      title: Text(
+        title,
+        style: theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
       ),
       actions: actions ??
           (!showLocaleButton
-              ? null
-              : [
-                  TextButton(
-                    onPressed: () {
-                      localizationUseCase.changeLocale(
+          ? null
+          : [
+              TextButton(
+                  onPressed: () {
+                    localizationUseCase.changeLocale(
                         currentLocal.toString() == LanguagesCodes.english
                             ? LanguagesCodes.arabic
                             : LanguagesCodes.english,
-                      );
+                        widgetNameForErrorNotifier ?? "");
                       if (onChangeLocaleButtonClick != null) {
                         onChangeLocaleButtonClick!();
                       }

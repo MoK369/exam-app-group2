@@ -19,7 +19,7 @@ class SignUpRemoteDataSourceImp implements SignUpRemoteDataSource {
         () => apiManager.signUp(signUpParameters: signUpParameters));
     switch (apiResult) {
       case Success<AuthenticationResponseDto>():
-        var convertedResult = apiResult.data.convertIntoAuthenticationEntity();
+        var convertedResult = apiResult.data.convertIntoEntity();
         return Success(data: convertedResult);
 
       case Error<AuthenticationResponseDto>():

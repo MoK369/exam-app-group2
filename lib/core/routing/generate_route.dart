@@ -1,8 +1,11 @@
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
+import 'package:exam_app_group2/modules/change_password/ui/change_password_screen.dart';
+import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -76,14 +79,25 @@ class GenerateRoute {
             examEntity: examEntity,
           ),
         );
+      case DefinedRoutes.editProfileRoutName:
+        return MaterialPageRoute<ProfileBackValues>(
+          builder: (context) => EditProfileScreen(
+            editProfileScreenParameters: (args as EditProfileScreenParameters),
+          ),
+        );
+      case DefinedRoutes.changePasswordRoutName:
+        return MaterialPageRoute<ProfileBackValues>(
+          builder: (context) => const ChangePasswordScreen(),
+        );
       default:
         return _errorRoute();
     }
   }
 
-  static List<Route<dynamic>> onGenerateInitialRoutes({String? initialRoute,
-    required AuthenticationResponseEntity? storedAuthEntity,
-    bool rememberMe = false}) {
+  static List<Route<dynamic>> onGenerateInitialRoutes(
+      {String? initialRoute,
+      required AuthenticationResponseEntity? storedAuthEntity,
+      bool rememberMe = false}) {
     return [
       if (storedAuthEntity != null)
         MaterialPageRoute(
