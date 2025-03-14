@@ -12,8 +12,8 @@ class ProfileFormWidget extends StatefulWidget {
   final void Function()? onFormChanged,
       onUpdateButtonClick,
       onTextFieldTap,
-      onAvatarTap,
       onChangePasswordClick;
+  final Future<void> Function()? onAvatarTap;
   final TextEditingController? userNameController,
       firstNameController,
       lastNameController,
@@ -84,7 +84,11 @@ class _ProfileFormWidgetState
                   alignment: Alignment.bottomRight,
                   children: [
                     InkWell(
-                      onTap: widget.onAvatarTap,
+                      onTap: () async {
+                        if (widget.onAvatarTap != null) {
+                          await widget.onAvatarTap!();
+                        }
+                      },
                       hoverColor: Colors.transparent,
                       splashColor: Colors.transparent,
                       child: CircleAvatar(

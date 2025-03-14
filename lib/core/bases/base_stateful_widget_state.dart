@@ -80,14 +80,14 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     );
   }
 
-  void displayAlertDialog(
+  Future<void> displayAlertDialog(
       {required Widget title,
       bool showOkButton = false,
       bool showConfirmButton = false,
       bool isDismissible = false,
       VoidFunction onOkButtonClick,
       VoidFunction onConfirmButtonClick}) {
-    showDialog(
+    return showDialog(
       context: context,
       barrierDismissible: isDismissible,
       builder: (context) {
@@ -123,6 +123,6 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   }
 
   void hideAlertDialog() {
-    Navigator.of(context, rootNavigator: true).pop();
+    Navigator.pop(context);
   }
 }

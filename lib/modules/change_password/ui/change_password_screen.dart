@@ -1,3 +1,4 @@
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
 import 'package:exam_app_group2/core/constants/form_keys/text_form_fields_keys.dart';
@@ -27,6 +28,17 @@ class _ChangePasswordScreenState
   late ValidateFunctions validateFunctions;
   ChangePasswordScreenViewModel changePasswordViewModel =
       getIt.get<ChangePasswordScreenViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    onLeadingButtonClick();
+    return true;
+  }
 
   @override
   void didChangeDependencies() {
@@ -68,10 +80,7 @@ class _ChangePasswordScreenState
             appBar: CustomAppBar(
               title: appLocalizations.resetPassword,
               onLeadingIconButtonClick: () {
-                Navigator.pop<ProfileBackValues>(
-                    context,
-                    ProfileBackValues(
-                        newToken: changePasswordViewModel.newToken));
+                onLeadingButtonClick();
               },
             ),
             body:
@@ -239,6 +248,19 @@ class _ChangePasswordScreenState
           ),
         ),
       ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
+  }
+
+  void onLeadingButtonClick() {
+    Navigator.pop<ProfileBackValues>(
+      context,
+      ProfileBackValues(newToken: changePasswordViewModel.newToken),
     );
   }
 }

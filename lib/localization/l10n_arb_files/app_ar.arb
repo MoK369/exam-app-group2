@@ -23,6 +23,7 @@
   "rememberMe": "تذكرني",
   "forgetPassword": "نسيت كلمة المرور ؟",
   "doNotHaveAccount": "هل لا تمتلك حساب؟ ",
+  "storagePermissionDenied": "لا يمكن لتطبيق الامتحان الاستمرار في العمل، لم يتم منح إذن التخزين ⛔",
 
   "validationFunctions______________": "$$$ تعليق $$$",
   "pleaseEnterName": "يرجى إدخال اسمك.",
@@ -79,6 +80,6 @@
   "editedProfileSuccessfully": "تم تعديل الملف الشخصي بنجاح!",
   "profileNotChangeMessage": "لم يتم تغيير الملف الشخصي!",
   "changedPasswordSuccessfully": "تم تغيير كلمة المرور بنجاح!",
-  "oldPasswordSameAsNewPassword": "كلمة المرور القديمة والجديدة هي نفسها!"
-
+  "oldPasswordSameAsNewPassword": "كلمة المرور القديمة والجديدة هي نفسها!",
+  "photosPermissionDenied": "لم يتم منح إذن الصور!"
 }

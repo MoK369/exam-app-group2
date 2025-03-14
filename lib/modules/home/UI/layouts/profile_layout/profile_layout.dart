@@ -57,7 +57,9 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
                   emailController: profileViewModel.emailController,
                   passwordController: profileViewModel.passwordController,
                   phoneNumberController: profileViewModel.phoneNumberController,
-                  onAvatarTap: () => navigateToEditScreen(),
+                  onAvatarTap: () async {
+                    navigateToEditScreen();
+                  },
                   onTextFieldTap: () => navigateToEditScreen(),
                   onChangePasswordClick: () {
                     Navigator.pushNamed<ProfileBackValues>(

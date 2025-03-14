@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/storage/result/storage_result.dart';
 
-abstract class StorageExecutor {
+abstract class StorageExecutionHandler {
   static Future<StorageResult<T>> execute<T>(
       Future<T> Function() storageFunction) async {
     try {

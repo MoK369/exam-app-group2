@@ -77,11 +77,11 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
           profileHasChanged = false;
           if (!profileUpdatedAtLeastOnce) profileUpdatedAtLeastOnce = true;
           print(
-              "Email changed ${oldAuthEntity.user!.email != editProfileRequestEntity.email}");
-          if (oldAuthEntity.user!.email != editProfileRequestEntity.email) {
+              "Email changed ${oldAuthEntity.user?.email != editProfileRequestEntity.email}");
+          if (oldAuthEntity.user?.email != editProfileRequestEntity.email) {
             await _whenEmailChanges(
-                oldEmailId: oldAuthEntity.user!.email!,
-                newEmailId: editProfileRequestEntity.email!);
+                oldEmailId: oldAuthEntity.user?.email,
+                newEmailId: editProfileRequestEntity.email);
           }
           emit(state.copyWith(editProfileState: EditStatus.success));
         case Error<EditProfileResponseEntity>():
@@ -119,7 +119,10 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
   }
 
   Future<void> _whenEmailChanges(
-      {required String oldEmailId, required String newEmailId}) {
+      {required String? oldEmailId, required String? newEmailId}) {
+    if (oldEmailId == null || newEmailId == null) {
+      return Future.value();
+    }
     return imagePickingService.updateImageEmailId(
         oldEmailId: oldEmailId, newEmailId: newEmailId);
   }

@@ -6,6 +6,7 @@ import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
+import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/settings_layout/dialogs/language_dialog.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/settings_layout/view_model/settings_intent.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/settings_layout/view_model/settings_state.dart';
@@ -23,6 +24,14 @@ class SettingsLayout extends StatefulWidget {
 
 class _SettingsLayoutState extends BaseStatefulWidgetState<SettingsLayout> {
   SettingsViewModel settingsViewModel = getIt.get<SettingsViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+    print("In Settings");
+    print(
+        "${authEntity.message} \n ${authEntity.token} & ${authEntity.user?.email} \n ${authEntity.user?.username}");
+  }
 
   @override
   Widget build(BuildContext context) {

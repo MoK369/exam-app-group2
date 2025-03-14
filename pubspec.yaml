@@ -68,7 +68,12 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   # pick image
   image_picker: ^1.1.2
-
+  # permissions
+  permission_handler: ^11.4.0
+  # device info
+  device_info_plus: 11.3.0
+  # back button
+  back_button_interceptor: ^8.0.4
   # local database
   isar: any #^3.1.0+1
   isar_flutter_libs: any #^3.1.0+1

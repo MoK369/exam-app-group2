@@ -20,9 +20,11 @@ extension LoginStatusEx on LoginState {
 enum LoginFormStatus { valid, unValid }
 
 extension LoginFormStatusEx on LoginState {
-  bool get isValid => state == LoginStatus.initial;
+  bool get isValid => loginFormStatus == LoginFormStatus.valid;
 
-  bool get isUnValid => state == LoginStatus.loading;
+  // bool get isValid => state == LoginStatus.initial;
+  // bool get isUnValid => state == LoginStatus.loading;
+  bool get isUnValid => loginFormStatus == LoginFormStatus.unValid;
 }
 
 class LoginState extends Equatable {

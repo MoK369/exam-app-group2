@@ -23,6 +23,7 @@
   "rememberMe": "Remember me",
   "forgetPassword": "Forget password ?",
   "doNotHaveAccount": "Don't have an account? ",
+  "storagePermissionDenied": "Exam App can't keep working, storage permission has not been granted ⛔",
 
   "validationFunctions______________": "$$$ Comment $$$",
   "pleaseEnterName": "Please enter your name.",
@@ -80,5 +81,6 @@
   "editedProfileSuccessfully": "Profile Edited Successfully!",
   "profileNotChangeMessage": "Profile has not been changed!",
   "changedPasswordSuccessfully": "Password Changed Successfully!",
-  "oldPasswordSameAsNewPassword": "Old password and new password are the same!"
+  "oldPasswordSameAsNewPassword": "Old password and new password are the same!",
+  "photosPermissionDenied": "Photos Permission has not been granted!"
 }

@@ -46,15 +46,17 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.authEntity.message != StorageConstants.storedMessage) {
+    if (widget.authEntity.message == StorageConstants.successMessage) {
       WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) {
           displayAlertDialog(
-              showOkButton: true,
-              title: Text(
-                appLocalizations.loggedInSuccessfully,
-                style: theme.textTheme.labelMedium,
-              ));
+            showOkButton: true,
+            title: Text(
+              appLocalizations.loggedInSuccessfully,
+              style: theme.textTheme.labelMedium,
+            ),
+          );
+          widget.authEntity.message = StorageConstants.storedMessage;
         },
       );
     }

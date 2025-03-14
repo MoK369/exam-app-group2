@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
@@ -8,6 +7,7 @@ import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/profile_form_widget.dart';
 import 'package:exam_app_group2/image_picking/contracts/image_picking_service_contract.dart';
+import 'package:exam_app_group2/image_picking/permissions/image_picking_permission.dart';
 import 'package:exam_app_group2/modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_intent.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart';
@@ -15,8 +15,10 @@ import 'package:exam_app_group2/modules/edit_profile/ui/view_model/edit_profile_
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_layout.dart';
 import 'package:exam_app_group2/modules/home/UI/view_model/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final EditProfileScreenParameters editProfileScreenParameters;
@@ -39,10 +41,16 @@ class _EditProfileScreenState
   @override
   void initState() {
     super.initState();
+    BackButtonInterceptor.add(myInterceptor);
     editProfileViewModel.doIntent(InitControllersAndFocusNodes(
         authEntity: widget.editProfileScreenParameters.authEntity));
     editProfileViewModel.doIntent(
         InitAvatarImage(image: widget.editProfileScreenParameters.avatarImage));
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    onLeadingButtonClick();
+    return true;
   }
 
   @override
@@ -77,13 +85,7 @@ class _EditProfileScreenState
             appBar: CustomAppBar(
               title: appLocalizations.editProfile,
               onLeadingIconButtonClick: () {
-                Navigator.pop<ProfileBackValues>(
-                    context,
-                    ProfileBackValues(
-                        profileUpdatedAtLeastOnce:
-                            editProfileViewModel.profileUpdatedAtLeastOnce,
-                        avatarUpdatedAtLeastOnce:
-                            editProfileViewModel.avatarUpdatedAtLeastOnce));
+                onLeadingButtonClick();
               },
             ),
             body: BlocBuilder<EditProfileScreenViewModel, EditProfileState>(
@@ -118,11 +120,23 @@ class _EditProfileScreenState
                     phoneNumberFocusNode:
                         editProfileViewModel.phoneNumberFocusNode,
                     areTextFieldsReadOnly: false,
-                    onAvatarTap: () {
-                      editProfileViewModel.doIntent(OnAvatarTap(
-                          emailId: widget.editProfileScreenParameters.authEntity
-                                  .user?.email ??
-                              ""));
+                    onAvatarTap: () async {
+                      var photosPermissionStatus =
+                          await ImagePickingPermission.askForPermission();
+                      print(photosPermissionStatus.isDenied ||
+                          photosPermissionStatus.isPermanentlyDenied);
+                      if (photosPermissionStatus.isDenied ||
+                          photosPermissionStatus.isPermanentlyDenied) {
+                        errorNotifier
+                            .setError(appLocalizations.photosPermissionDenied);
+                        return;
+                      }
+                      editProfileViewModel.doIntent(
+                        OnAvatarTap(
+                            emailId: widget.editProfileScreenParameters
+                                    .authEntity.user?.email ??
+                                ""),
+                      );
                     },
                     onChangePasswordClick: () {
                       Navigator.pushNamed<ProfileBackValues>(
@@ -160,8 +174,20 @@ class _EditProfileScreenState
   @override
   void dispose() {
     super.dispose();
+    BackButtonInterceptor.remove(myInterceptor);
     print(editProfileViewModel.profileUpdatedAtLeastOnce);
     editProfileViewModel.doIntent(DisposeControllersAndFocusNodes());
+  }
+
+  void onLeadingButtonClick() {
+    Navigator.pop<ProfileBackValues>(
+      context,
+      ProfileBackValues(
+          profileUpdatedAtLeastOnce:
+              editProfileViewModel.profileUpdatedAtLeastOnce,
+          avatarUpdatedAtLeastOnce:
+              editProfileViewModel.avatarUpdatedAtLeastOnce),
+    );
   }
 }
 
