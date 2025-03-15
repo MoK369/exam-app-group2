@@ -48,14 +48,6 @@ import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
     as _i39;
 import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
     as _i23;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
-    as _i42;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
-    as _i43;
-import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
-    as _i44;
-import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
-    as _i45;
 import '../../modules/home/data/api_manager/explore_api_manager.dart' as _i6;
 import '../../modules/home/data/data_source_contracts/explore_data_source.dart'
     as _i7;
@@ -79,6 +71,14 @@ import '../../modules/home/domain/use_cases/get_all_subjects_use_case.dart'
     as _i32;
 import '../../modules/home/domain/use_cases/get_cashed_question.dart' as _i33;
 import '../../modules/home/domain/use_cases/save_questions.dart' as _i40;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
+    as _i42;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
+    as _i43;
+import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
+    as _i44;
+import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
+    as _i45;
 import '../../storage/contracts/isar_storage_service_contract.dart' as _i11;
 import '../../storage/contracts/storage_service_contract.dart' as _i24;
 import '../../storage/implementation/isar_storage_service_cashed_question_entity_impl.dart'
@@ -139,14 +139,14 @@ extension GetItInjectableX on _i1.GetIt {
               gh<_i9.FlutterSecureStorage>(),
             ));
     await gh.factoryAsync<String>(
-      () => localeInitializer.initCurrentLocal(
-          gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
-      instanceName: 'initCurrentLocal',
+      () => dioService
+          .getToken(gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
       preResolve: true,
     );
     await gh.factoryAsync<String>(
-      () => dioService
-          .getToken(gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
+      () => localeInitializer.initCurrentLocal(
+          gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
+      instanceName: 'initCurrentLocal',
       preResolve: true,
     );
     gh.factory<_i26.AuthLocalDataSource>(() => _i27.AuthLocalDataSourceImpl(

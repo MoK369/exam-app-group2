@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
@@ -162,7 +160,8 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               } else if (state.isError) {
                 return ErrorStateWidget(error: state.error!);
               } else if (state.isSuccess) {
-                var question = state.questions?[cubit.currentQuestion - 1];
+                var question = state.questions?[state.currentQuestion - 1];
+
                 cubit.answersMap[question?.id] = "A${selectedIndex + 1}";
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,7 +169,8 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                     Column(
                       children: [
                         Text(
-                          'Question ${cubit.currentQuestion} of ${state.questions!.length}',
+                          'Question ${state.currentQuestion} of ${state
+                              .questions!.length}',
                           style: theme.textTheme.titleSmall,
                         ),
                         SizedBox(
@@ -178,7 +178,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                         ),
                         StepProgressIndicator(
                           totalSteps: state.questions!.length,
-                          currentStep: cubit.currentQuestion,
+                          currentStep: state.currentQuestion,
                           size: 4.h,
                           padding: 0,
                           selectedColor: AppColors.blue,
@@ -218,7 +218,11 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                   backgroundColor: AppColors.lightBlue,
                                 ),
                                 onPressed: () {
-                                  cubit.doIntent(PreviousQuestionIntent());
+                                  cubit.doIntent(
+                                    PreviousQuestionIntent(
+                                      currentQuestion: state.currentQuestion,
+                                    ),
+                                  );
                                 },
                                 child: Text(
                                   'Back',
@@ -243,7 +247,10 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                   backgroundColor: AppColors.blue,
                                 ),
                                 onPressed: () {
-                                  cubit.doIntent(NextQuestionIntent());
+                                  cubit.doIntent(NextQuestionIntent(
+                                    currentQuestion: state.currentQuestion,
+                                    questions: state.questions,
+                                  ));
                                 },
                                 child: Text(
                                   'Next',
@@ -292,7 +299,6 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               onChanged: (int? value) {
                 selectedIndex = value ?? 0;
                 cubit.answersMap[question.id] = "A${selectedIndex + 1}";
-                log(cubit.answersMap.toString());
                 setState(() {});
               },
             ),
