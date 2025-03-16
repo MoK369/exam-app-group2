@@ -1,0 +1,41 @@
+{
+  "signUpScreen_______________": "$$$ تعليق $$$",
+  "signUp": "تسجيل حساب",
+  "userName": "اسم المستخدم",
+  "enterUserName": "أدخل اسم المستخدم",
+  "firstName": "الاسم الأول",
+  "enterFirstName": "أدخل الاسم الأول",
+  "lastName": "الاسم الأخير",
+  "enterLastName": "أدخل الاسم الأخير",
+  "email": "البريد الإلكتروني",
+  "enterYourEmail": "أدخل بريدك الإلكتروني",
+  "password": "كلمة المرور",
+  "enterPassword": "أدخل كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "phoneNumber": "رقم الهاتف",
+  "enterPhoneNumber": "أدخل رقم الهاتف",
+  "alreadyHaveAccount": "هل لديك حساب؟ ",
+  "login": "تسجيل الدخول",
+
+  "errorMessages": "$$$ تعليق $$$",
+  "connectionTimeout": "انتهت مهلة الاتصال مع الخادم ⌛",
+  "sendTimeout": "انتهت مهلة الإرسال في الاتصال مع الخادم ⏱",
+  "receiveTimeout": "انتهت مهلة الاستقبال في الاتصال مع الخادم ⏰",
+  "cancel": "تم إلغاء الطلب إلى الخادم ✖",
+  "connectionError": "لا يوجد اتصال بالإنترنت \uD83D\uDE11",
+  "unknown": "حدث خطأ ما \uD83E\uDD14",
+  "badCertificate": "الشهادة المقدمة من الخادم غير صالحة \uD83D\uDCD1",
+  "somethingWentWrong": "حدث خطأ ما \uD83E\uDD14",
+
+  "resetPassword": "إعادة تعيين كلمة المرور",
+  "passwordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف مع حرف كبير ورقم واحد على الأقل",
+  "newPassword": "كلمة المرور الجديدة",
+  "enterNewPassword": "أدخل كلمة المرور الجديدة",
+
+  "confirmYourPassword": "أكد كلمة المرور",
+  "continueText": "متابعة",
+  "error": "خطأ"
+
+
+
+}

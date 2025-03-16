@@ -7,19 +7,20 @@ class NumberTextField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
   final void Function(String value) onNext;
+  final ValueChanged<String>? onChanged;
 
   const NumberTextField({
     super.key,
     required this.controller,
     required this.focusNode,
     required this.onNext,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
-
       keyboardType: TextInputType.number,
       inputFormatters: [
         LengthLimitingTextInputFormatter(1),
@@ -51,10 +52,15 @@ class NumberTextField extends StatelessWidget {
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 25.h),
       ),
-      // style: Styles.styles17w500NormalBlack,
       focusNode: focusNode,
-      textAlign: TextAlign.center, // Center the text
-      onChanged: onNext,
+      textAlign: TextAlign.center,
+      onChanged: (value) {
+        onChanged?.call(value);
+
+        if (value.length == 1) {
+          onNext();
+        }
+      },
     );
   }
 }

@@ -28,6 +28,8 @@ class AppThemes {
       appBarTheme: const AppBarTheme(
         backgroundColor: lightPrimaryColor,
       ),
+
+
       textTheme: TextTheme(
         labelSmall: GoogleFonts.inter(color: Colors.black, fontSize: 12.sp),
         labelMedium: GoogleFonts.inter(

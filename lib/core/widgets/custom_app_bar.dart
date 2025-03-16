@@ -5,11 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showLeadingIcon;
-  const CustomAppBar(
-      {super.key, required this.title, this.showLeadingIcon = true});
+  CustomAppBar({super.key, required this.title, this.showLeadingIcon = true});
 
   @override
-  Widget customBuild(BuildContext context, ThemeData theme) {
+  Widget customBuild(BuildContext context) {
     return AppBar(
       forceMaterialTransparency: true,
       leadingWidth: 35,
