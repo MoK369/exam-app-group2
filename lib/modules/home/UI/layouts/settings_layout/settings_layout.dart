@@ -76,6 +76,7 @@ class _SettingsLayoutState extends BaseStatefulWidgetState<SettingsLayout> {
                 height: 24.h,
               ),
               ListTile(
+                tileColor: AppColors.white,
                 onTap: () => showLanguagesDialog(),
                 leading: const Icon(Icons.language_outlined),
                 title: Column(
@@ -95,6 +96,7 @@ class _SettingsLayoutState extends BaseStatefulWidgetState<SettingsLayout> {
                 height: 24.h,
               ),
               ListTile(
+                tileColor: AppColors.white,
                 onTap: () {
                   settingsViewModel.doIntent(OnLogoutButtonClick());
                 },
@@ -112,6 +114,7 @@ class _SettingsLayoutState extends BaseStatefulWidgetState<SettingsLayout> {
                 height: 16.h,
               ),
               ListTile(
+                tileColor: AppColors.white,
                 onTap: () {
                   displayAlertDialog(
                     title: Text(

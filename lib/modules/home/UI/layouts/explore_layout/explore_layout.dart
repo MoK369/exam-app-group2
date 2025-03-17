@@ -32,71 +32,76 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: appLocalizations.survey,
-        padding: REdgeInsets.symmetric(
-          horizontal: 16,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: appLocalizations.survey,
+          padding: REdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          textStyle: theme.textTheme.labelMedium!.copyWith(
+            fontSize: 20.sp,
+            color: AppColors.blue,
+          ),
+          showLeadingIcon: false,
         ),
-        textStyle: theme.textTheme.labelMedium!.copyWith(
-          fontSize: 20.sp,
-          color: AppColors.blue,
-        ),
-        showLeadingIcon: false,
-      ),
-      body: Padding(
-        padding: REdgeInsets.symmetric(
-          horizontal: 16,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            buildSearchBar(),
-            SizedBox(
-              height: 40.h,
-            ),
-            Text(
-              appLocalizations.browseBySubject,
-              style: theme.textTheme.labelMedium,
-            ),
-            SizedBox(
-              height: 24.h,
-            ),
-            BlocProvider(
-              create: (context) => cubit,
-              child: BlocBuilder<ExploreCubit, HomeState>(
-                builder: (context, state) {
-                  if (state.isLoading) {
-                    return const LoadingStateWidget();
-                  } else if (state.isError) {
-                    return ErrorStateWidget(
-                      error: state.error!,
-                    );
-                  } else if (state.isSuccess) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, index) => GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              DefinedRoutes.exams,
-                              arguments: state.subjects?[index],
-                            );
-                          },
-                          child: buildSubjectCard(
-                            title: state.subjects?[index].name ?? '',
-                            url: state.subjects![index].icon ?? '',
-                          ),
-                        ),
-                        itemCount: state.subjects?.length,
-                      ),
-                    );
-                  }
-                  return const SizedBox();
-                },
+        body: Padding(
+          padding: REdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildSearchBar(),
+              SizedBox(
+                height: 40.h,
               ),
-            ),
-          ],
+              Text(
+                appLocalizations.browseBySubject,
+                style: theme.textTheme.labelMedium,
+              ),
+              SizedBox(
+                height: 24.h,
+              ),
+              BlocProvider(
+                create: (context) => cubit,
+                child: BlocBuilder<ExploreCubit, HomeState>(
+                  builder: (context, state) {
+                    if (state.isLoading) {
+                      return const LoadingStateWidget();
+                    } else if (state.isError) {
+                      return ErrorStateWidget(
+                        error: state.error!,
+                      );
+                    } else if (state.isSuccess) {
+                      return Expanded(
+                        child: ListView.builder(
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                DefinedRoutes.exams,
+                                arguments: state.subjects?[index],
+                              );
+                            },
+                            child: buildSubjectCard(
+                              title: state.subjects?[index].name ?? '',
+                              url: state.subjects![index].icon ?? '',
+                            ),
+                          ),
+                          itemCount: state.subjects?.length,
+                        ),
+                      );
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
