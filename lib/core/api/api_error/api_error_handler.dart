@@ -46,11 +46,4 @@ class ApiErrorHandler {
       return ApiErrorModel(message: error.toString());
     }
   }
-
-  // static ApiErrorModel _handleError(dynamic data) {
-  //   return ApiErrorModel(
-  //     message: data['message'],
-  //     code: data['code'],
-  //   );
-  // }
 }

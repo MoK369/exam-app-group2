@@ -1,12 +1,8 @@
 import 'package:exam_app_group2/core/routes/defined_routes.dart';
+import 'package:exam_app_group2/modules/authentication/ui/forget_password/forget_password_screen.dart';
+import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/confirm_password_layout/confirm_password_layout.dart';
+import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/verify_email_layout/email_verification_layout.dart';
 
-// import 'package:exam_app_group2/modules/authentication/screens/sign_up_screen.dart';
-import 'package:exam_app_group2/modules/authentication/screens/sign_up_screen.dart';
-import 'package:exam_app_group2/modules/forget%20password/screens/confirm_password.dart';
-import 'package:exam_app_group2/modules/forget%20password/screens/emial_verfication_screen.dart';
-import 'package:exam_app_group2/modules/forget%20password/screens/forget_password.dart';
-
-import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -14,47 +10,34 @@ class GenerateRoute {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     var args = settings.arguments;
     var name = settings.name;
-    // switch (name) {
-    //   case DefinedRoutes.homeRouteName:
-    //     return MaterialPageRoute(
-    //       builder: (context) => const HomeScreen(),
-    //     );
 
     switch (name) {
       case DefinedRoutes.homeRouteName:
         return MaterialPageRoute(
           builder: (context) => const HomeScreen(),
         );
-      case DefinedRoutes.signUpRouteName:
+      case DefinedRoutes.forgetPasswordRoute:
         return MaterialPageRoute(
-          builder: (context) => const SignUpScreen(),
+          builder: (context) => const ForgetPasswordScreen(),
         );
-      case DefinedRoutes.forgetPasswordName :
-        return MaterialPageRoute(
-          builder: (context)=> const ForgetPassword()
-        );
-      case DefinedRoutes.emailVerficationName: 
-        return MaterialPageRoute(
-          builder: (context){
-            final email = settings.arguments as String ;
-            return  EmialVerficationScreen(email: email,);  }
-        );
-      case DefinedRoutes.confirmPasswordName :
-        return MaterialPageRoute(
-          builder: (context) {
-            final email = settings.arguments as String ;
-            return  ConfirmPassword(email: email,);
-          }
-        );
+      // case DefinedRoutes.forgetPasswordName:
+      //   return MaterialPageRoute(builder: (context) => const ForgetPassword());
+      // case DefinedRoutes.emailVerficationName:
+      //   return MaterialPageRoute(builder: (context) {
+      //     final email = settings.arguments as String;
+      //     return EmailVerificationLayout(
+      //       email: email,
+      //     );
+      //   });
+      // case DefinedRoutes.confirmPasswordName:
+      //   return MaterialPageRoute(builder: (context) {
+      //     final email = settings.arguments as String;
+      //     return ConfirmPasswordLayout(
+      //       email: email,
+      //     );
+      //   });
       default:
         return _errorRoute();
-
-      // case DefinedRoutes.signUpRouteName:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const SignUpScreen(),
-      //   );
-      // default:
-      //   return _errorRoute();
     }
   }
 
@@ -74,4 +57,3 @@ class GenerateRoute {
     );
   }
 }
-

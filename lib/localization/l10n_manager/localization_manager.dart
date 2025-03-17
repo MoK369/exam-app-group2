@@ -5,16 +5,20 @@ import 'package:injectable/injectable.dart';
 
 @singleton
 class LocalizationManager extends Cubit<LocaleState> {
+  String currentLocale = LanguagesCodes.english;
   LocalizationManager() : super(const LocaleState());
 
   void changeLocal(String languageCode) {
     switch (languageCode) {
       case LanguagesCodes.english:
+        currentLocale = LanguagesCodes.english;
         emit(const LocaleState());
       case LanguagesCodes.arabic:
+        currentLocale = LanguagesCodes.arabic;
         emit(LocaleState(
             state: LocaleStatus.arabic, languageCode: languageCode));
       default:
+        currentLocale = LanguagesCodes.english;
         emit(const LocaleState());
     }
   }

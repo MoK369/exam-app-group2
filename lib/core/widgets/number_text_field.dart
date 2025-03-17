@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +7,7 @@ import 'package:exam_app_group2/core/themes/app_themes.dart';
 class NumberTextField extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
-  final void Function(String value) onNext;
+  final void Function() onNext; //String value
   final ValueChanged<String>? onChanged;
 
   const NumberTextField({
@@ -28,25 +29,25 @@ class NumberTextField extends StatelessWidget {
       ],
       decoration: InputDecoration(
         filled: true,
-        fillColor: AppThemes.verficationFieldColor,
+        fillColor: AppColors.verificationFieldColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: const BorderSide(
-            color: AppThemes.verficationFieldColor,
+            color: AppColors.verificationFieldColor,
             width: 1.5,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: const BorderSide(
-            color: AppThemes.verficationFieldColor,
+            color: AppColors.verificationFieldColor,
             width: 1.5,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
           borderSide: const BorderSide(
-            color: AppThemes.verficationFieldColor,
+            color: AppColors.verificationFieldColor,
             width: 1.5,
           ),
         ),

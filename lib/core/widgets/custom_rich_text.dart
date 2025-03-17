@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,9 +32,11 @@ class CustomRichText extends StatelessWidget {
               child: Text(
                 actionText,
                 style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(color: AppThemes.blueAppColor,fontSize: 14.sp,decoration: TextDecoration.underline , decorationColor: AppThemes.blueAppColor ),
+                    .textTheme.labelSmall!.copyWith(
+                    color: AppColors.blue,
+                    fontSize: 14.sp,
+                    decoration: TextDecoration.underline,
+                    decorationColor: AppColors.blue),
               ),
             ),
           ),
