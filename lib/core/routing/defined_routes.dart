@@ -6,4 +6,5 @@ class DefinedRoutes {
   static const String examDetails = "/examDetails";
   static const String questions = "/questions";
   static const String examScore = "/examScore";
+  static const String examAnswers = "/ExamAnswers" ; 
 }

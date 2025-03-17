@@ -14,8 +14,8 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:isar/isar.dart' as _i10;
 
-import '../../dio_service/dio_service.dart' as _i46;
-import '../../localization/initializer/locale_initializer.dart' as _i48;
+import '../../dio_service/dio_service.dart' as _i47;
+import '../../localization/initializer/locale_initializer.dart' as _i49;
 import '../../localization/l10n_manager/localization_manager.dart' as _i34;
 import '../../localization/use_case/localization_use_case.dart' as _i35;
 import '../../modules/authentication/data/api_manager/auth_api_manager.dart'
@@ -48,14 +48,6 @@ import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
     as _i39;
 import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
     as _i23;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
-    as _i42;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
-    as _i43;
-import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
-    as _i44;
-import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
-    as _i45;
 import '../../modules/home/data/api_manager/explore_api_manager.dart' as _i6;
 import '../../modules/home/data/data_source_contracts/explore_data_source.dart'
     as _i7;
@@ -71,7 +63,7 @@ import '../../modules/home/domain/entities/cahed_questions/cashed_questions_enti
     as _i12;
 import '../../modules/home/domain/repositories_contracts/explore_repository.dart'
     as _i28;
-import '../../modules/home/domain/use_cases/check_questions.dart' as _i41;
+import '../../modules/home/domain/use_cases/check_questions.dart' as _i42;
 import '../../modules/home/domain/use_cases/get_all_exams_on_subject.dart'
     as _i30;
 import '../../modules/home/domain/use_cases/get_all_questions.dart' as _i31;
@@ -79,12 +71,22 @@ import '../../modules/home/domain/use_cases/get_all_subjects_use_case.dart'
     as _i32;
 import '../../modules/home/domain/use_cases/get_cashed_question.dart' as _i33;
 import '../../modules/home/domain/use_cases/save_questions.dart' as _i40;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
+    as _i43;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
+    as _i44;
+import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
+    as _i45;
+import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
+    as _i46;
+import '../../modules/home/UI/layouts/result_layout/view%20model/cashed_cubit.dart'
+    as _i41;
 import '../../storage/contracts/isar_storage_service_contract.dart' as _i11;
 import '../../storage/contracts/storage_service_contract.dart' as _i24;
 import '../../storage/implementation/isar_storage_service_cashed_question_entity_impl.dart'
     as _i13;
 import '../../storage/implementation/storage_service_imp.dart' as _i25;
-import '../../storage/initializer/storage_initializer.dart' as _i47;
+import '../../storage/initializer/storage_initializer.dart' as _i48;
 import '../providers/error/error_notifier.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -139,14 +141,14 @@ extension GetItInjectableX on _i1.GetIt {
               gh<_i9.FlutterSecureStorage>(),
             ));
     await gh.factoryAsync<String>(
-      () => localeInitializer.initCurrentLocal(
-          gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
-      instanceName: 'initCurrentLocal',
+      () => dioService
+          .getToken(gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
       preResolve: true,
     );
     await gh.factoryAsync<String>(
-      () => dioService
-          .getToken(gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
+      () => localeInitializer.initCurrentLocal(
+          gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
+      instanceName: 'initCurrentLocal',
       preResolve: true,
     );
     gh.factory<_i26.AuthLocalDataSource>(() => _i27.AuthLocalDataSourceImpl(
@@ -181,17 +183,19 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i39.LoginViewModel(loginUseCase: gh<_i38.LoginUseCase>()));
     gh.factory<_i40.SaveQuestionsUseCase>(() => _i40.SaveQuestionsUseCase(
         exploreRepository: gh<_i28.ExploreRepository>()));
-    gh.factory<_i41.CheckQuestionsUseCase>(() => _i41.CheckQuestionsUseCase(
+    gh.factory<_i41.CachedQuestionsCubit>(() => _i41.CachedQuestionsCubit(
+        getCashedQuestionUseCase: gh<_i33.GetCashedQuestionUseCase>()));
+    gh.factory<_i42.CheckQuestionsUseCase>(() => _i42.CheckQuestionsUseCase(
         homeRepository: gh<_i28.ExploreRepository>()));
-    gh.factory<_i42.ExamCubit>(() => _i42.ExamCubit(
+    gh.factory<_i43.ExamCubit>(() => _i43.ExamCubit(
         getAllExamsOnSubjectUseCase: gh<_i30.GetAllExamsOnSubjectUseCase>()));
-    gh.factory<_i43.ExamScoreCubit>(() => _i43.ExamScoreCubit(
-        checkQuestionsUseCase: gh<_i41.CheckQuestionsUseCase>()));
-    gh.factory<_i44.ExploreCubit>(() => _i44.ExploreCubit(
+    gh.factory<_i44.ExamScoreCubit>(() => _i44.ExamScoreCubit(
+        checkQuestionsUseCase: gh<_i42.CheckQuestionsUseCase>()));
+    gh.factory<_i45.ExploreCubit>(() => _i45.ExploreCubit(
         getAllSubjectsUseCase: gh<_i32.GetAllSubjectsUseCase>()));
-    gh.factory<_i45.QuestionsCubit>(() => _i45.QuestionsCubit(
+    gh.factory<_i46.QuestionsCubit>(() => _i46.QuestionsCubit(
           getAllQuestionsUseCase: gh<_i31.GetAllQuestionsUseCase>(),
-          checkQuestionsUseCase: gh<_i41.CheckQuestionsUseCase>(),
+          checkQuestionsUseCase: gh<_i42.CheckQuestionsUseCase>(),
           saveQuestionsUseCase: gh<_i40.SaveQuestionsUseCase>(),
           getCashedQuestionUseCase: gh<_i33.GetCashedQuestionUseCase>(),
         ));
@@ -199,8 +203,8 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$DioService extends _i46.DioService {}
+class _$DioService extends _i47.DioService {}
 
-class _$StorageInitializer extends _i47.StorageInitializer {}
+class _$StorageInitializer extends _i48.StorageInitializer {}
 
-class _$LocaleInitializer extends _i48.LocaleInitializer {}
+class _$LocaleInitializer extends _i49.LocaleInitializer {}

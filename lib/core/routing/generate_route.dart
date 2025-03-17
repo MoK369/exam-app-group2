@@ -1,8 +1,11 @@
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart';
+import 'package:exam_app_group2/modules/home/data/models/all_questions_response/answer.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/result_layout/exam_answers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,7 +26,7 @@ class GenerateRoute {
     switch (name) {
       case DefinedRoutes.homeRouteName:
         HomeScreenParameters homeScreenParameters =
-        (args as HomeScreenParameters);
+            (args as HomeScreenParameters);
         return MaterialPageRoute(
           builder: (context) => HomeScreen(
             authEntity: homeScreenParameters.authEntity,
@@ -76,14 +79,26 @@ class GenerateRoute {
             examEntity: examEntity,
           ),
         );
+      case DefinedRoutes.examAnswers:
+        final List<dynamic> args = settings.arguments as List<dynamic>;
+        final List<QuestionEntity> questionEntities =
+            args[0] as List<QuestionEntity>;
+        final List<Answers> answers = args[1] as List<Answers>;
+        return MaterialPageRoute(
+          builder: (context) => ExamAnswers(
+            answers: answers,
+            questionEntities: questionEntities,
+          ),
+        );
       default:
         return _errorRoute();
     }
   }
 
-  static List<Route<dynamic>> onGenerateInitialRoutes({String? initialRoute,
-    required AuthenticationResponseEntity? storedAuthEntity,
-    bool rememberMe = false}) {
+  static List<Route<dynamic>> onGenerateInitialRoutes(
+      {String? initialRoute,
+      required AuthenticationResponseEntity? storedAuthEntity,
+      bool rememberMe = false}) {
     return [
       if (storedAuthEntity != null)
         MaterialPageRoute(

@@ -4,6 +4,56 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
+  static TextStyle styles18w500black15 = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+
+    color: const Color.fromRGBO(15,15,15,1),
+  );
+   static TextStyle styles13w400black15 = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+
+    color: const Color.fromRGBO(15,15,15,1),
+  );
+  static TextStyle styles12w600blue = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+
+    color: const Color.fromRGBO(2,54,156,1),
+  );
+  static TextStyle styles12w500blue = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+
+    color: const Color.fromRGBO(2,54,156,1),
+  );
+
+  static TextStyle styles16w500black15 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500,
+
+    color: const Color.fromRGBO(15,15,15,1),
+  );
+    static TextStyle styles20w500black15 = TextStyle(
+    fontSize: 20.sp,
+    fontWeight: FontWeight.w500,
+
+    color: const Color.fromRGBO(15,15,15,1),
+  );
+
+  static TextStyle styles14w400grey = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+
+    color: const Color.fromRGBO(83,83,83,1),
+  );
+  static TextStyle styles13w400grey = TextStyle(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400,
+
+    color: const Color.fromRGBO(83,83,83,1),
+  );
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.white,
