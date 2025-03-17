@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateless_widget.dart';
+import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:exam_app_group2/core/languages/language_codes.dart';
@@ -7,14 +8,26 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool showLeadingIcon;
   final bool showLocaleButton;
-  final void Function()? onChangeLocaleButtonClick;
 
-  CustomAppBar(
-      {super.key,
-      required this.title,
-      this.showLeadingIcon = true,
-      this.showLocaleButton = false,
-      this.onChangeLocaleButtonClick});
+  /// initialize this parameter when using onChangeLocaleButtonClick()
+  final String? widgetNameForErrorNotifier;
+  final void Function()? onChangeLocaleButtonClick, onLeadingIconButtonClick;
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
+  final List<Widget>? actions;
+
+  CustomAppBar({
+    this.padding,
+    this.textStyle,
+    this.actions,
+    super.key,
+    required this.title,
+    this.showLeadingIcon = true,
+    this.showLocaleButton = false,
+    this.widgetNameForErrorNotifier,
+      this.onLeadingIconButtonClick,
+      this.onChangeLocaleButtonClick,
+  });
 
   @override
   Widget customBuild(BuildContext context) {
@@ -22,12 +35,16 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
     return AppBar(
       forceMaterialTransparency: true,
       leadingWidth: 35,
-      titleSpacing: 0,
+      titleSpacing: showLeadingIcon ? 0 : 16.w,
       leading: !showLeadingIcon
           ? null
           : IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                if (onLeadingIconButtonClick != null) {
+                  onLeadingIconButtonClick!();
+                } else {
+                  Navigator.pop(context);
+                }
               },
               icon: const Icon(
                 Icons.arrow_back_ios,
@@ -37,25 +54,27 @@ class CustomAppBar extends BaseStatelessWidget implements PreferredSizeWidget {
         title,
         style: theme.textTheme.labelMedium!.copyWith(fontSize: 20.sp),
       ),
-      actions: !showLocaleButton
+      actions: actions ??
+          (!showLocaleButton
           ? null
           : [
               TextButton(
                   onPressed: () {
                     localizationUseCase.changeLocale(
-                      currentLocal.toString() == LanguagesCodes.english
-                          ? LanguagesCodes.arabic
-                          : LanguagesCodes.english,
-                    );
-                    if (onChangeLocaleButtonClick != null) {
-                      onChangeLocaleButtonClick!();
-                    }
-                  },
-                  child: Text(
-                    currentLocal.toString().toUpperCase(),
-                    style: theme.textTheme.labelMedium,
-                  ))
-            ],
+                        currentLocal.toString() == LanguagesCodes.english
+                            ? LanguagesCodes.arabic
+                            : LanguagesCodes.english,
+                        widgetNameForErrorNotifier ?? "");
+                      if (onChangeLocaleButtonClick != null) {
+                        onChangeLocaleButtonClick!();
+                      }
+                    },
+                    child: Text(
+                      currentLocal.toString().toUpperCase(),
+                      style: theme.textTheme.labelMedium,
+                    ),
+                  )
+                ]),
     );
   }
 

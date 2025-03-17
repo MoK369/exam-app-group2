@@ -1,0 +1,2 @@
+class ProfileNotChangeException implements Exception {
+}

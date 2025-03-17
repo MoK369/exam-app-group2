@@ -9,8 +9,8 @@ class LocalizationUseCase {
 
   LocalizationUseCase(this._localizationManager);
 
-  void changeLocale(String languageCode) {
-    _localizationManager.changeLocal(languageCode);
+  void changeLocale(String languageCode, String widgetName) {
+    _localizationManager.changeLocal(languageCode, widgetName);
   }
 
   AppLocalizations get(BuildContext context) {

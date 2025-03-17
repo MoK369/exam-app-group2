@@ -1,23 +1,38 @@
-import 'package:exam_app_group2/core/routes/defined_routes.dart';
-import 'package:exam_app_group2/core/routes/generate_route.dart';
+import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
-import 'package:exam_app_group2/localization/l10n_manager/local_state.dart';
 import 'package:exam_app_group2/localization/l10n_manager/localization_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import 'core/di/injectable_initializer.dart';
+import 'core/routing/generate_route.dart';
+import 'modules/authentication/domain/entities/authentication/authentication_response_entity.dart';
+import 'modules/authentication/domain/use_cases/login/login_use_case.dart';
+
+AuthenticationResponseEntity? storedAuthEntity;
 
 void main() async {
   FlutterNativeSplash.preserve(
       widgetsBinding: WidgetsFlutterBinding.ensureInitialized());
   await ScreenUtil.ensureScreenSize();
-  configureDependencies();
-  runApp(BlocProvider(
+  // Initializing local storage (Flutter Secure Storage) and current locale (Stored Locale) happens here
+  await configureDependencies();
+
+  // Get Cached Login Info
+  storedAuthEntity = await getIt.get<LoginUseCase>().getStoredLoginInfo();
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
       create: (context) => getIt.get<LocalizationManager>(),
-      child: const MyApp()));
+    ),
+    ChangeNotifierProvider(
+      create: (context) => getIt.get<ErrorNotifier>(),
+    )
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -28,12 +43,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
     FlutterNativeSplash.remove();
   }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -41,17 +56,21 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return BlocBuilder<LocalizationManager, LocaleState>(
-          builder: (context, state) {
+        return Consumer<LocalizationManager>(
+          builder: (BuildContext context,
+              LocalizationManager localizationManager, Widget? child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: AppThemes.lightTheme,
               themeMode: ThemeMode.light,
-              locale: Locale(state.languageCode),
+              locale: Locale(localizationManager.currentLocale),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateRoute: GenerateRoute.onGenerateRoute,
-              initialRoute: DefinedRoutes.forgetPasswordRoute,
+              onGenerateInitialRoutes: (initialRoute) =>
+                  GenerateRoute.onGenerateInitialRoutes(
+                      initialRoute: initialRoute,
+                      storedAuthEntity: storedAuthEntity),
             );
           },
         );

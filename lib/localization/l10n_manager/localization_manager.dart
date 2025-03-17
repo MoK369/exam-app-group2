@@ -1,25 +1,32 @@
-import 'package:exam_app_group2/core/languages/language_codes.dart';
-import 'package:exam_app_group2/localization/l10n_manager/local_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:exam_app_group2/storage/constants/storage_constants.dart';
+import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
 @singleton
-class LocalizationManager extends Cubit<LocaleState> {
-  String currentLocale = LanguagesCodes.english;
-  LocalizationManager() : super(const LocaleState());
+class LocalizationManager extends ChangeNotifier {
+  String currentLocale;
+  final StorageService<FlutterSecureStorage> _storageService;
 
-  void changeLocal(String languageCode) {
-    switch (languageCode) {
-      case LanguagesCodes.english:
-        currentLocale = LanguagesCodes.english;
-        emit(const LocaleState());
-      case LanguagesCodes.arabic:
-        currentLocale = LanguagesCodes.arabic;
-        emit(LocaleState(
-            state: LocaleStatus.arabic, languageCode: languageCode));
-      default:
-        currentLocale = LanguagesCodes.english;
-        emit(const LocaleState());
-    }
+  String currentLocale = LanguagesCodes.english;
+  LocalizationManager(
+      this._storageService, @Named("initCurrentLocal") this.currentLocale);
+
+  void changeLocal(String languageCode, String widgetName) {
+    currentLocale = languageCode;
+    saveLocal(languageCode, widgetName);
+    notifyListeners();
+  }
+
+  void saveLocal(String languageCode, String widgetName) {
+    _storageService.setStringValue(
+        StorageConstants.localKey, languageCode, widgetName);
+  }
+
+  Future<String?> getSavedLocal(String widgetName) async {
+    var savedLocale = await _storageService.getStringValue(
+        StorageConstants.localKey, widgetName);
+    return savedLocale;
   }
 }
