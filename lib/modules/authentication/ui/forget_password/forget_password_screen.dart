@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/forget_password_layout/forget_password_layout.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/reset_password_layout/reset_password_layout.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/verify_email_layout/email_verification_layout.dart';

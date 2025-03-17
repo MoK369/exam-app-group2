@@ -1,10 +1,10 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_button.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/forget_password_screen.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/forget_password_layout/view_model/forget_password_cubit.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/forget_password_layout/view_model/forget_password_states.dart';
@@ -71,6 +71,7 @@ class _ForgetPasswordLayoutState
                   ),
                   showOkButton: true,
                   onOkButtonClick: () {
+                    hideAlertDialog();
                     forgetPasswordScreenPageController.jumpToPage(1);
                   },
                 );

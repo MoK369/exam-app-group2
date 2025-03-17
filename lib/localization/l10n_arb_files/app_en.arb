@@ -21,7 +21,7 @@
   "successfullyRegistered": "Successfully Registered!",
   "ok": "OK",
   "rememberMe": "Remember me",
-  "forgetPassword": "Forget password ?",
+  "forgetPasswordQuestion": "Forget password ?",
   "doNotHaveAccount": "Don't have an account? ",
   "storagePermissionDenied": "Exam App can't keep working, storage permission has not been granted ⛔",
 
@@ -67,9 +67,7 @@
   "change": "Change",
   "update": "Update",
   "editProfile": "Edit Profile",
-  "resetPassword": "Rest Password",
   "currentPassword": "Current Password",
-  "newPassword": "New Password",
   "language": "Language",
   "cancelWord": "Cancel",
   "logout": "Logout",
@@ -116,8 +114,6 @@
   "confirmYourPassword": "Confirm your password",
   "continueText": "Continue",
   "error": "Error",
-  "ok": "OK",
-  "noError": "No Error",
   "resetPasswordGuidance": "Password must not be empty and must contain\n8 characters with upper case letter and one \nnumber at least ",
   "resetPasswordSuccessfully": "Password Reset Successfully!"
 }

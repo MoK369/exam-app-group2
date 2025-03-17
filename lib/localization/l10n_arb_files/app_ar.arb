@@ -18,11 +18,10 @@
   "login": "تسجيل الدخول",
 
   "loginScreen___________": "$$$ تعليق $$$",
-  "login": "تسجيل الدخول",
   "successfullyRegistered": "تم التسجيل بنجاح!",
   "ok": "موافق",
   "rememberMe": "تذكرني",
-  "forgetPassword": "نسيت كلمة المرور ؟",
+  "forgetPasswordQuestion": "نسيت كلمة المرور ؟",
   "doNotHaveAccount": "هل لا تمتلك حساب؟ ",
   "storagePermissionDenied": "لا يمكن لتطبيق الامتحان الاستمرار في العمل، لم يتم منح إذن التخزين ⛔",
 
@@ -109,15 +108,11 @@
   "resend": "إعادة إرسال",
   "emailVerified": "تم التحقق من البريد الإلكتروني بنجاح",
   "invalidCode": "رمز غير صالح",
-  "resetPassword": "إعادة تعيين كلمة المرور",
   "passwordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف مع حرف كبير ورقم واحد على الأقل",
-  "newPassword": "كلمة مرور جديدة",
   "enterNewPassword": "أدخل كلمة مرور جديدة",
   "confirmYourPassword": "أكد كلمة المرور الخاصة بك",
   "continueText": "استمرار",
   "error": "خطأ",
-  "ok": "موافق",
-  "noError": "لا يوجد خطأ",
   "resetPasswordGuidance": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي\nعلى 6 أحرف مع حرف كبير ورقم واحد على الأقل",
   "resetPasswordSuccessfully": "تمت إعادة تعيين كلمة المرور بنجاح!"
 

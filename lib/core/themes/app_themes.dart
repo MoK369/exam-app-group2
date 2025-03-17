@@ -53,7 +53,7 @@ class AppThemes {
       titleSmall: GoogleFonts.roboto(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: AppColors.darkGray,
+        color: AppColors.gray,
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -146,8 +146,8 @@ class AppThemes {
           Radius.circular(10.r),
         ),
       ),
-      tileColor: AppColors.moreLightBlue,
-      selectedTileColor: AppColors.lightBlue2,
+      tileColor: AppColors.lightBlue,
+      selectedTileColor: AppColors.blue[10],
       selectedColor: Colors.black,
     ),
     cardTheme: CardTheme(

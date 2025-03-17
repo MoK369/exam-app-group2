@@ -1,11 +1,11 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
+import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
 import 'package:exam_app_group2/core/widgets/custom_button.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/reset_password_layout/view_model/reset_password_cubit.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/reset_password_layout/view_model/reset_password_status.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/view_model/forget_password_screen_view_model.dart';
@@ -63,14 +63,21 @@ class _ResetPasswordLayoutState
             case ResetPasswordStatus.success:
               hideAlertDialog();
               displayAlertDialog(
-                  title: Text(
-                    appLocalizations.resetPasswordSuccessfully,
-                    textAlign: TextAlign.center,
-                  ),
-                  showOkButton: true);
+                title: Text(
+                  appLocalizations.resetPasswordSuccessfully,
+                  textAlign: TextAlign.center,
+                ),
+                showOkButton: true,
+                onOkButtonClick: () {
+                  hideAlertDialog();
+                  hideAlertDialog();
+                },
+              );
             case ResetPasswordStatus.error:
               hideAlertDialog();
-              displayAlertDialog(title: ErrorStateWidget(error: state.error!));
+              displayAlertDialog(
+                  title: ErrorStateWidget(error: state.error!),
+                  showOkButton: true);
           }
         },
         child: SingleChildScrollView(

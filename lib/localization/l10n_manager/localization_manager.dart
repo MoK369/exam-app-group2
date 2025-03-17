@@ -9,7 +9,6 @@ class LocalizationManager extends ChangeNotifier {
   String currentLocale;
   final StorageService<FlutterSecureStorage> _storageService;
 
-  String currentLocale = LanguagesCodes.english;
   LocalizationManager(
       this._storageService, @Named("initCurrentLocal") this.currentLocale);
 

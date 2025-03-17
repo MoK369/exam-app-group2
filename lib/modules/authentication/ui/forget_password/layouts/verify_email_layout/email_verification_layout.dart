@@ -1,11 +1,11 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
+import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/custom_rich_text.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/verfication_row.dart';
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/verify_email_layout/view_model/verify_email_cubit.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/verify_email_layout/view_model/verify_email_states.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/view_model/forget_password_screen_view_model.dart';
@@ -66,6 +66,7 @@ class _EmailVerificationLayoutState
                     ),
                     showOkButton: true,
                     onOkButtonClick: () {
+                      hideAlertDialog();
                       forgetPasswordScreenPageController.jumpToPage(2);
                     },
                   );
@@ -89,6 +90,7 @@ class _EmailVerificationLayoutState
                     ),
                     showOkButton: true,
                     onOkButtonClick: () {
+                      hideAlertDialog();
                       verifyEmailCubit.doIntent(StartTimer(25));
                     },
                   );

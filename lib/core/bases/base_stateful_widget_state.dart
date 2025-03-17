@@ -1,9 +1,7 @@
-import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/localization/use_case/localization_use_case.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
-import 'package:exam_app_group2/localization/use_case/localization_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,7 +74,6 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     if (errorNotifier.errorMessage != null &&
         errorNotifier.widgetName == widgetName) {
       var errorMessage = errorNotifier.errorMessage;
-      print("Show Error snack bar");
       WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) async {
           if (errorMessage == null) return;
@@ -87,7 +84,6 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   }
 
   Future<void> showAnimatedSnackBar(String errorMessage) async {
-    print("Showing Error snack bar");
     AnimatedSnackBar(
       builder: (context) {
         return Container(
@@ -110,7 +106,7 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
               ),
               Expanded(
                 child: Text(
-                  errorMessage ?? "No Error",
+                  errorMessage,
                   maxLines: 3,
                   textDirection: TextDirection.ltr,
                   overflow: TextOverflow.ellipsis,
