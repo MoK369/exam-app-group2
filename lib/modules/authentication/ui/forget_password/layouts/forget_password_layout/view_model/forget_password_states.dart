@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:exam_app_group2/core/api/api_error/api_error_model.dart';
 
-// part of 'forget_password_cubit.dart' ;
 
 enum ForgotPasswordStatus {
   initial,

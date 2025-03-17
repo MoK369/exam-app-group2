@@ -26,15 +26,7 @@
   "badCertificate": "The certificate provided by the server is not valid \uD83D\uDCD1",
   "somethingWentWrong": "Something Went Wrong \uD83E\uDD14",
 
-  "resetPassword": "Reset Password",
-  "passwordRequirements": "Password must not be empty and must contain 6 characters with an uppercase letter and at least one number",
-  "newPassword": "New Password",
-  "enterNewPassword": "Enter new password",
-  "confirmYourPassword": "Confirm your password",
-  "continueText": "Continue",
-  "error": "Error",
-  "ok": "OK",
-  "noError": "No Error",
+
   "validationFunctions______________": "$$$ Comment $$$",
   "pleaseEnterName": "Please enter your name.",
   "pleaseEnterUserName": "Please enter user name.",
@@ -55,6 +47,7 @@
   "specialCharactersRulePassword": "At least one special character(e.g., #?!@$%^&*-) must be included.",
   "pleaseConfirmPassword": "Please confirm password.",
   "noMatch": "No Match!",
+
   "forgetPasswordScreen________": "$$$ Comment $$$",
   "forgetPassword": "Forget password",
   "enterAssociatedEmail": "Please enter your email associated to\nyour account",
@@ -63,7 +56,20 @@
   "emailVerificationScreen________": "$$$ Comment $$$",
   "emilVerification": "Email verification",
   "enterOTPSentToTheEmail": "Please enter your code that was sent to your\nemail address",
-  "didNotReceiveCode": "Didn't receive code?",
+  "didNotReceiveCode": "Didn't receive code? ",
   "resend": "Resend",
-  "emailVerified": "Email Verified Successfully"
+  "emailVerified": "Email Verified Successfully",
+  "invalidCode": "Invalid Code",
+  "resetPassword": "Reset Password",
+  "passwordRequirements": "Password must not be empty and must contain 6 characters with an uppercase letter and at least one number",
+  "newPassword": "New Password",
+  "enterNewPassword": "Enter new password",
+  "confirmYourPassword": "Confirm your password",
+  "continueText": "Continue",
+  "error": "Error",
+  "ok": "OK",
+  "noError": "No Error",
+  "resetPasswordGuidance": "Password must not be empty and must contain\n8 characters with upper case letter and one \nnumber at least ",
+  "resetPasswordSuccessfully": "Password Reset Successfully!"
+
 }

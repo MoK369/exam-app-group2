@@ -1,3 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
-class ForgetPasswordScreenViewModel extends ChangeNotifier {}
+@injectable
+class ForgetPasswordScreenViewModel extends ChangeNotifier {
+  String _email = '';
+
+  void changeEmail(String newValue) {
+    _email = newValue;
+  }
+
+  String get email => _email;
+}

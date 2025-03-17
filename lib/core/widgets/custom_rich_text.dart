@@ -1,5 +1,4 @@
 import 'package:exam_app_group2/core/colors/app_colors.dart';
-import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,11 +8,11 @@ class CustomRichText extends StatelessWidget {
   final VoidCallback onActionTap;
 
   const CustomRichText({
-    Key? key,
+    super.key,
     required this.text,
     required this.actionText,
     required this.onActionTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

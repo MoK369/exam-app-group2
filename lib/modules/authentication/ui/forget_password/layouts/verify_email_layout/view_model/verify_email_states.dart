@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:exam_app_group2/core/api/api_error/api_error_model.dart';
 
 enum Status {
   initial,
@@ -20,28 +19,33 @@ extension VerifyEmailStatusEx on VerifyEmailState {
 
 class VerifyEmailState extends Equatable {
   final Status emailVerificationStatus;
+  final bool isSendCodeInvalid;
   final Status resendCodeStatus;
   final Object? error;
 
   const VerifyEmailState({
     this.emailVerificationStatus = Status.initial,
     this.resendCodeStatus = Status.initial,
+    this.isSendCodeInvalid = false,
     this.error,
   });
 
   VerifyEmailState copyWith({
     Status? emailVerificationStatus,
     Status? resendCodeStatus,
+    bool? isSendCodeInvalid,
     Object? error,
   }) {
     return VerifyEmailState(
       emailVerificationStatus:
           emailVerificationStatus ?? this.emailVerificationStatus,
       resendCodeStatus: resendCodeStatus ?? this.resendCodeStatus,
+      isSendCodeInvalid: isSendCodeInvalid ?? this.isSendCodeInvalid,
       error: error ?? this.error,
     );
   }
 
   @override
-  List<Object?> get props => [emailVerificationStatus, error];
+  List<Object?> get props =>
+      [emailVerificationStatus, error, resendCodeStatus, isSendCodeInvalid];
 }

@@ -1,6 +1,6 @@
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/modules/authentication/data/datasource_contract/reset_password_remote_datasource.dart';
-import 'package:exam_app_group2/modules/authentication/data/model/reset_password_response.dart';
+import 'package:exam_app_group2/modules/authentication/domain/entity/reset_password_response_entity.dart';
 import 'package:exam_app_group2/modules/authentication/domain/repo_contract/reset_password_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,19 +14,10 @@ class ResetPasswordRepoImp implements ResetPasswordRepo {
   });
 
   @override
-  Future<ApiResult<void>> resetPassword({
+  Future<ApiResult<ResetPasswordResponseEntity>> resetPassword({
     required String mail,
     required String newPassword,
   }) async {
-    var result = await resetPasswordRemoteDataSource.resetPassword(mail, newPassword);
-
-    switch (result) {
-      case Success<ResetPasswordResponse>():
-        break;
-      case Error<ResetPasswordResponse>():
-        break;
-    }
-
-    return result;
+    return resetPasswordRemoteDataSource.resetPassword(mail, newPassword);
   }
 }

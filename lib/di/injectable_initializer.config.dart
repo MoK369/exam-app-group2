@@ -46,12 +46,14 @@ import '../modules/authentication/domain/usecases/reset_password_usecase.dart'
     as _i778;
 import '../modules/authentication/domain/usecases/verfy_code_usecase.dart'
     as _i900;
-import '../modules/authentication/ui/forget_password/layouts/confirm_password_layout/view_model/reset_password_cubit.dart'
-    as _i83;
 import '../modules/authentication/ui/forget_password/layouts/forget_password_layout/view_model/forget_password_cubit.dart'
     as _i553;
+import '../modules/authentication/ui/forget_password/layouts/reset_password_layout/view_model/reset_password_cubit.dart'
+    as _i904;
 import '../modules/authentication/ui/forget_password/layouts/verify_email_layout/view_model/verify_email_cubit.dart'
     as _i954;
+import '../modules/authentication/ui/forget_password/view_model/forget_password_screen_view_model.dart'
+    as _i13;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -69,6 +71,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => dioService.provideDio(),
       preResolve: true,
     );
+    gh.factory<_i13.ForgetPasswordScreenViewModel>(
+        () => _i13.ForgetPasswordScreenViewModel());
     gh.singleton<_i157.ForgotPasswordApiManager>(
         () => _i157.ForgotPasswordApiManager());
     gh.singleton<_i141.LocalizationManager>(() => _i141.LocalizationManager());
@@ -91,7 +95,7 @@ extension GetItInjectableX on _i174.GetIt {
         resetPasswordRepo: gh<_i476.ResetPasswordRepo>()));
     gh.factory<_i451.LocalizationUseCase>(
         () => _i451.LocalizationUseCase(gh<_i141.LocalizationManager>()));
-    gh.factory<_i83.ResetPasswordCubit>(() => _i83.ResetPasswordCubit(
+    gh.factory<_i904.ResetPasswordCubit>(() => _i904.ResetPasswordCubit(
         resetPasswordUseCase: gh<_i778.ResetPasswordUseCase>()));
     gh.factory<_i474.ForgetPasswordUseCase>(() => _i474.ForgetPasswordUseCase(
         forgetPasswordRepo: gh<_i125.ForgetPasswordRepo>()));

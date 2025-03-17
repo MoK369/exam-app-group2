@@ -1,7 +1,6 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/validation/validation_functions.dart';
-import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/custom_button.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
@@ -9,14 +8,14 @@ import 'package:exam_app_group2/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/forget_password_screen.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/forget_password_layout/view_model/forget_password_cubit.dart';
 import 'package:exam_app_group2/modules/authentication/ui/forget_password/layouts/forget_password_layout/view_model/forget_password_states.dart';
+import 'package:exam_app_group2/modules/authentication/ui/forget_password/view_model/forget_password_screen_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ForgetPasswordLayout extends StatefulWidget {
-  final TextEditingController emailController;
-
-  const ForgetPasswordLayout({super.key, required this.emailController});
+  const ForgetPasswordLayout({super.key});
 
   @override
   State<ForgetPasswordLayout> createState() => _ForgetPasswordLayoutState();
@@ -25,7 +24,10 @@ class ForgetPasswordLayout extends StatefulWidget {
 class _ForgetPasswordLayoutState
     extends BaseStatefulWidgetState<ForgetPasswordLayout> {
   ForgetPasswordCubit forgetPasswordCubit = getIt<ForgetPasswordCubit>();
+  final TextEditingController emailController = TextEditingController();
+
   late ValidateFunctions validateFunctions;
+  late ForgetPasswordScreenViewModel forgetPasswordScreenViewModel;
 
   String? currentLocale;
 
@@ -38,12 +40,9 @@ class _ForgetPasswordLayoutState
         (currentLocale != localizationUseCase.currentLocale)) {
       forgetPasswordCubit.doIntent(ValidateForm());
       currentLocale = localizationUseCase.currentLocale;
-      // WidgetsBinding.instance.addPostFrameCallback(
-      //   (timeStamp) {
-      //
-      //   },
-      // );
     }
+    forgetPasswordScreenViewModel =
+        Provider.of<ForgetPasswordScreenViewModel>(context);
   }
 
   @override
@@ -63,6 +62,7 @@ class _ForgetPasswordLayoutState
                 displayAlertDialog(title: const LoadingStateWidget());
 
               case ForgotPasswordStatus.success:
+                forgetPasswordScreenViewModel.changeEmail(emailController.text);
                 hideAlertDialog();
                 displayAlertDialog(
                   title: Text(
@@ -113,7 +113,7 @@ class _ForgetPasswordLayoutState
                       height: 30.h,
                     ),
                     TextFormField(
-                      controller: widget.emailController,
+                      controller: emailController,
                       validator: (inputText) {
                         return validateFunctions.validationOfEmail(inputText);
                       },
@@ -140,7 +140,7 @@ class _ForgetPasswordLayoutState
                               : () {
                                   forgetPasswordCubit.doIntent(
                                     OnForgotPasswordButtonClicked(
-                                        email: widget.emailController.text),
+                                        email: emailController.text),
                                   );
                                 },
                           text: appLocalizations.continueWord,

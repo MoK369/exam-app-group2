@@ -46,16 +46,28 @@
   "specialCharactersRulePassword": "يجب أن تحتوي على رمز خاص واحد على الأقل (مثل: #?!@$%^&*-).",
   "pleaseConfirmPassword": "يرجى تأكيد كلمة المرور.",
   "noMatch": "لا يوجد تطابق!",
-
+  "forgetPasswordScreen________": "$$$ تعليق $$$",
+  "forgetPassword": "نسيت كلمة المرور",
+  "enterAssociatedEmail": "يرجى إدخال بريدك الإلكتروني المرتبط\nبحسابك",
+  "continueWord": "استمرار",
+  "otpSendSuccessfully": "نجاح!\nتم إرسال رمز التحقق إلى بريدك الإلكتروني",
+  "emailVerificationScreen________": "$$$ تعليق $$$",
+  "emilVerification": "التحقق من البريد الإلكتروني",
+  "enterOTPSentToTheEmail": "يرجى إدخال الرمز الذي تم إرساله إلى\nعنوان بريدك الإلكتروني",
+  "didNotReceiveCode": "لم تتلق الرمز؟ ",
+  "resend": "إعادة إرسال",
+  "emailVerified": "تم التحقق من البريد الإلكتروني بنجاح",
+  "invalidCode": "رمز غير صالح",
   "resetPassword": "إعادة تعيين كلمة المرور",
   "passwordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف مع حرف كبير ورقم واحد على الأقل",
-  "newPassword": "كلمة المرور الجديدة",
-  "enterNewPassword": "أدخل كلمة المرور الجديدة",
-
-  "confirmYourPassword": "أكد كلمة المرور",
-  "continueText": "متابعة",
-  "error": "خطأ"
-
-
+  "newPassword": "كلمة مرور جديدة",
+  "enterNewPassword": "أدخل كلمة مرور جديدة",
+  "confirmYourPassword": "أكد كلمة المرور الخاصة بك",
+  "continueText": "استمرار",
+  "error": "خطأ",
+  "ok": "موافق",
+  "noError": "لا يوجد خطأ",
+  "resetPasswordGuidance": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي\nعلى 6 أحرف مع حرف كبير ورقم واحد على الأقل",
+  "resetPasswordSuccessfully": "تمت إعادة تعيين كلمة المرور بنجاح!"
 
 }
