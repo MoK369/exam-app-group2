@@ -73,7 +73,6 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
     if (errorNotifier.errorMessage != null &&
         errorNotifier.widgetName == widgetName) {
       var errorMessage = errorNotifier.errorMessage;
-      print("Show Error snack bar");
       WidgetsBinding.instance.addPostFrameCallback(
         (timeStamp) async {
           if (errorMessage == null) return;
@@ -84,7 +83,6 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
   }
 
   Future<void> showAnimatedSnackBar(String errorMessage) async {
-    print("Showing Error snack bar");
     AnimatedSnackBar(
       builder: (context) {
         return Container(
@@ -107,7 +105,7 @@ abstract class BaseStatefulWidgetState<T extends StatefulWidget>
               ),
               Expanded(
                 child: Text(
-                  errorMessage ?? "No Error",
+                  errorMessage,
                   maxLines: 3,
                   textDirection: TextDirection.ltr,
                   overflow: TextOverflow.ellipsis,
