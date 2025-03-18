@@ -4,6 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppThemes {
+  static TextStyle styles18w500black15 = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
+    color: const Color.fromRGBO(15, 15, 15, 1),
+  );
+
+  static TextStyle styles14w400grey = TextStyle(
+    fontSize: 14.sp,
+    fontWeight: FontWeight.w400,
+    color: const Color.fromRGBO(83, 83, 83, 1),
+  );
+
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.white,
@@ -41,7 +53,7 @@ class AppThemes {
       titleSmall: GoogleFonts.roboto(
         fontSize: 14.sp,
         fontWeight: FontWeight.w500,
-        color: AppColors.darkGray,
+        color: AppColors.gray,
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
@@ -134,8 +146,8 @@ class AppThemes {
           Radius.circular(10.r),
         ),
       ),
-      tileColor: AppColors.moreLightBlue,
-      selectedTileColor: AppColors.lightBlue2,
+      tileColor: AppColors.lightBlue,
+      selectedTileColor: AppColors.blue[10],
       selectedColor: Colors.black,
     ),
     cardTheme: CardTheme(

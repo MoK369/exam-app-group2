@@ -9,8 +9,8 @@ abstract class BaseStatelessWidget extends StatelessWidget {
 
   final LocalizationUseCase localizationUseCase =
       getIt.get<LocalizationUseCase>();
-  late final ThemeData theme;
-  late final AppLocalizations appLocalizations;
+  late ThemeData theme;
+  late AppLocalizations appLocalizations;
 
   @override
   Widget build(BuildContext context) {

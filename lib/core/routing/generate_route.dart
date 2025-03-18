@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
+import 'package:exam_app_group2/modules/authentication/ui/forget_password/forget_password_screen.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/change_password/ui/change_password_screen.dart';
 import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
@@ -88,6 +89,10 @@ class GenerateRoute {
       case DefinedRoutes.changePasswordRoutName:
         return MaterialPageRoute<ProfileBackValues>(
           builder: (context) => const ChangePasswordScreen(),
+        );
+      case DefinedRoutes.forgetPasswordRoute:
+        return MaterialPageRoute(
+          builder: (context) => const ForgetPasswordScreen(),
         );
       default:
         return _errorRoute();

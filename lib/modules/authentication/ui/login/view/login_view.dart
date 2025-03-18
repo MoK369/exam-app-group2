@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
+import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
@@ -14,7 +15,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/di/injectable_initializer.dart';
-import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
 import '../../../../../core/widgets/underline_text.dart';
 import '../../../data/models/login/login_request.dart';
@@ -191,9 +191,11 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                 style: theme.textTheme.bodySmall),
                             const Spacer(),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(context, DefinedRoutes.forgetPasswordRoute);
+                              },
                               child: UnderlineText(
-                                child: Text(appLocalizations.forgetPassword,
+                                child: Text(appLocalizations.forgetPasswordQuestion,
                                     style: theme.textTheme.bodySmall),
                               ),
                             )
