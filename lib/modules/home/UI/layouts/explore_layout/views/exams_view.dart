@@ -147,7 +147,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                   height: 4.h,
                 ),
                 Text(
-                  '${entity!.numberOfQuestions} Question' ?? '',
+                  '${entity!.numberOfQuestions} Question',
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: AppColors.gray,
                   ),

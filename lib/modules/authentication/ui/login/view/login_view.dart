@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
@@ -69,6 +71,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
         appBar: CustomAppBar(
           title: appLocalizations.login,
           showLocaleButton: true,
+          showLeadingIcon: !Platform.isIOS,
           onLeadingIconButtonClick: () {
             SystemNavigator.pop();
           },
