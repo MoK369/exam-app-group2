@@ -62,7 +62,6 @@ class _EditProfileScreenState
 
   @override
   Widget build(BuildContext context) {
-    var widgetName = context.widget.toString(minLevel: DiagnosticLevel.hint);
     return BlocProvider(
       create: (context) => editProfileViewModel,
       child: GestureDetector(

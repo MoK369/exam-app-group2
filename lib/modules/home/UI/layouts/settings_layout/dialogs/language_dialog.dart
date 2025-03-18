@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/enumerators/languages/languages_enum.dart';
 import 'package:exam_app_group2/core/languages/language_codes.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,8 @@ class _LanguageDialogState extends BaseStatefulWidgetState<LanguageDialog> {
   late LanguagesEnum chosenLanguage;
   late ScrollController scrollController;
   bool showTopDivider = false, showBottomDivider = true;
+
+  var languagesList = LanguagesEnum.values;
 
   @override
   void initState() {
@@ -72,38 +75,33 @@ class _LanguageDialogState extends BaseStatefulWidgetState<LanguageDialog> {
             Scrollbar(
               controller: scrollController,
               child: SingleChildScrollView(
-                controller: scrollController,
                 child: Column(
-                  children: [
-                    ListTile(
-                      leading: Radio<LanguagesEnum>(
-                        value: LanguagesEnum.en,
-                        groupValue: chosenLanguage,
-                        onChanged: (value) {
+                  children: List<Widget>.generate(
+                    languagesList.length,
+                    (index) {
+                      return ListTile(
+                        tileColor: AppColors.white,
+                        leading: Radio<LanguagesEnum>(
+                          value: languagesList[index],
+                          groupValue: chosenLanguage,
+                          onChanged: (value) {
+                            setState(() {
+                              chosenLanguage = value!;
+                            });
+                          },
+                        ),
+                        title: Text(
+                          LanguagesCodes.getLanguageName(
+                              languagesList[index].getLanguageCode()),
+                        ),
+                        onTap: () {
                           setState(() {
-                            chosenLanguage = value!;
+                            chosenLanguage = languagesList[index];
                           });
                         },
-                      ),
-                      title: Text(
-                        LanguagesCodes.getLanguageName(LanguagesCodes.english),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Radio<LanguagesEnum>(
-                        value: LanguagesEnum.ar,
-                        groupValue: chosenLanguage,
-                        onChanged: (value) {
-                          setState(() {
-                            chosenLanguage = value!;
-                          });
-                        },
-                      ),
-                      title: Text(
-                        LanguagesCodes.getLanguageName(LanguagesCodes.arabic),
-                      ),
-                    ),
-                  ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

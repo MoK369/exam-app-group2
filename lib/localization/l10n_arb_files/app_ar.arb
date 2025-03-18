@@ -15,13 +15,13 @@
   "phoneNumber": "رقم الهاتف",
   "enterPhoneNumber": "أدخل رقم الهاتف",
   "alreadyHaveAccount": "هل لديك حساب؟ ",
+  "login": "تسجيل الدخول",
 
   "loginScreen___________": "$$$ تعليق $$$",
-  "login": "تسجيل الدخول",
   "successfullyRegistered": "تم التسجيل بنجاح!",
   "ok": "موافق",
   "rememberMe": "تذكرني",
-  "forgetPassword": "نسيت كلمة المرور ؟",
+  "forgetPasswordQuestion": "نسيت كلمة المرور ؟",
   "doNotHaveAccount": "هل لا تمتلك حساب؟ ",
   "storagePermissionDenied": "لا يمكن لتطبيق الامتحان الاستمرار في العمل، لم يتم منح إذن التخزين ⛔",
 
@@ -94,6 +94,26 @@
   "inCorrect": "خاطئ",
   "showResult": "اظهار النتيجة",
   "startAgain": "بدء مرة اخرى",
-  "yourScore": "نتيجتك"
+  "yourScore": "نتيجتك",
+
+  "forgetPasswordScreen________": "$$$ تعليق $$$",
+  "forgetPassword": "نسيت كلمة المرور",
+  "enterAssociatedEmail": "يرجى إدخال بريدك الإلكتروني المرتبط\nبحسابك",
+  "continueWord": "استمرار",
+  "otpSendSuccessfully": "نجاح!\nتم إرسال رمز التحقق إلى بريدك الإلكتروني",
+  "emailVerificationScreen________": "$$$ تعليق $$$",
+  "emilVerification": "التحقق من البريد الإلكتروني",
+  "enterOTPSentToTheEmail": "يرجى إدخال الرمز الذي تم إرساله إلى\nعنوان بريدك الإلكتروني",
+  "didNotReceiveCode": "لم تتلق الرمز؟ ",
+  "resend": "إعادة إرسال",
+  "emailVerified": "تم التحقق من البريد الإلكتروني بنجاح",
+  "invalidCode": "رمز غير صالح",
+  "passwordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف مع حرف كبير ورقم واحد على الأقل",
+  "enterNewPassword": "أدخل كلمة مرور جديدة",
+  "confirmYourPassword": "أكد كلمة المرور الخاصة بك",
+  "continueText": "استمرار",
+  "error": "خطأ",
+  "resetPasswordGuidance": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي\nعلى 6 أحرف مع حرف كبير ورقم واحد على الأقل",
+  "resetPasswordSuccessfully": "تمت إعادة تعيين كلمة المرور بنجاح!"
 
 }

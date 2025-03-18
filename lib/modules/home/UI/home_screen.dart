@@ -69,6 +69,7 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
     return ChangeNotifierProvider(
       create: (context) => homeViewModel,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         bottomNavigationBar: NavigationBar(
           selectedIndex: currentSelectedItemIndex,
           onDestinationSelected: (value) {

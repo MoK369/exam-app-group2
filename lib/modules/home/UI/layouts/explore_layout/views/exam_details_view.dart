@@ -47,7 +47,7 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                       Text(
                         '${widget.examEntity.numberOfQuestions} Question',
                         style: theme.textTheme.labelMedium?.copyWith(
-                          color: AppColors.darkGray,
+                          color: AppColors.gray,
                         ),
                       )
                     ],
