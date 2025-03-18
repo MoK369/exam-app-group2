@@ -210,4 +210,11 @@ class _EmailVerificationLayoutState
           )),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    verifyEmailCubit.doIntent(DisposeTimerAndValueNotifier());
+    verifyEmailCubit.doIntent(DisposeControllersAndFocusNodes());
+  }
 }
