@@ -9,6 +9,7 @@ class ResultLayout extends StatefulWidget {
 }
 
 class _ResultLayoutState extends State<ResultLayout> {
+
   @override
   void initState() {
     super.initState();

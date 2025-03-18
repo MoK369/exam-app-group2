@@ -74,9 +74,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
       answers: checkedAnswers,
       subjectName: questions![0].subject?.name,
     ));
-    log('cash questions and answers');
     var getResult = await _getCashedQuestionsAndAnswers();
-    log(getResult![0].subjectName!);
   }
 
   Future<List<CashedQuestions>?> _getCashedQuestionsAndAnswers() {

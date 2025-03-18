@@ -43,7 +43,7 @@ dependencies:
   # screen util
   flutter_screenutil: ^5.9.3
   # native splash
-  flutter_native_splash: ^2.4.4
+  flutter_native_splash: 2.4.4
   # app icon
   flutter_launcher_icons: ^0.14.3
   # state management
@@ -56,6 +56,10 @@ dependencies:
   equatable: ^2.0.7
   # API Calling Package
   dio: ^5.8.0+1
+  # retrofit
+  retrofit: ^4.4.2
+  logger: ^2.5.0
+  json_annotation: ^4.9.0
   # local storage
   flutter_secure_storage: ^9.2.4
   # snack bars
@@ -68,20 +72,36 @@ dependencies:
   step_progress_indicator: ^1.0.2
   mockito: ^5.4.4
   bloc_test: ^10.0.0
-  isar: ^3.1.0
-  isar_flutter_libs: ^3.1.0+1
+  # pick image
+  image_picker: ^1.1.2
+  # permissions
+  permission_handler: ^11.4.0
+  # device info
+  device_info_plus: 11.3.0
+  # back button
+  back_button_interceptor: ^8.0.4
+  # local database
+  isar: any #^3.1.0+1
+  isar_flutter_libs: any #^3.1.0+1
   path_provider: ^2.1.5
+  # animations
+  lottie: 3.2.0
   cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  isar_generator: ^3.1.0
-  # add the generator to your dev_dependencies
-  injectable_generator: 2.4.2
-  # add build runner if not already added
-  build_runner: 2.4.13
+
+  # local database devs
+  isar_generator: any #^3.1.0+1
+  # injectable div
+  injectable_generator: any #2.4.2
+  build_runner: any #2.4.13
+  # retrofit dev
+  retrofit_generator: any #8.2.1
+  json_serializable: any #6.8.0
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -104,9 +124,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
-    - assets/icons/
-    - assets/animations/
+  - assets/images/
+  - assets/icons/
+  - assets/animations/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

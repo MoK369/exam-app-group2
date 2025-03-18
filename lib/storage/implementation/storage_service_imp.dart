@@ -1,7 +1,7 @@
 import 'package:exam_app_group2/core/providers/error/error_notifier.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
-import 'package:exam_app_group2/storage/handler/storage_handler.dart';
+import 'package:exam_app_group2/storage/handler/storage_execution_handler.dart';
 import 'package:exam_app_group2/storage/result/storage_result.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -13,43 +13,47 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
 
   StorageServiceImp(this.errorNotifier, this.storageInstance);
 
-  AndroidOptions _getAndroidOptions() => const AndroidOptions(
-        encryptedSharedPreferences: true,
-      );
-
   @override
-  void setStringValue(String key, String value) async {
-    var result = await StorageExecutor.execute<void>(
+  void setStringValue(String key, String value,
+      [String widgetName = ""]) async {
+    var result = await StorageExecutionHandler.execute<void>(
         () => storageInstance.write(key: key, value: value));
     if (result is StorageErrorResult) {
+      print("Error setting string value flutter secure storage");
       errorNotifier.setError(
-          StorageConstants.errorStoringMessage(result.error.toString()));
+          message:
+              StorageConstants.errorStoringMessage(result.error.toString()),
+          widgetName: widgetName);
     }
   }
 
   @override
-  Future<String?> getStringValue(String key) async {
-    var storageResult = await StorageExecutor.execute(
+  Future<String?> getStringValue(String key, [String widgetName = ""]) async {
+    var storageResult = await StorageExecutionHandler.execute(
       () => storageInstance.read(key: key),
     );
     switch (storageResult) {
       case StorageSuccessResult<String?>():
         return storageResult.data;
       case StorageErrorResult<String?>():
-        errorNotifier.setError(StorageConstants.errorDeletingMessage(
-            storageResult.error.toString()));
+        errorNotifier.setError(
+            message: StorageConstants.errorDeletingMessage(
+                storageResult.error.toString()),
+            widgetName: widgetName);
     }
     return null;
   }
 
   @override
-  Future<void> deleteValue(String key) async {
-    var storageResult = await StorageExecutor.execute(
+  Future<void> deleteValue(String key, [String widgetName = ""]) async {
+    var storageResult = await StorageExecutionHandler.execute(
       () => storageInstance.delete(key: key),
     );
     if (storageResult is StorageErrorResult) {
-      errorNotifier.setError(StorageConstants.errorDeletingMessage(
-          storageResult.error.toString()));
+      errorNotifier.setError(
+          message: StorageConstants.errorDeletingMessage(
+              storageResult.error.toString()),
+          widgetName: widgetName);
     }
   }
 }

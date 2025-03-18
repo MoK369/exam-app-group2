@@ -55,23 +55,25 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
               return ErrorStateWidget(error: state.error!);
             } else if (state.isSuccess) {
               if (state.exams!.isEmpty) {
-                return Center(
-                  child: Column(
-                    children: [
-                      Text(
-                        'No Exams Found',
-                        style: theme.textTheme.bodyLarge,
-                      ),
-                      SizedBox(
-                        height: 40.h,
-                      ),
-                      Icon(
-                        Icons.playlist_remove_outlined,
-                        size: 60,
-                        color: AppColors.blue,
-                      )
-                    ],
-                  ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      appLocalizations.noExamsFound,
+                      style: theme.textTheme.labelLarge!
+                          .copyWith(fontWeight: FontWeight.w500),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Icon(
+                      Icons.playlist_remove_outlined,
+                      size: 60,
+                      color: AppColors.blue,
+                    )
+                  ],
                 );
               }
               return Padding(
@@ -147,9 +149,9 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
               height: 4.h,
             ),
             Text(
-              '${entity!.numberOfQuestions} Question' ?? '',
+              '${entity!.numberOfQuestions} Question',
               style: theme.textTheme.bodySmall?.copyWith(
-                color: AppColors.darkGray,
+                color: AppColors.gray,
               ),
             ),
             SizedBox(

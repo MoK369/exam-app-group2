@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/modules/authentication/domain/entities/user/user_entity.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 
 import '../../../../domain/entities/authentication/authentication_response_entity.dart';
@@ -33,7 +34,7 @@ class AuthenticationResponseDto {
   String? token;
   UserDto? user;
 
-  AuthenticationResponseEntity convertIntoAuthenticationEntity() {
+  AuthenticationResponseEntity convertIntoEntity() {
     return AuthenticationResponseEntity(
         message: message, token: token, user: user?.convertIntoUserEntity());
   }

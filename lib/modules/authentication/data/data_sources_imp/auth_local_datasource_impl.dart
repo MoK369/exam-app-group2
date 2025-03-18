@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:exam_app_group2/modules/authentication/data/data_sources_contracts/auth_local_datasource.dart';
+import 'package:exam_app_group2/modules/authentication/ui/login/view/login_view.dart';
 import 'package:exam_app_group2/storage/constants/storage_constants.dart';
 import 'package:exam_app_group2/storage/contracts/storage_service_contract.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -17,12 +18,12 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<AuthenticationResponseEntity?> getCashedUser() async {
-    String? stringAuthDto =
-        await storageService.getStringValue(StorageConstants.authModelKey);
+    String? stringAuthDto = await storageService.getStringValue(
+        StorageConstants.authModelKey, LoginView.widgetName);
     if (stringAuthDto != null) {
       AuthenticationResponseDto authDto =
           AuthenticationResponseDto.fromJson(jsonDecode(stringAuthDto));
-      return authDto.convertIntoAuthenticationEntity();
+      return authDto.convertIntoEntity();
     }
     return null;
   }
@@ -31,12 +32,13 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   void cashUser({required AuthenticationResponseEntity authEntity}) {
     var authDto =
         AuthenticationResponseDto.convertIntoAuthenticationDto(authEntity);
-    storageService.setStringValue(
-        StorageConstants.authModelKey, jsonEncode(authDto.toJson()));
+    storageService.setStringValue(StorageConstants.authModelKey,
+        jsonEncode(authDto.toJson()), LoginView.widgetName);
   }
 
   @override
   Future<void> deleteCachedUser() {
-    return storageService.deleteValue(StorageConstants.authModelKey);
+    return storageService.deleteValue(
+        StorageConstants.authModelKey, LoginView.widgetName);
   }
 }
