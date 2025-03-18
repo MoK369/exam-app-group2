@@ -37,7 +37,7 @@ class QuestionsState extends Equatable {
   CheckQuestionsResponseEntity? checkQuestionsResponseEntity;
   QuestionsStatus? questionsStatus;
   List<QuestionEntity>? questions;
-  int? currentQuestion;
+  int currentQuestion;
   Object? error;
 
   QuestionsState(
@@ -58,20 +58,20 @@ class QuestionsState extends Equatable {
       int? currentQuestion,
       CheckQuestionsResponseEntity? checkQuestionsResponseEntity}) {
     return QuestionsState(
-        getAllQuestionsStatus:
-            getAllQuestionsStatus ?? this.getAllQuestionsStatus,
-        questions: questions ?? this.questions,
-        error: error ?? this.error,
-        questionsStatus: questionsStatus ?? this.questionsStatus,
-        currentQuestion: currentQuestion ?? this.currentQuestion,
-        checkQuestionsStatus: checkQuestionsStatus ?? this.checkQuestionsStatus,
-        checkQuestionsResponseEntity:
-            checkQuestionsResponseEntity ?? this.checkQuestionsResponseEntity);
+      getAllQuestionsStatus:
+          getAllQuestionsStatus ?? this.getAllQuestionsStatus,
+      questions: questions ?? this.questions,
+      error: error ?? this.error,
+      questionsStatus: questionsStatus ?? this.questionsStatus,
+      currentQuestion: currentQuestion ?? this.currentQuestion,
+      checkQuestionsStatus: checkQuestionsStatus ?? this.checkQuestionsStatus,
+      checkQuestionsResponseEntity:
+          checkQuestionsResponseEntity ?? this.checkQuestionsResponseEntity,
+    );
   }
 
   @override
-  List<Object?> get props =>
-      [
+  List<Object?> get props => [
         getAllQuestionsStatus,
         questions,
         error,

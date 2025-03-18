@@ -105,77 +105,77 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
   }
 
   Widget buildExamCard(ExamEntity? entity) => Container(
-        margin: REdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(10.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25), // Shadow color
-              spreadRadius: 0, // Spread radius
-              blurRadius: 8, // Blur radius
-              offset: const Offset(0, 0), // Shadow offset
-            ),
-          ],
+    margin: REdgeInsets.symmetric(vertical: 8, horizontal: 8),
+    decoration: BoxDecoration(
+      color: AppColors.white,
+      borderRadius: BorderRadius.circular(10.r),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.25), // Shadow color
+          spreadRadius: 0, // Spread radius
+          blurRadius: 8, // Blur radius
+          offset: const Offset(0, 0), // Shadow offset
         ),
-        child: Row(
+      ],
+    ),
+    child: Row(
+      children: [
+        Padding(
+          padding: REdgeInsets.only(
+            top: 16,
+            bottom: 16,
+            left: 24,
+          ),
+          child: Image.asset(
+            AppStrings.examIcon,
+            height: 71.h,
+            width: 60.h,
+          ),
+        ),
+        SizedBox(
+          width: 12.h,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: REdgeInsets.only(
-                top: 16,
-                bottom: 16,
-                left: 24,
-              ),
-              child: Image.asset(
-                AppStrings.examIcon,
-                height: 71.h,
-                width: 60.h,
+            Text(
+              entity?.title ?? '',
+              style: theme.textTheme.bodySmall?.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(
-              width: 12.h,
+              height: 4.h,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  entity?.title ?? '',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  height: 4.h,
-                ),
-                Text(
-                  '${entity!.numberOfQuestions} Question',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.gray,
-                  ),
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Row(children: [
-                  Text(
-                    'From: 1:00  To: 6:00',
-                    style: theme.textTheme.bodySmall,
-                  )
-                ])
-              ],
-            ),
-            const Spacer(),
-            Padding(
-              padding: REdgeInsets.all(16),
-              child: Text(
-                '${entity.duration} minutes',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.blue,
-                ),
+            Text(
+              '${entity!.numberOfQuestions} Question',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: AppColors.gray,
               ),
             ),
+            SizedBox(
+              height: 16.h,
+            ),
+            Row(children: [
+              Text(
+                'From: 1:00  To: 6:00',
+                style: theme.textTheme.bodySmall,
+              )
+            ])
           ],
         ),
-      );
+        const Spacer(),
+        Padding(
+          padding: REdgeInsets.all(16),
+          child: Text(
+            '${entity.duration} minutes',
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: AppColors.blue,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

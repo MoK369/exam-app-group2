@@ -2,10 +2,8 @@ import 'package:exam_app_group2/modules/home/domain/entities/answer_entity.dart'
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:isar/isar.dart';
-
 import '../../../data/models/check_questions/answers.dart';
 import '../subject_entity.dart';
-
 part 'cashed_questions_entity.g.dart';
 
 @Collection()

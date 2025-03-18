@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/constants/assets/assets_paths.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
@@ -124,30 +125,29 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
   }
 
   Widget buildSearchBar() => TextField(
-        onChanged: (value) {
+    onChanged: (value) {
           cubit.doIntent(SearchInSubjectList(value));
-        },
-        decoration: InputDecoration(
-          hintText: appLocalizations.search,
-          prefixIcon: const Icon(
-            Icons.search,
-            color: AppColors.gray,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.r),
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: AppColors.blue,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.r),
-            ),
-          ),
+        },decoration: InputDecoration(
+      hintText: appLocalizations.search,
+      prefixIcon: const Icon(
+        Icons.search,
+        color: AppColors.gray,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.r),
         ),
-      );
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.blue,
+        ),
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.r),
+        ),
+      ),
+    ),
+  );
 
   Widget buildSubjectCard({
     required String title,
@@ -175,11 +175,7 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
                 bottom: 16,
                 left: 24,
               ),
-              child: Image.network(
-                url,
-                height: 50.h,
-                width: 50.h,
-              ),
+              child: buildSubjectImage(url),
             ),
             SizedBox(
               width: 12.h,
@@ -192,5 +188,14 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
             ),
           ],
         ),
+      );
+
+  Widget buildSubjectImage(url) => CachedNetworkImage(
+        imageUrl: url,
+        height: 50.h,
+        width: 50.h,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => const LoadingStateWidget(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       );
 }

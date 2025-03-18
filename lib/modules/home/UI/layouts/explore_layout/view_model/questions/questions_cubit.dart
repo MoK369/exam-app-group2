@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
@@ -35,9 +34,14 @@ class QuestionsCubit extends Cubit<QuestionsState> {
       case GetAllQuestionsIntent():
         _getAllQuestions(examId: intent.examId);
       case NextQuestionIntent():
-        _nextQuestion();
+        _nextQuestion(
+          intent.currentQuestion,
+          intent.questions,
+        );
       case PreviousQuestionIntent():
-        _previousQuestion();
+        _previousQuestion(
+          intent.currentQuestion,
+        );
       case CheckQuestionIntent():
         _checkQuestions();
       case GetAnswersList():
@@ -56,19 +60,12 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   Map<String?, String> answersMap = {};
 
   void _getCheckedAnswers() {
-    log('get checked answers list ');
-
-    log('answersMap: $answersMap');
-
     answersMap.forEach((key, value) {
       checkedAnswers?.add(Answers(
         questionId: key,
         correct: value,
       ));
     });
-
-    log(checkedAnswers![0].toString());
-    // log(answersMap.toString());
   }
 
   Future<void> _cashQuestionsAndAnswers() async {
@@ -88,7 +85,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     emit(state.copyWith(getAllQuestionsStatus: Status.loading));
     var result = await getAllQuestionsUseCase.execute(examId: examId);
     switch (result) {
-      case Success<List<QuestionEntity>>():
+      case Success<List<QuestionEntity>?>():
         questions = result.data;
         emit(
           state.copyWith(
@@ -96,7 +93,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
             questions: result.data,
           ),
         );
-      case Error<List<QuestionEntity>>():
+      case Error<List<QuestionEntity>?>():
         emit(
           state.copyWith(
             getAllQuestionsStatus: Status.error,
@@ -132,28 +129,30 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     }
   }
 
-  void _nextQuestion() {
-    if (_isLastQuestion()) return;
-    currentQuestion++;
-
+  void _nextQuestion(int currentQuestion, List<QuestionEntity>? questions) {
+    if (_isLastQuestion(questions, currentQuestion)) return;
     emit(state.copyWith(
       questionsStatus: QuestionsStatus.nextQuestion,
-      currentQuestion: currentQuestion,
+      currentQuestion: currentQuestion + 1,
     ));
   }
 
-  void _previousQuestion() {
-    if (currentQuestion > 1) currentQuestion--;
+  void _previousQuestion(int currentQuestion) {
     emit(state.copyWith(
       questionsStatus: QuestionsStatus.previousQuestion,
-      currentQuestion: currentQuestion,
+      currentQuestion:
+          currentQuestion > 1 ? currentQuestion - 1 : currentQuestion,
     ));
   }
 
-  bool _isLastQuestion() {
-    bool isLastQuestion = currentQuestion == state.questions!.length;
+  bool _isLastQuestion(List<QuestionEntity>? questions, int currentQuestion) {
+    bool isLastQuestion = currentQuestion == questions?.length;
     if (isLastQuestion) {
-      emit(state.copyWith(questionsStatus: QuestionsStatus.endExam));
+      emit(
+        state.copyWith(
+          questionsStatus: QuestionsStatus.endExam,
+        ),
+      );
     }
     return isLastQuestion;
   }
@@ -169,9 +168,20 @@ class GetAllQuestionsIntent extends QuestionsIntent {
   GetAllQuestionsIntent({required this.examId});
 }
 
-class NextQuestionIntent extends QuestionsIntent {}
+class NextQuestionIntent extends QuestionsIntent {
+  int currentQuestion;
+  List<QuestionEntity>? questions;
 
-class PreviousQuestionIntent extends QuestionsIntent {}
+  NextQuestionIntent({required this.currentQuestion, required this.questions});
+}
+
+class PreviousQuestionIntent extends QuestionsIntent {
+  int currentQuestion;
+
+  PreviousQuestionIntent({
+    required this.currentQuestion,
+  });
+}
 
 class CheckQuestionIntent extends QuestionsIntent {}
 

@@ -135,6 +135,19 @@ import '../../modules/edit_profile/domain/use_cases/edit_profile/edit_profile_us
     as _i73;
 import '../../modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart'
     as _i103;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
+    as _i104;
+import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
+    as _i105;
+import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
+    as _i106;
+import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
+    as _i108;
+import '../../modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart'
+    as _i95;
+import '../../modules/home/UI/layouts/settings_layout/view_model/settings_view_model.dart'
+    as _i109;
+import '../../modules/home/UI/view_model/home_view_model.dart' as _i107;
 import '../../modules/home/data/api/api_client/home_api_client.dart' as _i19;
 import '../../modules/home/data/api/api_client_provider/home_api_client_provider.dart'
     as _i113;
@@ -195,19 +208,6 @@ import '../../modules/home/domain/use_cases/get_logged_user_info/get_logged_user
 import '../../modules/home/domain/use_cases/logout/logout_use_case.dart'
     as _i94;
 import '../../modules/home/domain/use_cases/save_questions.dart' as _i97;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
-    as _i104;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
-    as _i105;
-import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
-    as _i106;
-import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
-    as _i108;
-import '../../modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart'
-    as _i95;
-import '../../modules/home/UI/layouts/settings_layout/view_model/settings_view_model.dart'
-    as _i109;
-import '../../modules/home/UI/view_model/home_view_model.dart' as _i107;
 import '../../storage/contracts/isar_storage_service_cashed_question_entity_contract.dart'
     as _i22;
 import '../../storage/contracts/isar_storage_service_image_entity_contract.dart'
@@ -316,14 +316,14 @@ extension GetItInjectableX on _i1.GetIt {
               gh<_i12.FlutterSecureStorage>(),
             ));
     await gh.factoryAsync<String>(
-      () => dioService
-          .getToken(gh<_i49.StorageService<_i12.FlutterSecureStorage>>()),
-      preResolve: true,
-    );
-    await gh.factoryAsync<String>(
       () => localeInitializer.initCurrentLocal(
           gh<_i49.StorageService<_i12.FlutterSecureStorage>>()),
       instanceName: 'initCurrentLocal',
+      preResolve: true,
+    );
+    await gh.factoryAsync<String>(
+      () => dioService
+          .getToken(gh<_i49.StorageService<_i12.FlutterSecureStorage>>()),
       preResolve: true,
     );
     gh.factory<_i51.VerifyCodeRemoteDatasource>(() =>

@@ -55,13 +55,14 @@ class HomeRepositoryImp implements ExploreRepository {
   }
 
   @override
-  Future<ApiResult<List<QuestionEntity>>> getAllQuestions(String examId) async {
+  Future<ApiResult<List<QuestionEntity>?>> getAllQuestions(
+      String examId) async {
     var result = await homeDataSource.getAllQuestions(examId);
     switch (result) {
       case Success<GetAllQuestionsResponse>():
         return Success(
-          data: result.data.questions!
-              .map((question) => question.toEntity())
+          data: result.data.questions
+              ?.map((question) => question.toEntity())
               .toList(),
         );
       case Error<GetAllQuestionsResponse>():

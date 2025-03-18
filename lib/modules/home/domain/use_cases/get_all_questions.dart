@@ -10,7 +10,7 @@ class GetAllQuestionsUseCase {
 
   GetAllQuestionsUseCase({required this.homeRepo});
 
-  Future<ApiResult<List<QuestionEntity>>> execute({required String examId}) {
+  Future<ApiResult<List<QuestionEntity>?>> execute({required String examId}) {
     return homeRepo.getAllQuestions(examId);
   }
 }
