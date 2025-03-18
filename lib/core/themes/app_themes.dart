@@ -44,7 +44,8 @@ class AppThemes {
         color: Colors.black,
         fontSize: 20.sp,
       ),
-      // /// Note this parameter its value effects all the Text Form Fields by default.
+      // /// Note this parameter its value effects all
+      // the Text Form Fields by default.===>
       // bodyLarge: GoogleFonts.inter(
       //   color: Colors.black,
       //   fontSize: 16.sp,

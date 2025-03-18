@@ -1,4 +1,5 @@
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/constants/assets/assets_paths.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
@@ -7,6 +8,7 @@ import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_mode
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../../core/colors/app_colors.dart';
 import '../../../../../core/widgets/loading_state_widget.dart';
@@ -37,6 +39,7 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
           title: appLocalizations.survey,
           padding: REdgeInsets.symmetric(
@@ -71,29 +74,42 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
                 child: BlocBuilder<ExploreCubit, HomeState>(
                   builder: (context, state) {
                     if (state.isLoading) {
-                      return const LoadingStateWidget();
+                      return const Expanded(child: LoadingStateWidget());
                     } else if (state.isError) {
                       return ErrorStateWidget(
                         error: state.error!,
                       );
                     } else if (state.isSuccess) {
                       return Expanded(
-                        child: ListView.builder(
-                          itemBuilder: (context, index) => GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                DefinedRoutes.exams,
-                                arguments: state.subjects?[index],
-                              );
-                            },
-                            child: buildSubjectCard(
-                              title: state.subjects?[index].name ?? '',
-                              url: state.subjects![index].icon ?? '',
-                            ),
-                          ),
-                          itemCount: state.subjects?.length,
-                        ),
+                        child: state.searchStatus == SearchStatus.withoutResult
+                            ? RPadding(
+                                padding: const EdgeInsets.only(
+                                    left: 24, right: 24, bottom: 32),
+                                child: Lottie.asset(
+                                    AssetsPaths.noSearchResultAnim),
+                              )
+                            : ListView.builder(
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      DefinedRoutes.exams,
+                                      arguments:
+                                          state.userSearchedSubjects?[index],
+                                    );
+                                  },
+                                  child: buildSubjectCard(
+                                    title: state.userSearchedSubjects?[index]
+                                            .name ??
+                                        '',
+                                    url: state.userSearchedSubjects![index]
+                                            .icon ??
+                                        '',
+                                  ),
+                                ),
+                                itemCount: state.userSearchedSubjects?.length,
+                              ),
                       );
                     }
                     return const SizedBox();
@@ -108,6 +124,9 @@ class _ExploreLayoutState extends BaseStatefulWidgetState<ExploreLayout>
   }
 
   Widget buildSearchBar() => TextField(
+        onChanged: (value) {
+          cubit.doIntent(SearchInSubjectList(value));
+        },
         decoration: InputDecoration(
           hintText: appLocalizations.search,
           prefixIcon: const Icon(
