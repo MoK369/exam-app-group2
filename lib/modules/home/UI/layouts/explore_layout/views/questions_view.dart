@@ -28,6 +28,7 @@ class QuestionsView extends StatefulWidget {
 class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
   int selectedIndex = 0;
   var cubit = getIt.get<QuestionsCubit>();
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -166,39 +167,38 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Question ${state.currentQuestion} of ${state.questions!.length}',
-                          style: theme.textTheme.titleSmall,
-                        ),
-                        SizedBox(
-                          height: 4.h,
-                        ),
-                        StepProgressIndicator(
-                          totalSteps: state.questions!.length,
-                          currentStep: state.currentQuestion,
-                          size: 4.h,
-                          padding: 0,
-                          selectedColor: AppColors.blue,
-                          unselectedColor: AppColors.black[20]!,
-                          roundedEdges: Radius.circular(100.r),
-                        ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
-                        Text(
-                          question?.question ?? '',
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            fontSize: 18.sp,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
-                      ],
+                    Center(
+                      child: Text(
+                        'Question ${state.currentQuestion} of ${state.questions!.length}',
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    StepProgressIndicator(
+                      totalSteps: state.questions!.length,
+                      currentStep: state.currentQuestion,
+                      size: 4.h,
+                      padding: 0,
+                      selectedColor: AppColors.blue,
+                      unselectedColor: AppColors.black[20]!,
+                      roundedEdges: Radius.circular(100.r),
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Text(
+                      question?.question ?? '',
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24.h,
                     ),
                     Expanded(
+                      flex: 2,
                       child: buildChoice(question: question!),
                     ),
                     Expanded(
@@ -276,31 +276,41 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
   }
 
   Widget buildChoice({required QuestionEntity question}) {
-    return ListView.separated(
-      itemCount: question.answers!.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          titleTextStyle: theme.textTheme.bodySmall?.copyWith(
-            fontSize: 14.sp,
+    return Scrollbar(
+      controller: scrollController,
+      thumbVisibility: true,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ListView.separated(
+          controller: scrollController,
+          itemCount: question.answers!.length,
+          itemBuilder: (context, index) {
+            return Material(
+              child: ListTile(
+                titleTextStyle: theme.textTheme.bodySmall?.copyWith(
+                  fontSize: 14.sp,
+                ),
+                selected: selectedIndex == index,
+                title: Text(
+                  question.answers?[index].answer ?? '',
+                ),
+                leading: Radio<int>(
+                  activeColor: AppColors.blue,
+                  value: index,
+                  groupValue: selectedIndex,
+                  onChanged: (int? value) {
+                    selectedIndex = value ?? 0;
+                    cubit.answersMap[question.id] = "A${selectedIndex + 1}";
+                    setState(() {});
+                  },
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => SizedBox(
+            height: 16.h,
           ),
-          selected: selectedIndex == index,
-          title: Text(
-            question.answers?[index].answer ?? '',
-          ),
-          leading: Radio<int>(
-            activeColor: AppColors.blue,
-            value: index,
-            groupValue: selectedIndex,
-            onChanged: (int? value) {
-              selectedIndex = value ?? 0;
-              cubit.answersMap[question.id] = "A${selectedIndex + 1}";
-              setState(() {});
-            },
-          ),
-        );
-      },
-      separatorBuilder: (BuildContext context, int index) => SizedBox(
-        height: 16.h,
+        ),
       ),
     );
   }
