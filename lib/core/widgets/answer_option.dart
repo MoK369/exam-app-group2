@@ -20,8 +20,6 @@ class AnswerOption extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: 300.w,
-        height: 50.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
           color: isSelected

@@ -72,9 +72,11 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   }
 
   Future<void> _cashQuestionsAndAnswers() async {
+    print("Caching the exam ${questions?[0].exam?.title}=======");
     await saveQuestionsUseCase.execute(CashedQuestions(
       questions: questions,
       answers: checkedAnswers,
+      examEntity: questions![0].exam,
       subjectName: questions![0].subject?.name,
     ));
     log('cash questions and answers');

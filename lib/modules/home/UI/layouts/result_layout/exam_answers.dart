@@ -32,8 +32,6 @@ class _ExamAnswersState extends State<ExamAnswers> {
                   return Padding(
                     padding: EdgeInsets.all(16.0.sp),
                     child: Container(
-                      width: 300.w,
-                      height: 360.h,
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(249, 249, 249, 1),
                           borderRadius: BorderRadius.circular(10.r),
@@ -62,13 +60,6 @@ class _ExamAnswersState extends State<ExamAnswers> {
                                 itemCount:
                                     widget.questionEntities[i].answers!.length,
                                 itemBuilder: (context, index) {
-                                  print(
-                                      "Correct Answer: ${widget.questionEntities[i].correct}");
-                                  print(
-                                      "Current Answer: ${widget.answers[index].correct}");
-                                  print(
-                                      "Comparison Result: ${widget.questionEntities[i].correct == widget.answers[i].correct}");
-
                                   return AnswerOption(
                                       isMultiple:
                                           widget.questionEntities[i].type !=
