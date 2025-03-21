@@ -19,7 +19,6 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
     var result = await StorageExecutionHandler.execute<void>(
         () => storageInstance.write(key: key, value: value));
     if (result is StorageErrorResult) {
-      print("Error setting string value flutter secure storage");
       errorNotifier.setError(
           message:
               StorageConstants.errorStoringMessage(result.error.toString()),

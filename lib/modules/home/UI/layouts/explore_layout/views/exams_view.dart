@@ -152,7 +152,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                   appLocalizations
                       .questionsNumber(entity!.numberOfQuestions ?? ""),
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.darkGray,
+                    color: AppColors.gray,
                   ),
                 ),
                 SizedBox(

@@ -5,7 +5,6 @@ import 'package:exam_app_group2/core/api/api_error/api_error_model.dart';
 import 'package:exam_app_group2/core/custom_exception/old_password_same_as_new_password.dart';
 import 'package:exam_app_group2/core/custom_exception/profile_not_changed_exception.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApiErrorHandler {
   static ApiErrorHandler? _instance;

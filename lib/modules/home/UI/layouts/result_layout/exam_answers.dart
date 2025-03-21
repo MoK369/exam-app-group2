@@ -19,8 +19,6 @@ class ExamAnswers extends StatefulWidget {
 }
 
 class _ExamAnswersState extends BaseStatefulWidgetState<ExamAnswers> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +29,6 @@ class _ExamAnswersState extends BaseStatefulWidgetState<ExamAnswers> {
             child: ListView.builder(
                 itemCount: widget.questionEntities.length,
                 itemBuilder: (context, index) {
-                  print(widget.answers[index].correct);
                   var currentQuestion = widget.questionEntities[index];
                   var currentQuestionUserAnswer = widget.answers[index];
                   return Padding(
@@ -50,10 +47,14 @@ class _ExamAnswersState extends BaseStatefulWidgetState<ExamAnswers> {
                       child: Padding(
                         padding: EdgeInsets.all(12.0.sp),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(widget.questionEntities[index].question ?? "",
-                                style: AppThemes.styles18w500black15,
-                                textAlign: TextAlign.left),
+                            Text(
+                              widget.questionEntities[index].question ?? "",
+                              style: AppThemes.styles18w500black15,
+                              textDirection: TextDirection.ltr,
+                              textAlign: TextAlign.center,
+                            ),
                             SizedBox(
                               height: 4.h,
                             ),

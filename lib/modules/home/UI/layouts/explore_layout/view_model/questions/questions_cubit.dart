@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
@@ -34,12 +33,9 @@ class QuestionsCubit extends Cubit<QuestionsState> {
       case GetAllQuestionsIntent():
         _getAllQuestions(examId: intent.examId);
       case NextQuestionIntent():
-        _nextQuestion(
-
-        );
+        _nextQuestion();
       case PreviousQuestionIntent():
-        _previousQuestion(
-        );
+        _previousQuestion();
       case CheckQuestionIntent():
         _checkQuestions();
       case GetAnswersList():
@@ -62,7 +58,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   void _getCheckedAnswers() {
     answersMap.forEach((key, value) {
       checkedAnswers?.add(Answers(
-        questionId: key,
+        questionId: key?.split("_")[0],
         correct: value,
       ));
     });
@@ -130,7 +126,6 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   }
 
   void _nextQuestion() {
-    print(answersMap);
     if (_isLastQuestion()) return;
     var questionFound = false;
     currentQuestion++;

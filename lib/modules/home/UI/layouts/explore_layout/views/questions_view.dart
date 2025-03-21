@@ -169,103 +169,106 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 questionsList = state.questions ?? [];
                 questionEntity = state.questions?[state.currentQuestion - 1];
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Column(
+                    Center(
+                      child: Text(
+                        appLocalizations.questionOfTotalQuestions(
+                            cubit.currentQuestion, state.questions!.length),
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    StepProgressIndicator(
+                      totalSteps: state.questions!.length,
+                      currentStep: cubit.currentQuestion,
+                      size: 4.h,
+                      padding: 0,
+                      selectedColor: AppColors.blue,
+                      unselectedColor: AppColors.black[20]!,
+                      roundedEdges: Radius.circular(100.r),
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Text(
+                      questionEntity?.question ?? '',
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: buildChoice(question: questionEntity!),
+                    ),
+                    SizedBox(
+                      height: 80.h,
+                    ),
+                    Row(
                       children: [
-                        Text(
-                          appLocalizations.questionOfTotalQuestions(
-                              cubit.currentQuestion, state.questions!.length),
-                          style: theme.textTheme.titleSmall,
-                        ),
-                        SizedBox(
-                          height: 4.h,
-                        ),
-                        StepProgressIndicator(
-                          totalSteps: state.questions!.length,
-                          currentStep: cubit.currentQuestion,
-                          size: 4.h,
-                          padding: 0,
-                          selectedColor: AppColors.blue,
-                          unselectedColor: AppColors.black[20]!,
-                          roundedEdges: Radius.circular(100.r),
-                        ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
-                        Text(
-                          questionEntity?.question ?? '',
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            fontSize: 18.sp,
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: AppColors.blue,
+                                ),
+                                borderRadius: BorderRadius.circular(
+                                  10.r,
+                                ),
+                              ),
+                              backgroundColor: AppColors.lightBlue,
+                            ),
+                            onPressed: () {
+                              cubit.doIntent(PreviousQuestionIntent());
+                            },
+                            child: Text(
+                              appLocalizations.back,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: AppColors.blue,
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
-                          height: 24.h,
+                          width: 16.w,
                         ),
-                        buildChoice(question: questionEntity!),
-                        SizedBox(
-                          height: 80.h,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: AppColors.blue,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                      10.r,
-                                    ),
-                                  ),
-                                  backgroundColor: AppColors.lightBlue,
-                                ),
-                                onPressed: () {
-                                  cubit.doIntent(PreviousQuestionIntent());
-                                },
-                                child: Text(
-                                  appLocalizations.back,
-                                  style: theme.textTheme.labelMedium?.copyWith(
-                                    color: AppColors.blue,
-                                  ),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  10.r,
                                 ),
                               ),
+                              backgroundColor: AppColors.blue,
                             ),
-                            SizedBox(
-                              width: 16.w,
-                            ),
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                      10.r,
-                                    ),
-                                  ),
-                                  backgroundColor: AppColors.blue,
-                                ),
-                                onPressed: () {
-                                  if (cubit.answersMap[
-                                          "${questionEntity!.id!}_${cubit.currentQuestion}"] ==
-                                      null) {
-                                    cubit.answersMap[
-                                            "${questionEntity!.id!}_${cubit.currentQuestion}"] =
-                                        "A1";
-                                  }
-                                  cubit.doIntent(NextQuestionIntent());
-                                },
-                                child: Text(
-                                  appLocalizations.next,
-                                  style: theme.textTheme.labelMedium?.copyWith(
-                                    color: AppColors.white,
-                                  ),
-                                ),
+                            onPressed: () {
+                              if (cubit.answersMap[
+                                      "${questionEntity!.id!}_${cubit.currentQuestion}"] ==
+                                  null) {
+                                cubit.answersMap[
+                                        "${questionEntity!.id!}_${cubit.currentQuestion}"] =
+                                    "A1";
+                              }
+                              cubit.doIntent(NextQuestionIntent());
+                            },
+                            child: Text(
+                              appLocalizations.next,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: AppColors.white,
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
@@ -283,41 +286,87 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
     );
   }
 
+  // Widget buildChoice({required QuestionEntity question}) {
+  //   return SizedBox(
+  //     height: 257.h,
+  //     child: ListView.separated(
+  //       itemCount: question.answers!.length,
+  //       itemBuilder: (context, index) {
+  //         return ListTile(
+  //           onTap: () {
+  //             setState(() {
+  //               cubit.selectedAnswerIndex = index;
+  //               addAnswerInAnswersMap();
+  //             });
+  //           },
+  //           titleTextStyle: theme.textTheme.bodySmall?.copyWith(
+  //             fontSize: 14.sp,
+  //           ),
+  //           selected: cubit.selectedAnswerIndex == index,
+  //           title: Text(
+  //             question.answers?[index].answer ?? '',
+  //           ),
+  //           leading: Radio<int>(
+  //             activeColor: AppColors.blue,
+  //             value: index,
+  //             groupValue: cubit.selectedAnswerIndex,
+  //             onChanged: (int? value) {
+  //               setState(() {
+  //                 cubit.selectedAnswerIndex = value ?? 0;
+  //                 addAnswerInAnswersMap();
+  //               });
+  //             },
+  //           ),
+  //         );
+  //       },
+  //       separatorBuilder: (BuildContext context, int index) => SizedBox(
+  //         height: 16.h,
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget buildChoice({required QuestionEntity question}) {
-    return SizedBox(
-      height: 257.h,
-      child: ListView.separated(
-        itemCount: question.answers!.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            onTap: () {
-              setState(() {
-                cubit.selectedAnswerIndex = index;
-                addAnswerInAnswersMap();
-              });
-            },
-            titleTextStyle: theme.textTheme.bodySmall?.copyWith(
-              fontSize: 14.sp,
-            ),
-            selected: cubit.selectedAnswerIndex == index,
-            title: Text(
-              question.answers?[index].answer ?? '',
-            ),
-            leading: Radio<int>(
-              activeColor: AppColors.blue,
-              value: index,
-              groupValue: cubit.selectedAnswerIndex,
-              onChanged: (int? value) {
-                setState(() {
-                  cubit.selectedAnswerIndex = value ?? 0;
-                  addAnswerInAnswersMap();
-                });
-              },
-            ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => SizedBox(
-          height: 16.h,
+    return Scrollbar(
+      controller: scrollController,
+      thumbVisibility: true,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: ListView.separated(
+          controller: scrollController,
+          itemCount: question.answers!.length,
+          itemBuilder: (context, index) {
+            return Material(
+              child: ListTile(
+                onTap: () {
+                  setState(() {
+                    cubit.selectedAnswerIndex = index;
+                    addAnswerInAnswersMap();
+                  });
+                },
+                titleTextStyle: theme.textTheme.bodySmall?.copyWith(
+                  fontSize: 14.sp,
+                ),
+                selected: cubit.selectedAnswerIndex == index,
+                title: Text(
+                  question.answers?[index].answer ?? '',
+                ),
+                leading: Radio<int>(
+                  activeColor: AppColors.blue,
+                  value: index,
+                  groupValue: cubit.selectedAnswerIndex,
+                  onChanged: (int? value) {
+                    setState(() {
+                      cubit.selectedAnswerIndex = value ?? 0;
+                      addAnswerInAnswersMap();
+                    });
+                  },
+                ),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) => SizedBox(
+            height: 16.h,
+          ),
         ),
       ),
     );

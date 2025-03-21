@@ -25,12 +25,6 @@ class ProfileLayout extends StatefulWidget {
 class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
   ProfileViewModel profileViewModel = getIt.get<ProfileViewModel>();
   late HomeViewModel homeViewModel;
-  @override
-  void initState() {
-    super.initState();
-    print("In Profile");
-    print("${authEntity.token} & ${authEntity.user?.email}");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +86,9 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
         .then(
       (editScreenBackValues) async {
         if (editScreenBackValues?.profileUpdatedAtLeastOnce == true) {
-          print("Getting User info========");
           await profileViewModel.doIntent(GetLoggedUserInfo());
         }
         if (editScreenBackValues?.avatarUpdatedAtLeastOnce == true) {
-          print("Updating Avatar =========");
           await homeViewModel.getAvatarImage(authEntity.user?.email ?? "");
         }
         if (editScreenBackValues?.newToken != null) {
@@ -107,7 +99,6 @@ class _ProfileLayoutState extends BaseStatefulWidgetState<ProfileLayout> {
   }
 
   void whenThereIsANewTokenBack(String newToken) {
-    print("New Token $newToken");
     authEntity.token = newToken;
   }
 

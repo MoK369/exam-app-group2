@@ -97,14 +97,13 @@ ExamEntity _examEntityDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = ExamEntity(
-    active: reader.readBoolOrNull(offsets[0]),
-    duration: reader.readLongOrNull(offsets[1]),
-    id: reader.readStringOrNull(offsets[2]),
-    numberOfQuestions: reader.readLongOrNull(offsets[3]),
-    subject: reader.readStringOrNull(offsets[4]),
-    title: reader.readStringOrNull(offsets[5]),
-  );
+  final object = ExamEntity();
+  object.active = reader.readBoolOrNull(offsets[0]);
+  object.duration = reader.readLongOrNull(offsets[1]);
+  object.id = reader.readStringOrNull(offsets[2]);
+  object.numberOfQuestions = reader.readLongOrNull(offsets[3]);
+  object.subject = reader.readStringOrNull(offsets[4]);
+  object.title = reader.readStringOrNull(offsets[5]);
   return object;
 }
 

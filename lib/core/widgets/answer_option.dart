@@ -29,7 +29,7 @@ class AnswerOption extends StatelessWidget {
                   : AppColors.lightRed)
               : isCorrect
                   ? AppColors.lightGreen
-                  : AppColors.moreLightBlue,
+                  : AppColors.lightBlue,
           border: Border.all(
             color: isSelected
                 ? (isCorrect
@@ -37,7 +37,7 @@ class AnswerOption extends StatelessWidget {
                     : AppColors.red)
                 : isCorrect
                     ? AppColors.green
-                    : AppColors.moreLightBlue,
+                    : AppColors.lightBlue,
           ),
         ),
         child: Padding(

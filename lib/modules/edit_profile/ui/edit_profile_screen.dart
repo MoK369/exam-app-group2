@@ -136,7 +136,6 @@ class _EditProfileScreenState
                             widgetName: EditProfileScreen.widgetName);
                         return;
                       }
-                      print("picking an image-===========");
                       editProfileViewModel.doIntent(
                         OnAvatarTap(
                           emailId: widget.editProfileScreenParameters.authEntity
@@ -150,8 +149,6 @@ class _EditProfileScreenState
                         context,
                         DefinedRoutes.changePasswordRoutName,
                       ).then((profileBackValues) {
-                        print(
-                            "ProfileBackValues: ${profileBackValues != null}");
                         if (profileBackValues != null) {
                           Navigator.pop<ProfileBackValues>(
                               context, profileBackValues);
@@ -182,7 +179,6 @@ class _EditProfileScreenState
   void dispose() {
     super.dispose();
     BackButtonInterceptor.remove(myInterceptor);
-    print(editProfileViewModel.profileUpdatedAtLeastOnce);
     editProfileViewModel.doIntent(DisposeControllersAndFocusNodes());
   }
 

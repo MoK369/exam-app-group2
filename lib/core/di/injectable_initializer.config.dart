@@ -15,18 +15,14 @@ import 'package:image_picker/image_picker.dart' as _i20;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:isar/isar.dart' as _i21;
 
-import '../../dio_service/dio_service.dart' as _i47;
-import '../../localization/initializer/locale_initializer.dart' as _i49;
-import '../../localization/l10n_manager/localization_manager.dart' as _i34;
-import '../../localization/use_case/localization_use_case.dart' as _i35;
-import '../../dio_service/dio_service.dart' as _i110;
+import '../../dio_service/dio_service.dart' as _i111;
 import '../../image_picking/contracts/image_picking_service_contract.dart'
     as _i82;
 import '../../image_picking/image_picker_provider/image_picker_provider.dart'
-    as _i114;
+    as _i115;
 import '../../image_picking/implementation/image_picking_service_imp.dart'
     as _i83;
-import '../../localization/initializer/locale_initializer.dart' as _i115;
+import '../../localization/initializer/locale_initializer.dart' as _i116;
 import '../../localization/l10n_manager/localization_manager.dart' as _i84;
 import '../../localization/use_case/localization_use_case.dart' as _i85;
 import '../../modules/authentication/data/api_manager/auth_api_manager.dart'
@@ -96,13 +92,11 @@ import '../../modules/authentication/ui/forget_password/view_model/forget_passwo
 import '../../modules/authentication/ui/login/view_model/login_view_model.dart'
     as _i89;
 import '../../modules/authentication/ui/sign_up/view_model/sign_up_view_model.dart'
-    as _i23;
-import '../../modules/home/data/api_manager/explore_api_manager.dart' as _i6;
     as _i48;
 import '../../modules/change_password/data/api/api_client/change_password_api_client.dart'
     as _i59;
 import '../../modules/change_password/data/api/api_client_provider/change_password_api_client_provider.dart'
-    as _i116;
+    as _i117;
 import '../../modules/change_password/data/data_source_contracts/change_password/change_password_local_data_source.dart'
     as _i60;
 import '../../modules/change_password/data/data_source_contracts/change_password/change_password_remote_data_source.dart'
@@ -118,11 +112,11 @@ import '../../modules/change_password/domain/repositories_contracts/change_passw
 import '../../modules/change_password/domain/use_cases/change_password/change_password_use_case.dart'
     as _i66;
 import '../../modules/change_password/ui/view_model/change_password_screen_view_model.dart'
-    as _i98;
+    as _i99;
 import '../../modules/edit_profile/data/api/api_client/edit_profile_api_client.dart'
     as _i5;
 import '../../modules/edit_profile/data/api/api_client_provider/edit_profile_api_client_provider.dart'
-    as _i111;
+    as _i112;
 import '../../modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_local_data_source.dart'
     as _i69;
 import '../../modules/edit_profile/data/data_source_contracts/edit_profile/edit_profile_remote_data_source.dart'
@@ -140,23 +134,10 @@ import '../../modules/edit_profile/domain/repositories_contracts/edit_profile/ed
 import '../../modules/edit_profile/domain/use_cases/edit_profile/edit_profile_use_case.dart'
     as _i73;
 import '../../modules/edit_profile/ui/view_model/edit_profile_screen_view_model.dart'
-    as _i103;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
     as _i104;
-import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
-    as _i105;
-import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
-    as _i106;
-import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
-    as _i108;
-import '../../modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart'
-    as _i95;
-import '../../modules/home/UI/layouts/settings_layout/view_model/settings_view_model.dart'
-    as _i109;
-import '../../modules/home/UI/view_model/home_view_model.dart' as _i107;
 import '../../modules/home/data/api/api_client/home_api_client.dart' as _i19;
 import '../../modules/home/data/api/api_client_provider/home_api_client_provider.dart'
-    as _i113;
+    as _i114;
 import '../../modules/home/data/api_manager/explore_api_manager.dart' as _i9;
 import '../../modules/home/data/data_source_contracts/delete_account/delete_account_remote_data_source.dart'
     as _i67;
@@ -183,7 +164,7 @@ import '../../modules/home/data/data_source_imp/logout_delete_account_local_data
 import '../../modules/home/data/data_source_imp/questions_offline_data_source_impl.dart'
     as _i37;
 import '../../modules/home/data/repository_imp/delete_account/delete_account_repository_imp.dart'
-    as _i101;
+    as _i102;
 import '../../modules/home/data/repository_imp/explore_repository_imp.dart'
     as _i75;
 import '../../modules/home/data/repository_imp/get_logged_user_info/logged_user_info_repository_imp.dart'
@@ -193,18 +174,16 @@ import '../../modules/home/data/repository_imp/logout/logout_repository_imp.dart
 import '../../modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart'
     as _i23;
 import '../../modules/home/domain/repositories_contracts/delete_account/delete_account_repository.dart'
-    as _i100;
+    as _i101;
 import '../../modules/home/domain/repositories_contracts/explore_repository.dart'
-    as _i28;
-import '../../modules/home/domain/use_cases/check_questions.dart' as _i42;
     as _i74;
 import '../../modules/home/domain/repositories_contracts/get_logged_user_info/logged_user_info_repository.dart'
     as _i30;
 import '../../modules/home/domain/repositories_contracts/logout/logout_repository.dart'
     as _i92;
-import '../../modules/home/domain/use_cases/check_questions.dart' as _i99;
+import '../../modules/home/domain/use_cases/check_questions.dart' as _i100;
 import '../../modules/home/domain/use_cases/delete_account/delete_account_use_case.dart'
-    as _i102;
+    as _i103;
 import '../../modules/home/domain/use_cases/get_all_exams_on_subject.dart'
     as _i77;
 import '../../modules/home/domain/use_cases/get_all_questions.dart' as _i78;
@@ -217,15 +196,20 @@ import '../../modules/home/domain/use_cases/logout/logout_use_case.dart'
     as _i94;
 import '../../modules/home/domain/use_cases/save_questions.dart' as _i97;
 import '../../modules/home/UI/layouts/explore_layout/view_model/exam/exam_cubit.dart'
-    as _i43;
+    as _i105;
 import '../../modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart'
-    as _i44;
+    as _i106;
 import '../../modules/home/UI/layouts/explore_layout/view_model/explore/explore_cubit.dart'
-    as _i45;
+    as _i107;
 import '../../modules/home/UI/layouts/explore_layout/view_model/questions/questions_cubit.dart'
-    as _i46;
+    as _i109;
+import '../../modules/home/UI/layouts/profile_layout/view_model/profile_view_model.dart'
+    as _i95;
 import '../../modules/home/UI/layouts/result_layout/view%20model/cashed_cubit.dart'
-    as _i41;
+    as _i98;
+import '../../modules/home/UI/layouts/settings_layout/view_model/settings_view_model.dart'
+    as _i110;
+import '../../modules/home/UI/view_model/home_view_model.dart' as _i108;
 import '../../storage/contracts/isar_storage_service_cashed_question_entity_contract.dart'
     as _i22;
 import '../../storage/contracts/isar_storage_service_image_entity_contract.dart'
@@ -236,12 +220,8 @@ import '../../storage/implementation/isar_storage_service_cashed_question_entity
 import '../../storage/implementation/isar_storage_service_image_entity_imp.dart'
     as _i27;
 import '../../storage/implementation/storage_service_imp.dart' as _i50;
-import '../../storage/initializer/storage_initializer.dart' as _i112;
+import '../../storage/initializer/storage_initializer.dart' as _i113;
 import '../providers/error/error_notifier.dart' as _i8;
-    as _i13;
-import '../../storage/implementation/storage_service_imp.dart' as _i25;
-import '../../storage/initializer/storage_initializer.dart' as _i48;
-import '../providers/error/error_notifier.dart' as _i5;
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -338,11 +318,6 @@ extension GetItInjectableX on _i1.GetIt {
               gh<_i12.FlutterSecureStorage>(),
             ));
     await gh.factoryAsync<String>(
-      () => dioService
-          .getToken(gh<_i24.StorageService<_i9.FlutterSecureStorage>>()),
-      preResolve: true,
-    );
-    await gh.factoryAsync<String>(
       () => localeInitializer.initCurrentLocal(
           gh<_i49.StorageService<_i12.FlutterSecureStorage>>()),
       instanceName: 'initCurrentLocal',
@@ -395,11 +370,6 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i74.ExploreRepository>(() => _i75.HomeRepositoryImp(
           homeDataSource: gh<_i10.ExploreDataSource>(),
           questionsOfflineDataSource: gh<_i36.QuestionsOfflineDataSource>(),
-    gh.factory<_i26.AuthLocalDataSource>(() => _i27.AuthLocalDataSourceImpl(
-        storageService: gh<_i24.StorageService<_i9.FlutterSecureStorage>>()));
-    gh.factory<_i28.ExploreRepository>(() => _i29.HomeRepositoryImp(
-          homeDataSource: gh<_i7.ExploreDataSource>(),
-          questionsOfflineDataSource: gh<_i16.QuestionsOfflineDataSource>(),
         ));
     gh.factory<_i76.ForgetPasswordCubit>(() => _i76.ForgetPasswordCubit(
         forgetPasswordUseCase: gh<_i18.ForgetPasswordUseCase>()));
@@ -441,27 +411,6 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i34.LogoutRemoteDataSource>(),
           gh<_i90.LogoutDeleteAccountLocalDataSource>(),
         ));
-    gh.factory<_i38.LoginUseCase>(
-        () => _i38.LoginUseCase(authRepo: gh<_i36.LoginRepo>()));
-    gh.factory<_i39.LoginViewModel>(
-        () => _i39.LoginViewModel(loginUseCase: gh<_i38.LoginUseCase>()));
-    gh.factory<_i40.SaveQuestionsUseCase>(() => _i40.SaveQuestionsUseCase(
-        exploreRepository: gh<_i28.ExploreRepository>()));
-    gh.factory<_i41.CachedQuestionsCubit>(() => _i41.CachedQuestionsCubit(
-        getCashedQuestionUseCase: gh<_i33.GetCashedQuestionUseCase>()));
-    gh.factory<_i42.CheckQuestionsUseCase>(() => _i42.CheckQuestionsUseCase(
-        homeRepository: gh<_i28.ExploreRepository>()));
-    gh.factory<_i43.ExamCubit>(() => _i43.ExamCubit(
-        getAllExamsOnSubjectUseCase: gh<_i30.GetAllExamsOnSubjectUseCase>()));
-    gh.factory<_i44.ExamScoreCubit>(() => _i44.ExamScoreCubit(
-        checkQuestionsUseCase: gh<_i42.CheckQuestionsUseCase>()));
-    gh.factory<_i45.ExploreCubit>(() => _i45.ExploreCubit(
-        getAllSubjectsUseCase: gh<_i32.GetAllSubjectsUseCase>()));
-    gh.factory<_i46.QuestionsCubit>(() => _i46.QuestionsCubit(
-          getAllQuestionsUseCase: gh<_i31.GetAllQuestionsUseCase>(),
-          checkQuestionsUseCase: gh<_i42.CheckQuestionsUseCase>(),
-          saveQuestionsUseCase: gh<_i40.SaveQuestionsUseCase>(),
-          getCashedQuestionUseCase: gh<_i33.GetCashedQuestionUseCase>(),
     gh.factory<_i94.LogoutUseCase>(
         () => _i94.LogoutUseCase(gh<_i92.LogoutRepository>()));
     gh.factory<_i95.ProfileViewModel>(() => _i95.ProfileViewModel(
@@ -472,59 +421,58 @@ extension GetItInjectableX on _i1.GetIt {
         resetPasswordUseCase: gh<_i42.ResetPasswordUseCase>()));
     gh.factory<_i97.SaveQuestionsUseCase>(() => _i97.SaveQuestionsUseCase(
         exploreRepository: gh<_i74.ExploreRepository>()));
-    gh.factory<_i98.ChangePasswordScreenViewModel>(() =>
-        _i98.ChangePasswordScreenViewModel(gh<_i66.ChangePasswordUseCase>()));
-    gh.factory<_i99.CheckQuestionsUseCase>(() => _i99.CheckQuestionsUseCase(
+    gh.factory<_i98.CachedQuestionsCubit>(() => _i98.CachedQuestionsCubit(
+        getCashedQuestionUseCase: gh<_i80.GetCashedQuestionUseCase>()));
+    gh.factory<_i99.ChangePasswordScreenViewModel>(() =>
+        _i99.ChangePasswordScreenViewModel(gh<_i66.ChangePasswordUseCase>()));
+    gh.factory<_i100.CheckQuestionsUseCase>(() => _i100.CheckQuestionsUseCase(
         homeRepository: gh<_i74.ExploreRepository>()));
-    gh.factory<_i100.DeleteAccountRepository>(
-        () => _i101.DeleteAccountRepositoryImp(
+    gh.factory<_i101.DeleteAccountRepository>(
+        () => _i102.DeleteAccountRepositoryImp(
               gh<_i67.DeleteAccountRemoteDataSource>(),
               gh<_i90.LogoutDeleteAccountLocalDataSource>(),
             ));
-    gh.factory<_i102.DeleteAccountUseCase>(
-        () => _i102.DeleteAccountUseCase(gh<_i100.DeleteAccountRepository>()));
-    gh.factory<_i103.EditProfileScreenViewModel>(
-        () => _i103.EditProfileScreenViewModel(
+    gh.factory<_i103.DeleteAccountUseCase>(
+        () => _i103.DeleteAccountUseCase(gh<_i101.DeleteAccountRepository>()));
+    gh.factory<_i104.EditProfileScreenViewModel>(
+        () => _i104.EditProfileScreenViewModel(
               gh<_i73.EditProfileUseCase>(),
               gh<_i82.ImagePickingService>(),
             ));
-    gh.factory<_i104.ExamCubit>(() => _i104.ExamCubit(
+    gh.factory<_i105.ExamCubit>(() => _i105.ExamCubit(
         getAllExamsOnSubjectUseCase: gh<_i77.GetAllExamsOnSubjectUseCase>()));
-    gh.factory<_i105.ExamScoreCubit>(() => _i105.ExamScoreCubit(
-        checkQuestionsUseCase: gh<_i99.CheckQuestionsUseCase>()));
-    gh.factory<_i106.ExploreCubit>(() => _i106.ExploreCubit(
+    gh.factory<_i106.ExamScoreCubit>(() => _i106.ExamScoreCubit(
+        checkQuestionsUseCase: gh<_i100.CheckQuestionsUseCase>()));
+    gh.factory<_i107.ExploreCubit>(() => _i107.ExploreCubit(
         getAllSubjectsUseCase: gh<_i79.GetAllSubjectsUseCase>()));
-    gh.factory<_i107.HomeViewModel>(
-        () => _i107.HomeViewModel(gh<_i82.ImagePickingService>()));
-    gh.factory<_i108.QuestionsCubit>(() => _i108.QuestionsCubit(
+    gh.factory<_i108.HomeViewModel>(
+        () => _i108.HomeViewModel(gh<_i82.ImagePickingService>()));
+    gh.factory<_i109.QuestionsCubit>(() => _i109.QuestionsCubit(
           getAllQuestionsUseCase: gh<_i78.GetAllQuestionsUseCase>(),
-          checkQuestionsUseCase: gh<_i99.CheckQuestionsUseCase>(),
+          checkQuestionsUseCase: gh<_i100.CheckQuestionsUseCase>(),
           saveQuestionsUseCase: gh<_i97.SaveQuestionsUseCase>(),
           getCashedQuestionUseCase: gh<_i80.GetCashedQuestionUseCase>(),
         ));
-    gh.factory<_i109.SettingsViewModel>(() => _i109.SettingsViewModel(
+    gh.factory<_i110.SettingsViewModel>(() => _i110.SettingsViewModel(
           gh<_i94.LogoutUseCase>(),
-          gh<_i102.DeleteAccountUseCase>(),
+          gh<_i103.DeleteAccountUseCase>(),
         ));
     return this;
   }
 }
 
-class _$DioService extends _i47.DioService {}
-class _$DioService extends _i110.DioService {}
+class _$DioService extends _i111.DioService {}
 
 class _$EditProfileApiClientProvider
-    extends _i111.EditProfileApiClientProvider {}
+    extends _i112.EditProfileApiClientProvider {}
 
-class _$StorageInitializer extends _i112.StorageInitializer {}
+class _$StorageInitializer extends _i113.StorageInitializer {}
 
-class _$HomeApiClientProvider extends _i113.HomeApiClientProvider {}
+class _$HomeApiClientProvider extends _i114.HomeApiClientProvider {}
 
-class _$StorageInitializer extends _i48.StorageInitializer {}
-class _$ImagePickerProvider extends _i114.ImagePickerProvider {}
+class _$ImagePickerProvider extends _i115.ImagePickerProvider {}
 
-class _$LocaleInitializer extends _i49.LocaleInitializer {}
-class _$LocaleInitializer extends _i115.LocaleInitializer {}
+class _$LocaleInitializer extends _i116.LocaleInitializer {}
 
 class _$ChangePasswordApiClientProvider
-    extends _i116.ChangePasswordApiClientProvider {}
+    extends _i117.ChangePasswordApiClientProvider {}

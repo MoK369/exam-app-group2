@@ -1,6 +1,6 @@
-import 'package:exam_app_group2/core/assets/assets_paths.dart';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
+import 'package:exam_app_group2/core/constants/assets/assets_paths.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
