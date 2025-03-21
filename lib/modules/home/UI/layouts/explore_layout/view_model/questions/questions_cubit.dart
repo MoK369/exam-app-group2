@@ -34,9 +34,12 @@ class QuestionsCubit extends Cubit<QuestionsState> {
       case GetAllQuestionsIntent():
         _getAllQuestions(examId: intent.examId);
       case NextQuestionIntent():
-        _nextQuestion();
+        _nextQuestion(
+
+        );
       case PreviousQuestionIntent():
-        _previousQuestion();
+        _previousQuestion(
+        );
       case CheckQuestionIntent():
         _checkQuestions();
       case GetAnswersList():
@@ -57,19 +60,12 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   Map<String?, String> answersMap = {};
 
   void _getCheckedAnswers() {
-    log('get checked answers list ');
-
-    log('answersMap: $answersMap');
-
     answersMap.forEach((key, value) {
       checkedAnswers?.add(Answers(
-        questionId: key?.split("_")[0],
+        questionId: key,
         correct: value,
       ));
     });
-
-    log(checkedAnswers![0].toString());
-    // log(answersMap.toString());
   }
 
   Future<void> _cashQuestionsAndAnswers() async {
@@ -89,7 +85,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
     emit(state.copyWith(getAllQuestionsStatus: Status.loading));
     var result = await getAllQuestionsUseCase.execute(examId: examId);
     switch (result) {
-      case Success<List<QuestionEntity>>():
+      case Success<List<QuestionEntity>?>():
         questions = result.data;
         emit(
           state.copyWith(
@@ -97,7 +93,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
             questions: result.data,
           ),
         );
-      case Error<List<QuestionEntity>>():
+      case Error<List<QuestionEntity>?>():
         emit(
           state.copyWith(
             getAllQuestionsStatus: Status.error,

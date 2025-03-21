@@ -24,7 +24,7 @@ class LoginRemoteDataSourceImpl implements LoginRemoteDataSource {
             ));
     switch (apiResult) {
       case Success<AuthenticationResponseDto>():
-        return Success(data: apiResult.data.convertIntoAuthenticationEntity());
+        return Success(data: apiResult.data.convertIntoEntity());
       case Error<AuthenticationResponseDto>():
         return Error(
           error: apiResult.error,

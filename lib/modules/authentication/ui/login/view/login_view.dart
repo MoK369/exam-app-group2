@@ -1,22 +1,28 @@
+import 'dart:io';
+
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
+import 'package:exam_app_group2/core/constants/emojis/emojis.dart';
+import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/modules/authentication/ui/login/view_model/login_view_model.dart';
 import 'package:exam_app_group2/modules/home/UI/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/di/injectable_initializer.dart';
-import '../../../../../core/routing/defined_routes.dart';
 import '../../../../../core/validation/validation_functions.dart';
 import '../../../../../core/widgets/underline_text.dart';
 import '../../../data/models/login/login_request.dart';
 import '../../../domain/entities/authentication/authentication_response_entity.dart';
 
 class LoginView extends StatefulWidget {
+  static const String widgetName = "LoginView";
+
   const LoginView({super.key});
 
   @override
@@ -32,16 +38,17 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
   late ValidateFunctions validateFunctions;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    validateFunctions = ValidateFunctions.getInstance(appLocalizations);
-  }
-
-  @override
   void initState() {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    initErrorNotifier(context, LoginView.widgetName);
+    validateFunctions = ValidateFunctions.getInstance(appLocalizations);
   }
 
   @override
@@ -64,6 +71,11 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
         appBar: CustomAppBar(
           title: appLocalizations.login,
           showLocaleButton: true,
+          showLeadingIcon: !Platform.isIOS,
+          onLeadingIconButtonClick: () {
+            SystemNavigator.pop();
+          },
+          widgetNameForErrorNotifier: LoginView.widgetName,
           onChangeLocaleButtonClick: () {
             if (loginViewModel.state.isUnValid) {
               WidgetsBinding.instance.addPostFrameCallback(
@@ -146,7 +158,7 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                           onFieldSubmitted: (value) =>
                               passwordFocusNode.unfocus(),
                           keyboardType: TextInputType.visiblePassword,
-                          obscuringCharacter: '*',
+                          obscuringCharacter: Emojis.star,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           decoration: InputDecoration(
                             labelText: appLocalizations.password,
@@ -179,9 +191,11 @@ class _LoginViewState extends BaseStatefulWidgetState<LoginView> {
                                 style: theme.textTheme.bodySmall),
                             const Spacer(),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(context, DefinedRoutes.forgetPasswordRoute);
+                              },
                               child: UnderlineText(
-                                child: Text(appLocalizations.forgetPassword,
+                                child: Text(appLocalizations.forgetPasswordQuestion,
                                     style: theme.textTheme.bodySmall),
                               ),
                             )

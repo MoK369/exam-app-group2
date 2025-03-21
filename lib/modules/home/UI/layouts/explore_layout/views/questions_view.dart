@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
 import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
@@ -31,6 +29,8 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
   var cubit = getIt.get<QuestionsCubit>();
   late List<QuestionEntity> questionsList;
   late QuestionEntity? questionEntity;
+  final ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     cubit.doIntent(GetAllQuestionsIntent(examId: widget.examEntity.id!));
@@ -167,7 +167,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 return ErrorStateWidget(error: state.error!);
               } else if (state.isSuccess) {
                 questionsList = state.questions ?? [];
-                questionEntity = state.questions?[cubit.currentQuestion - 1];
+                questionEntity = state.questions?[state.currentQuestion - 1];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

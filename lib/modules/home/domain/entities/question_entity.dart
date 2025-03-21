@@ -2,7 +2,6 @@ import 'package:exam_app_group2/modules/home/domain/entities/answer_entity.dart'
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
 import 'package:isar/isar.dart';
-
 part 'question_entity.g.dart';
 
 @embedded

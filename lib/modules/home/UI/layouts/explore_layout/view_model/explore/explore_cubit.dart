@@ -16,8 +16,14 @@ class ExploreCubit extends Cubit<HomeState> {
     switch (intent) {
       case GetAllSubjectsIntent():
         _getAllSubjects();
+        break;
+      case SearchInSubjectList():
+        _searchInSubjectList(intent.keyword);
+        break;
     }
   }
+
+  late List<SubjectEntity> _subjectsList;
 
   Future<void> _getAllSubjects() async {
     emit(
@@ -28,10 +34,11 @@ class ExploreCubit extends Cubit<HomeState> {
     var result = await getAllSubjectsUseCase.execute();
     switch (result) {
       case Success<List<SubjectEntity>?>():
+        _subjectsList = result.data ?? [];
         emit(
           state.copyWith(
             state: Status.success,
-            subjects: result.data,
+            userSearchedSubjects: _subjectsList,
           ),
         );
       case Error<List<SubjectEntity>?>():
@@ -43,8 +50,45 @@ class ExploreCubit extends Cubit<HomeState> {
         );
     }
   }
+
+  void _searchInSubjectList(String keyWord) {
+    if (state.isSuccess) {
+      List<SubjectEntity> resultSubjectsList = [];
+      if (keyWord.trim().isEmpty) {
+        if (state.userSearchedSubjects != _subjectsList) {
+          emit(state.copyWith(
+              searchStatus: SearchStatus.idle,
+              userSearchedSubjects: _subjectsList));
+        }
+      } else {
+        resultSubjectsList = _subjectsList.where(
+          (subject) {
+            return subject.name
+                    ?.toLowerCase()
+                    .contains(keyWord.toLowerCase()) ??
+                false;
+          },
+        ).toList();
+        if (resultSubjectsList.isEmpty) {
+          emit(state.copyWith(
+              searchStatus: SearchStatus.withoutResult,
+              userSearchedSubjects: resultSubjectsList));
+        } else {
+          emit(state.copyWith(
+              searchStatus: SearchStatus.withResult,
+              userSearchedSubjects: resultSubjectsList));
+        }
+      }
+    }
+  }
 }
 
 sealed class HomeViewIntent {}
 
 class GetAllSubjectsIntent extends HomeViewIntent {}
+
+class SearchInSubjectList extends HomeViewIntent {
+  String keyword;
+
+  SearchInSubjectList(this.keyword);
+}

@@ -80,22 +80,22 @@ class MockExploreRepository extends _i1.Mock implements _i2.ExploreRepository {
       ) as _i3.Future<_i4.ApiResult<List<_i7.ExamEntity>?>>);
 
   @override
-  _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>>> getAllQuestions(
+  _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>?>> getAllQuestions(
           String? examId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllQuestions,
           [examId],
         ),
-        returnValue: _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>>>.value(
-            _i6.dummyValue<_i4.ApiResult<List<_i8.QuestionEntity>>>(
+        returnValue: _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>?>>.value(
+            _i6.dummyValue<_i4.ApiResult<List<_i8.QuestionEntity>?>>(
           this,
           Invocation.method(
             #getAllQuestions,
             [examId],
           ),
         )),
-      ) as _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>>>);
+      ) as _i3.Future<_i4.ApiResult<List<_i8.QuestionEntity>?>>);
 
   @override
   _i3.Future<_i4.ApiResult<_i9.CheckQuestionsResponseEntity>> checkQuestions(

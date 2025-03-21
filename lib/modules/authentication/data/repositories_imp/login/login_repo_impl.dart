@@ -36,7 +36,7 @@ class LoginRepoImpl implements LoginRepo {
   }
 
   @override
-  Future<AuthenticationResponseEntity?> getLoginInfo() {
+  Future<AuthenticationResponseEntity?> getStoredLoginInfo() {
     return authLocalDataSource.getCashedUser();
   }
 

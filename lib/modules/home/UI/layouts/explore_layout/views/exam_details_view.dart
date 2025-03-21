@@ -40,13 +40,15 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                     children: [
                       Text(
                         widget.examEntity.title ?? '',
-                        style: theme.textTheme.bodyLarge,
+                        style: theme.textTheme.labelLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Text(
                         appLocalizations.questionsNumber(
                             widget.examEntity.numberOfQuestions ?? ""),
                         style: theme.textTheme.labelMedium?.copyWith(
-                          color: AppColors.darkGray,
+                          color: AppColors.gray,
                         ),
                       )
                     ],

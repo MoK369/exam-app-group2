@@ -7,6 +7,8 @@ enum Status {
   error,
 }
 
+enum SearchStatus { idle, withResult, withoutResult }
+
 extension LoginStatusEx on HomeState {
   bool get isInitial => getAllSubjectsStatus == Status.initial;
 
@@ -19,22 +21,29 @@ extension LoginStatusEx on HomeState {
 
 class HomeState extends Equatable {
   Status getAllSubjectsStatus;
-  List<SubjectEntity>? subjects;
+  List<SubjectEntity>? userSearchedSubjects;
+  SearchStatus searchStatus;
 
   Object? error;
 
-  HomeState(
-      {this.getAllSubjectsStatus = Status.initial, this.error, this.subjects});
+  HomeState({this.getAllSubjectsStatus = Status.initial,
+    this.error,
+    this.searchStatus = SearchStatus.idle,
+    this.userSearchedSubjects});
 
-  HomeState copyWith(
-      {Status? state, Object? error, List<SubjectEntity>? subjects}) {
+  HomeState copyWith({Status? state,
+    Object? error,
+    SearchStatus? searchStatus,
+    List<SubjectEntity>? userSearchedSubjects}) {
     return HomeState(
       getAllSubjectsStatus: state ?? getAllSubjectsStatus,
       error: error ?? this.error,
-      subjects: subjects ?? this.subjects,
+      searchStatus: searchStatus ?? this.searchStatus,
+      userSearchedSubjects: userSearchedSubjects ?? this.userSearchedSubjects,
     );
   }
 
   @override
-  List<Object?> get props => [getAllSubjectsStatus, error, subjects];
+  List<Object?> get props =>
+      [getAllSubjectsStatus, error, searchStatus, userSearchedSubjects];
 }

@@ -21,7 +21,6 @@ class ResultLayout extends StatefulWidget {
 class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
   var cubit = getIt.get<CachedQuestionsCubit>();
   String subjectName = "";
-
   @override
   void initState() {
     super.initState();

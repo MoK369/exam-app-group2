@@ -12,7 +12,7 @@ abstract interface class ExploreRepository {
 
   Future<ApiResult<List<ExamEntity>?>> getAllExamsOnSubject(String subjectId);
 
-  Future<ApiResult<List<QuestionEntity>>> getAllQuestions(String examId);
+  Future<ApiResult<List<QuestionEntity>?>> getAllQuestions(String examId);
 
   Future<ApiResult<CheckQuestionsResponseEntity>> checkQuestions(
       {required CheckQuestionsRequest checkQuestionRequest});
