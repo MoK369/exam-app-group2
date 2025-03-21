@@ -45,7 +45,8 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                         ),
                       ),
                       Text(
-                        '${widget.examEntity.numberOfQuestions} Question',
+                        appLocalizations.questionsNumber(
+                            widget.examEntity.numberOfQuestions ?? ""),
                         style: theme.textTheme.labelMedium?.copyWith(
                           color: AppColors.gray,
                         ),
@@ -54,7 +55,8 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                   ),
                   const Spacer(),
                   Text(
-                    '${widget.examEntity.duration} minutes',
+                    appLocalizations
+                        .durationInMinutes(widget.examEntity.duration ?? ""),
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: AppColors.blue,
                     ),
@@ -74,8 +76,8 @@ class _ExamDetailsViewState extends BaseStatefulWidgetState<ExamDetailsView> {
                     arguments: widget.examEntity,
                   );
                 },
-                child: const Text(
-                  'Start',
+                child: Text(
+                  appLocalizations.start,
                 ),
               )
             ],

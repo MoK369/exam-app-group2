@@ -18,18 +18,28 @@ const ExamEntitySchema = Schema(
       name: r'active',
       type: IsarType.bool,
     ),
-    r'id': PropertySchema(
+    r'duration': PropertySchema(
       id: 1,
+      name: r'duration',
+      type: IsarType.long,
+    ),
+    r'id': PropertySchema(
+      id: 2,
       name: r'id',
       type: IsarType.string,
     ),
+    r'numberOfQuestions': PropertySchema(
+      id: 3,
+      name: r'numberOfQuestions',
+      type: IsarType.long,
+    ),
     r'subject': PropertySchema(
-      id: 2,
+      id: 4,
       name: r'subject',
       type: IsarType.string,
     ),
     r'title': PropertySchema(
-      id: 3,
+      id: 5,
       name: r'title',
       type: IsarType.string,
     )
@@ -74,9 +84,11 @@ void _examEntitySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeBool(offsets[0], object.active);
-  writer.writeString(offsets[1], object.id);
-  writer.writeString(offsets[2], object.subject);
-  writer.writeString(offsets[3], object.title);
+  writer.writeLong(offsets[1], object.duration);
+  writer.writeString(offsets[2], object.id);
+  writer.writeLong(offsets[3], object.numberOfQuestions);
+  writer.writeString(offsets[4], object.subject);
+  writer.writeString(offsets[5], object.title);
 }
 
 ExamEntity _examEntityDeserialize(
@@ -85,12 +97,13 @@ ExamEntity _examEntityDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = ExamEntity(
-    active: reader.readBoolOrNull(offsets[0]),
-    id: reader.readStringOrNull(offsets[1]),
-    subject: reader.readStringOrNull(offsets[2]),
-    title: reader.readStringOrNull(offsets[3]),
-  );
+  final object = ExamEntity();
+  object.active = reader.readBoolOrNull(offsets[0]);
+  object.duration = reader.readLongOrNull(offsets[1]);
+  object.id = reader.readStringOrNull(offsets[2]);
+  object.numberOfQuestions = reader.readLongOrNull(offsets[3]);
+  object.subject = reader.readStringOrNull(offsets[4]);
+  object.title = reader.readStringOrNull(offsets[5]);
   return object;
 }
 
@@ -104,10 +117,14 @@ P _examEntityDeserializeProp<P>(
     case 0:
       return (reader.readBoolOrNull(offset)) as P;
     case 1:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    case 4:
+      return (reader.readStringOrNull(offset)) as P;
+    case 5:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -139,6 +156,77 @@ extension ExamEntityQueryFilter
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'active',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition> durationIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'duration',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      durationIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'duration',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition> durationEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'duration',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      durationGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'duration',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition> durationLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'duration',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition> durationBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'duration',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -285,6 +373,80 @@ extension ExamEntityQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'id',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      numberOfQuestionsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'numberOfQuestions',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      numberOfQuestionsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'numberOfQuestions',
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      numberOfQuestionsEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'numberOfQuestions',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      numberOfQuestionsGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'numberOfQuestions',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      numberOfQuestionsLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'numberOfQuestions',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ExamEntity, ExamEntity, QAfterFilterCondition>
+      numberOfQuestionsBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'numberOfQuestions',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }

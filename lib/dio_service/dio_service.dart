@@ -1,16 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:exam_app_group2/core/api/apis_endpoints/apis_endpoints.dart';
 import 'package:flutter/material.dart';
-import 'package:exam_app_group2/core/api/apis_endpoints/apis_endpoints.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../storage/constants/storage_constants.dart';
 import '../storage/contracts/storage_service_contract.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 @module
 abstract class DioService {

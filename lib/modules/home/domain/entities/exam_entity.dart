@@ -6,28 +6,20 @@ part 'exam_entity.g.dart';
 class ExamEntity {
   String? id;
   String? title;
-  @ignore
-  num? duration;
+  int? duration;
   String? subject;
-  @ignore
-  num? numberOfQuestions;
+  int? numberOfQuestions;
   bool? active;
 
   ExamEntity({
     this.id,
     this.title,
-    this.duration,
+    num? duration,
     this.subject,
-    this.numberOfQuestions,
+    num? numberOfQuestions,
     this.active,
-  });
-
-  ExamEntity.fromJson(dynamic json) {
-    id = json['_id'];
-    title = json['title'];
-    duration = json['duration'];
-    subject = json['subject'];
-    numberOfQuestions = json['numberOfQuestions'];
-    active = json['active'];
+  }){
+    this.duration = duration?.toInt();
+    this.numberOfQuestions = numberOfQuestions?.toInt();
   }
 }

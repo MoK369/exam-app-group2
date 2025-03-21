@@ -9,4 +9,5 @@ class DefinedRoutes {
   static const String questions = "/questions";
   static const String examScore = "/examScore";
   static const String forgetPasswordRoute = "ForgetPasswordScreen";
+  static const String examAnswers = "/ExamAnswers" ;
 }

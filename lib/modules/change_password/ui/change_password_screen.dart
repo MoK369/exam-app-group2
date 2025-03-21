@@ -88,7 +88,6 @@ class _ChangePasswordScreenState
             body:
                 BlocBuilder<ChangePasswordScreenViewModel, ChangePasswordState>(
               buildWhen: (previous, current) {
-                print(previous.formStatus != current.formStatus);
                 if (previous.formStatus != current.formStatus) {
                   return true;
                 }

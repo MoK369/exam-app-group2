@@ -23,4 +23,9 @@ class Answers {
     map['correct'] = correct;
     return map;
   }
+
+  @override
+  String toString() {
+    return "($questionId, $correct)";
+  }
 }

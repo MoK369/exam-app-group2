@@ -30,10 +30,10 @@ class _HomeScreenState extends BaseStatefulWidgetState<HomeScreen> {
   final PageController pageViewController = PageController(initialPage: 0);
   late HomeViewModel homeViewModel;
   List<Widget> layouts = [
-    ExploreLayout(),
-    ResultLayout(),
-    ProfileLayout(),
-    SettingsLayout()
+    const ExploreLayout(),
+    const ResultLayout(),
+    const ProfileLayout(),
+    const SettingsLayout()
   ];
 
   @override

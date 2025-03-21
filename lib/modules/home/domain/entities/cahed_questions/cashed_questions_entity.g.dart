@@ -23,14 +23,20 @@ const CashedQuestionsSchema = CollectionSchema(
       type: IsarType.objectList,
       target: r'Answers',
     ),
-    r'questions': PropertySchema(
+    r'examEntity': PropertySchema(
       id: 1,
+      name: r'examEntity',
+      type: IsarType.object,
+      target: r'ExamEntity',
+    ),
+    r'questions': PropertySchema(
+      id: 2,
       name: r'questions',
       type: IsarType.objectList,
       target: r'QuestionEntity',
     ),
     r'subjectName': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'subjectName',
       type: IsarType.string,
     )
@@ -75,6 +81,14 @@ int _cashedQuestionsEstimateSize(
     }
   }
   {
+    final value = object.examEntity;
+    if (value != null) {
+      bytesCount += 3 +
+          ExamEntitySchema.estimateSize(
+              value, allOffsets[ExamEntity]!, allOffsets);
+    }
+  }
+  {
     final list = object.questions;
     if (list != null) {
       bytesCount += 3 + list.length * 3;
@@ -109,13 +123,19 @@ void _cashedQuestionsSerialize(
     AnswersSchema.serialize,
     object.answers,
   );
-  writer.writeObjectList<QuestionEntity>(
+  writer.writeObject<ExamEntity>(
     offsets[1],
+    allOffsets,
+    ExamEntitySchema.serialize,
+    object.examEntity,
+  );
+  writer.writeObjectList<QuestionEntity>(
+    offsets[2],
     allOffsets,
     QuestionEntitySchema.serialize,
     object.questions,
   );
-  writer.writeString(offsets[2], object.subjectName);
+  writer.writeString(offsets[3], object.subjectName);
 }
 
 CashedQuestions _cashedQuestionsDeserialize(
@@ -131,13 +151,18 @@ CashedQuestions _cashedQuestionsDeserialize(
       allOffsets,
       Answers(),
     ),
-    questions: reader.readObjectList<QuestionEntity>(
+    examEntity: reader.readObjectOrNull<ExamEntity>(
       offsets[1],
+      ExamEntitySchema.deserialize,
+      allOffsets,
+    ),
+    questions: reader.readObjectList<QuestionEntity>(
+      offsets[2],
       QuestionEntitySchema.deserialize,
       allOffsets,
       QuestionEntity(),
     ),
-    subjectName: reader.readStringOrNull(offsets[2]),
+    subjectName: reader.readStringOrNull(offsets[3]),
   );
   object.id = id;
   return object;
@@ -158,13 +183,19 @@ P _cashedQuestionsDeserializeProp<P>(
         Answers(),
       )) as P;
     case 1:
+      return (reader.readObjectOrNull<ExamEntity>(
+        offset,
+        ExamEntitySchema.deserialize,
+        allOffsets,
+      )) as P;
+    case 2:
       return (reader.readObjectList<QuestionEntity>(
         offset,
         QuestionEntitySchema.deserialize,
         allOffsets,
         QuestionEntity(),
       )) as P;
-    case 2:
+    case 3:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -370,6 +401,24 @@ extension CashedQuestionsQueryFilter
         upper,
         includeUpper,
       );
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      examEntityIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'examEntity',
+      ));
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      examEntityIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'examEntity',
+      ));
     });
   }
 
@@ -701,6 +750,13 @@ extension CashedQuestionsQueryObject
   }
 
   QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
+      examEntity(FilterQuery<ExamEntity> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.object(q, r'examEntity');
+    });
+  }
+
+  QueryBuilder<CashedQuestions, CashedQuestions, QAfterFilterCondition>
       questionsElement(FilterQuery<QuestionEntity> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'questions');
@@ -779,6 +835,13 @@ extension CashedQuestionsQueryProperty
       answersProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'answers');
+    });
+  }
+
+  QueryBuilder<CashedQuestions, ExamEntity?, QQueryOperations>
+      examEntityProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'examEntity');
     });
   }
 

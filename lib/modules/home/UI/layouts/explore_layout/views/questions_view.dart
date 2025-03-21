@@ -26,8 +26,9 @@ class QuestionsView extends StatefulWidget {
 }
 
 class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
-  int selectedIndex = 0;
   var cubit = getIt.get<QuestionsCubit>();
+  late List<QuestionEntity> questionsList;
+  late QuestionEntity? questionEntity;
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -151,7 +152,11 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 Navigator.pushReplacementNamed(
                   context,
                   DefinedRoutes.examScore,
-                  arguments: [cubit.checkedAnswers, widget.examEntity],
+                  arguments: [
+                    cubit.checkedAnswers,
+                    widget.examEntity,
+                    questionsList
+                  ],
                 );
               }
             },
@@ -161,15 +166,15 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               } else if (state.isError) {
                 return ErrorStateWidget(error: state.error!);
               } else if (state.isSuccess) {
-                var question = state.questions?[state.currentQuestion - 1];
-
-                cubit.answersMap[question?.id] = "A${selectedIndex + 1}";
+                questionsList = state.questions ?? [];
+                questionEntity = state.questions?[state.currentQuestion - 1];
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Center(
                       child: Text(
-                        'Question ${state.currentQuestion} of ${state.questions!.length}',
+                        appLocalizations.questionOfTotalQuestions(
+                            cubit.currentQuestion, state.questions!.length),
                         style: theme.textTheme.titleSmall,
                       ),
                     ),
@@ -178,7 +183,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                     ),
                     StepProgressIndicator(
                       totalSteps: state.questions!.length,
-                      currentStep: state.currentQuestion,
+                      currentStep: cubit.currentQuestion,
                       size: 4.h,
                       padding: 0,
                       selectedColor: AppColors.blue,
@@ -189,7 +194,9 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                       height: 24.h,
                     ),
                     Text(
-                      question?.question ?? '',
+                      questionEntity?.question ?? '',
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.center,
                       style: theme.textTheme.labelMedium?.copyWith(
                         fontSize: 18.sp,
                       ),
@@ -199,70 +206,74 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                     ),
                     Expanded(
                       flex: 2,
-                      child: buildChoice(question: question!),
+                      child: buildChoice(question: questionEntity!),
                     ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: AppColors.blue,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    10.r,
-                                  ),
-                                ),
-                                backgroundColor: AppColors.lightBlue,
-                              ),
-                              onPressed: () {
-                                cubit.doIntent(
-                                  PreviousQuestionIntent(
-                                    currentQuestion: state.currentQuestion,
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Back',
-                                style: theme.textTheme.labelMedium?.copyWith(
+                    SizedBox(
+                      height: 80.h,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
                                   color: AppColors.blue,
                                 ),
+                                borderRadius: BorderRadius.circular(
+                                  10.r,
+                                ),
+                              ),
+                              backgroundColor: AppColors.lightBlue,
+                            ),
+                            onPressed: () {
+                              cubit.doIntent(PreviousQuestionIntent());
+                            },
+                            child: Text(
+                              appLocalizations.back,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: AppColors.blue,
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: 16.w,
-                          ),
-                          Expanded(
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    10.r,
-                                  ),
+                        ),
+                        SizedBox(
+                          width: 16.w,
+                        ),
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                  10.r,
                                 ),
-                                backgroundColor: AppColors.blue,
                               ),
-                              onPressed: () {
-                                cubit.doIntent(NextQuestionIntent(
-                                  currentQuestion: state.currentQuestion,
-                                  questions: state.questions,
-                                ));
-                              },
-                              child: Text(
-                                'Next',
-                                style: theme.textTheme.labelMedium?.copyWith(
-                                  color: AppColors.white,
-                                ),
+                              backgroundColor: AppColors.blue,
+                            ),
+                            onPressed: () {
+                              if (cubit.answersMap[
+                                      "${questionEntity!.id!}_${cubit.currentQuestion}"] ==
+                                  null) {
+                                cubit.answersMap[
+                                        "${questionEntity!.id!}_${cubit.currentQuestion}"] =
+                                    "A1";
+                              }
+                              cubit.doIntent(NextQuestionIntent());
+                            },
+                            child: Text(
+                              appLocalizations.next,
+                              style: theme.textTheme.labelMedium?.copyWith(
+                                color: AppColors.white,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 24.h,
                     ),
                   ],
                 );
@@ -275,6 +286,45 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
     );
   }
 
+  // Widget buildChoice({required QuestionEntity question}) {
+  //   return SizedBox(
+  //     height: 257.h,
+  //     child: ListView.separated(
+  //       itemCount: question.answers!.length,
+  //       itemBuilder: (context, index) {
+  //         return ListTile(
+  //           onTap: () {
+  //             setState(() {
+  //               cubit.selectedAnswerIndex = index;
+  //               addAnswerInAnswersMap();
+  //             });
+  //           },
+  //           titleTextStyle: theme.textTheme.bodySmall?.copyWith(
+  //             fontSize: 14.sp,
+  //           ),
+  //           selected: cubit.selectedAnswerIndex == index,
+  //           title: Text(
+  //             question.answers?[index].answer ?? '',
+  //           ),
+  //           leading: Radio<int>(
+  //             activeColor: AppColors.blue,
+  //             value: index,
+  //             groupValue: cubit.selectedAnswerIndex,
+  //             onChanged: (int? value) {
+  //               setState(() {
+  //                 cubit.selectedAnswerIndex = value ?? 0;
+  //                 addAnswerInAnswersMap();
+  //               });
+  //             },
+  //           ),
+  //         );
+  //       },
+  //       separatorBuilder: (BuildContext context, int index) => SizedBox(
+  //         height: 16.h,
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget buildChoice({required QuestionEntity question}) {
     return Scrollbar(
       controller: scrollController,
@@ -287,21 +337,28 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
           itemBuilder: (context, index) {
             return Material(
               child: ListTile(
+                onTap: () {
+                  setState(() {
+                    cubit.selectedAnswerIndex = index;
+                    addAnswerInAnswersMap();
+                  });
+                },
                 titleTextStyle: theme.textTheme.bodySmall?.copyWith(
                   fontSize: 14.sp,
                 ),
-                selected: selectedIndex == index,
+                selected: cubit.selectedAnswerIndex == index,
                 title: Text(
                   question.answers?[index].answer ?? '',
                 ),
                 leading: Radio<int>(
                   activeColor: AppColors.blue,
                   value: index,
-                  groupValue: selectedIndex,
+                  groupValue: cubit.selectedAnswerIndex,
                   onChanged: (int? value) {
-                    selectedIndex = value ?? 0;
-                    cubit.answersMap[question.id] = "A${selectedIndex + 1}";
-                    setState(() {});
+                    setState(() {
+                      cubit.selectedAnswerIndex = value ?? 0;
+                      addAnswerInAnswersMap();
+                    });
                   },
                 ),
               ),
@@ -313,5 +370,12 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
         ),
       ),
     );
+  }
+
+  void addAnswerInAnswersMap() {
+    if (questionEntity?.id != null) {
+      cubit.answersMap["${questionEntity!.id!}_${cubit.currentQuestion}"] =
+          "A${cubit.selectedAnswerIndex + 1}";
+    }
   }
 }

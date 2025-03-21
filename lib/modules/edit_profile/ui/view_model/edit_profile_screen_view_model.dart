@@ -77,8 +77,6 @@ class EditProfileScreenViewModel extends Cubit<EditProfileState> {
         case Success<EditProfileResponseEntity>():
           profileHasChanged = false;
           if (!profileUpdatedAtLeastOnce) profileUpdatedAtLeastOnce = true;
-          print(
-              "Email changed ${oldAuthEntity.user?.email != editProfileRequestEntity.email}");
           if (oldAuthEntity.user?.email != editProfileRequestEntity.email) {
             await _whenEmailChanges(
                 oldEmailId: oldAuthEntity.user?.email,

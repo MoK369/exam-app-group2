@@ -5,7 +5,9 @@ import 'package:exam_app_group2/modules/change_password/ui/change_password_scree
 import 'package:exam_app_group2/modules/edit_profile/ui/edit_profile_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
+import 'package:exam_app_group2/modules/home/UI/layouts/result_layout/exam_answers.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/profile_layout/profile_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +29,7 @@ class GenerateRoute {
     switch (name) {
       case DefinedRoutes.homeRouteName:
         HomeScreenParameters homeScreenParameters =
-        (args as HomeScreenParameters);
+            (args as HomeScreenParameters);
         return MaterialPageRoute(
           builder: (context) => HomeScreen(
             authEntity: homeScreenParameters.authEntity,
@@ -45,8 +47,9 @@ class GenerateRoute {
         );
       case DefinedRoutes.examScore:
         args as List<dynamic>;
-        final examEntity = args[1] as ExamEntity;
         final checkedAnswers = args[0] as List<Answers>;
+        final examEntity = args[1] as ExamEntity;
+        final questionsList = args[2] as List<QuestionEntity>;
 
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
@@ -54,6 +57,7 @@ class GenerateRoute {
             child: ExamScore(
               answers: checkedAnswers,
               examEntity: examEntity,
+              questionsList: questionsList,
             ),
           ),
         );
@@ -78,6 +82,17 @@ class GenerateRoute {
         return MaterialPageRoute(
           builder: (context) => ExamDetailsView(
             examEntity: examEntity,
+          ),
+        );
+      case DefinedRoutes.examAnswers:
+        final List<dynamic> args = settings.arguments as List<dynamic>;
+        final List<QuestionEntity> questionEntities =
+            args[0] as List<QuestionEntity>;
+        final List<Answers> answers = args[1] as List<Answers>;
+        return MaterialPageRoute(
+          builder: (context) => ExamAnswers(
+            answers: answers,
+            questionEntities: questionEntities,
           ),
         );
       case DefinedRoutes.editProfileRoutName:

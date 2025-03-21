@@ -26,14 +26,6 @@ class _SettingsLayoutState extends BaseStatefulWidgetState<SettingsLayout> {
   SettingsViewModel settingsViewModel = getIt.get<SettingsViewModel>();
 
   @override
-  void initState() {
-    super.initState();
-    print("In Settings");
-    print(
-        "${authEntity.message} \n ${authEntity.token} & ${authEntity.user?.email} \n ${authEntity.user?.username}");
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => settingsViewModel,

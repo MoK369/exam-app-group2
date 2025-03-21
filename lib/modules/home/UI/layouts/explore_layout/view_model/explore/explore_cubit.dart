@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/core/api/api_result/api_result.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_subjects_use_case.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 part 'explore_state.dart';
