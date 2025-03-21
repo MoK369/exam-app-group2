@@ -59,7 +59,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                   child: Column(
                     children: [
                       Text(
-                        'No Exams Found',
+                        appLocalizations.noExamsFound,
                         style: theme.textTheme.bodyLarge,
                       ),
                       SizedBox(
@@ -85,12 +85,12 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                         context,
                         DefinedRoutes.examDetails,
                         arguments: state.exams?[index],
-                          );
-                        },
-                        child: buildExamCard(
-                          state.exams?[index],
-                        ),
-                      ),
+                      );
+                    },
+                    child: buildExamCard(
+                      state.exams?[index],
+                    ),
+                  ),
                   itemCount: state.exams?.length,
                 ),
               );
@@ -147,7 +147,8 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                   height: 4.h,
                 ),
                 Text(
-                  '${entity!.numberOfQuestions} Question' ?? '',
+                  appLocalizations
+                      .questionsNumber(entity!.numberOfQuestions ?? ""),
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: AppColors.darkGray,
                   ),
@@ -157,7 +158,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
                 ),
                 Row(children: [
                   Text(
-                    'From: 1:00  To: 6:00',
+                    appLocalizations.formTo,
                     style: theme.textTheme.bodySmall,
                   )
                 ])
@@ -167,7 +168,7 @@ class _ExamsViewState extends BaseStatefulWidgetState<ExamsView> {
             Padding(
               padding: REdgeInsets.all(16),
               child: Text(
-                '${entity.duration} minutes',
+                appLocalizations.durationInMinutes(entity.duration ?? ''),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: AppColors.blue,
                 ),

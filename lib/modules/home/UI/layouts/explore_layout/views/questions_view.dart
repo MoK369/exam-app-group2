@@ -28,9 +28,9 @@ class QuestionsView extends StatefulWidget {
 }
 
 class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
-  int selectedIndex = 0;
   var cubit = getIt.get<QuestionsCubit>();
-
+  late List<QuestionEntity> questionsList;
+  late QuestionEntity? questionEntity;
   @override
   void initState() {
     cubit.doIntent(GetAllQuestionsIntent(examId: widget.examEntity.id!));
@@ -152,7 +152,11 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 Navigator.pushReplacementNamed(
                   context,
                   DefinedRoutes.examScore,
-                  arguments: [cubit.checkedAnswers, widget.examEntity],
+                  arguments: [
+                    cubit.checkedAnswers,
+                    widget.examEntity,
+                    questionsList
+                  ],
                 );
               }
             },
@@ -162,15 +166,16 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               } else if (state.isError) {
                 return ErrorStateWidget(error: state.error!);
               } else if (state.isSuccess) {
-                var question = state.questions?[cubit.currentQuestion - 1];
-                cubit.answersMap[question?.id] = "A${selectedIndex + 1}";
+                questionsList = state.questions ?? [];
+                questionEntity = state.questions?[cubit.currentQuestion - 1];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
                       children: [
                         Text(
-                          'Question ${cubit.currentQuestion} of ${state.questions!.length}',
+                          appLocalizations.questionOfTotalQuestions(
+                              cubit.currentQuestion, state.questions!.length),
                           style: theme.textTheme.titleSmall,
                         ),
                         SizedBox(
@@ -189,7 +194,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                           height: 24.h,
                         ),
                         Text(
-                          question?.question ?? '',
+                          questionEntity?.question ?? '',
                           style: theme.textTheme.labelMedium?.copyWith(
                             fontSize: 18.sp,
                           ),
@@ -197,7 +202,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                         SizedBox(
                           height: 24.h,
                         ),
-                        buildChoice(question: question!),
+                        buildChoice(question: questionEntity!),
                         SizedBox(
                           height: 80.h,
                         ),
@@ -221,7 +226,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                   cubit.doIntent(PreviousQuestionIntent());
                                 },
                                 child: Text(
-                                  'Back',
+                                  appLocalizations.back,
                                   style: theme.textTheme.labelMedium?.copyWith(
                                     color: AppColors.blue,
                                   ),
@@ -243,10 +248,17 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                                   backgroundColor: AppColors.blue,
                                 ),
                                 onPressed: () {
+                                  if (cubit.answersMap[
+                                          "${questionEntity!.id!}_${cubit.currentQuestion}"] ==
+                                      null) {
+                                    cubit.answersMap[
+                                            "${questionEntity!.id!}_${cubit.currentQuestion}"] =
+                                        "A1";
+                                  }
                                   cubit.doIntent(NextQuestionIntent());
                                 },
                                 child: Text(
-                                  'Next',
+                                  appLocalizations.next,
                                   style: theme.textTheme.labelMedium?.copyWith(
                                     color: AppColors.white,
                                   ),
@@ -278,22 +290,28 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
         itemCount: question.answers!.length,
         itemBuilder: (context, index) {
           return ListTile(
+            onTap: () {
+              setState(() {
+                cubit.selectedAnswerIndex = index;
+                addAnswerInAnswersMap();
+              });
+            },
             titleTextStyle: theme.textTheme.bodySmall?.copyWith(
               fontSize: 14.sp,
             ),
-            selected: selectedIndex == index,
+            selected: cubit.selectedAnswerIndex == index,
             title: Text(
               question.answers?[index].answer ?? '',
             ),
             leading: Radio<int>(
               activeColor: AppColors.blue,
               value: index,
-              groupValue: selectedIndex,
+              groupValue: cubit.selectedAnswerIndex,
               onChanged: (int? value) {
-                selectedIndex = value ?? 0;
-                cubit.answersMap[question.id] = "A${selectedIndex + 1}";
-                log(cubit.answersMap.toString());
-                setState(() {});
+                setState(() {
+                  cubit.selectedAnswerIndex = value ?? 0;
+                  addAnswerInAnswersMap();
+                });
               },
             ),
           );
@@ -303,5 +321,12 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
         ),
       ),
     );
+  }
+
+  void addAnswerInAnswersMap() {
+    if (questionEntity?.id != null) {
+      cubit.answersMap["${questionEntity!.id!}_${cubit.currentQuestion}"] =
+          "A${cubit.selectedAnswerIndex + 1}";
+    }
   }
 }

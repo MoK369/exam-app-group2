@@ -8,6 +8,7 @@ import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart';
 import 'package:exam_app_group2/modules/home/data/models/check_questions/answers.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,14 +18,15 @@ import '../../../../../../core/di/injectable_initializer.dart';
 import '../../../../../../core/widgets/error_state_widget.dart';
 
 class ExamScore extends StatefulWidget {
-  const ExamScore({
-    super.key,
-    required this.answers,
-    required this.examEntity,
-  });
+  const ExamScore(
+      {super.key,
+      required this.answers,
+      required this.examEntity,
+      required this.questionsList});
 
   final List<Answers>? answers;
   final ExamEntity examEntity;
+  final List<QuestionEntity> questionsList;
 
   @override
   State<ExamScore> createState() => _ExamScoreState();
@@ -61,6 +63,7 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
           if (state.isLoading) {
             return const LoadingStateWidget();
           } else if (state.isSuccess) {
+            state.checkQuestionsResponseEntity;
             String score =
                 state.checkQuestionsResponseEntity!.total!.split('%')[0];
             log(score);
@@ -87,7 +90,8 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                       CircularPercentIndicator(
                         radius: 60.r,
                         lineWidth: 6.0,
-                        percent: 0.8,
+                        percent: total / 100,
+                        startAngle: 10,
                         backgroundColor: AppColors.red,
                         center: Text(
                           '$total %',
@@ -172,7 +176,7 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                                     state.checkQuestionsResponseEntity!.wrong
                                         .toString(),
                                     style:
-                                    theme.textTheme.labelMedium?.copyWith(
+                                        theme.textTheme.labelMedium?.copyWith(
                                       color: AppColors.red,
                                       fontSize: 13.sp,
                                     ),
@@ -190,7 +194,9 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      /// navigate to result screen
+                      Navigator.pushReplacementNamed(
+                          context, DefinedRoutes.examAnswers,
+                          arguments: [widget.questionsList, widget.answers]);
                     },
                     child: Text(
                       appLocalizations.showResult,

@@ -1,3 +1,4 @@
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,12 +9,12 @@ class AnswerOption extends StatelessWidget {
   final String answerText;
 
   const AnswerOption({
-    Key? key,
+    super.key,
     required this.isMultiple,
     required this.isSelected,
     required this.isCorrect,
     required this.answerText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +25,19 @@ class AnswerOption extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           color: isSelected
               ? (isCorrect
-                  ? const Color.fromRGBO(202, 249, 204, 1)
-                  : const Color.fromRGBO(248, 210, 210, 1))
-              : const Color.fromRGBO(237, 239, 243, 1),
+                  ? AppColors.lightGreen
+                  : AppColors.lightRed)
+              : isCorrect
+                  ? AppColors.lightGreen
+                  : AppColors.moreLightBlue,
           border: Border.all(
             color: isSelected
                 ? (isCorrect
-                    ? const Color.fromRGBO(17, 206, 25, 1)
-                    : const Color.fromRGBO(204, 16, 16, 1))
-                : const Color.fromRGBO(237, 239, 243, 1),
+                    ? AppColors.green
+                    : AppColors.red)
+                : isCorrect
+                    ? AppColors.green
+                    : AppColors.moreLightBlue,
           ),
         ),
         child: Padding(
@@ -50,9 +55,9 @@ class AnswerOption extends StatelessWidget {
                           : Icons.radio_button_unchecked),
                   color: isSelected
                       ? (isCorrect
-                          ? const Color.fromRGBO(17, 206, 25, 1)
-                          : const Color.fromRGBO(204, 16, 16, 1))
-                      : const Color.fromRGBO(2, 54, 156, 1),
+                          ? AppColors.green
+                          : AppColors.red)
+                      : AppColors.blue,
                   size: 24,
                 ),
               ),
@@ -62,7 +67,7 @@ class AnswerOption extends StatelessWidget {
                   answerText,
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: const Color.fromRGBO(15, 15, 15, 1),
+                    color: AppColors.black,
                     overflow: TextOverflow.visible,
                   ),
                 ),

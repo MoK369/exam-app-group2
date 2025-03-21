@@ -13,10 +13,6 @@ class StorageServiceImp implements StorageService<FlutterSecureStorage> {
 
   StorageServiceImp(this.errorNotifier, this.storageInstance);
 
-  AndroidOptions _getAndroidOptions() => const AndroidOptions(
-        encryptedSharedPreferences: true,
-      );
-
   @override
   void setStringValue(String key, String value) async {
     var result = await StorageExecutor.execute<void>(

@@ -1,3 +1,5 @@
+import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
 import 'package:exam_app_group2/core/widgets/answer_option.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
@@ -16,39 +18,40 @@ class ExamAnswers extends StatefulWidget {
   State<ExamAnswers> createState() => _ExamAnswersState();
 }
 
-class _ExamAnswersState extends State<ExamAnswers> {
-  int i = 0;
+class _ExamAnswersState extends BaseStatefulWidgetState<ExamAnswers> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Answers"),
+      appBar: CustomAppBar(title: appLocalizations.answers),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
                 itemCount: widget.questionEntities.length,
                 itemBuilder: (context, index) {
-                  i = index;
+                  print(widget.answers[index].correct);
+                  var currentQuestion = widget.questionEntities[index];
+                  var currentQuestionUserAnswer = widget.answers[index];
                   return Padding(
                     padding: EdgeInsets.all(16.0.sp),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: const Color.fromRGBO(249, 249, 249, 1),
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(10.r),
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 2.sp,
                               spreadRadius: 1.sp,
-                              color: const Color.fromRGBO(42, 41, 41, 0.25),
+                              color: AppColors.placeHolderColor,
                             )
                           ]),
                       child: Padding(
                         padding: EdgeInsets.all(12.0.sp),
                         child: Column(
                           children: [
-                            Text(
-                                widget.questionEntities[index].question
-                                    .toString(),
+                            Text(widget.questionEntities[index].question ?? "",
                                 style: AppThemes.styles18w500black15,
                                 textAlign: TextAlign.left),
                             SizedBox(
@@ -57,26 +60,23 @@ class _ExamAnswersState extends State<ExamAnswers> {
                             ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    widget.questionEntities[i].answers!.length,
+                                itemCount: widget
+                                    .questionEntities[index].answers!.length,
                                 itemBuilder: (context, index) {
                                   return AnswerOption(
-                                      isMultiple:
-                                          widget.questionEntities[i].type !=
-                                              "single_choice",
-                                      isSelected:
-                                          int.tryParse(widget.answers[index].correct!.substring(1)) ==
-                                              index + 1,
-                                      isCorrect: widget.questionEntities[i]
-                                              .correct!.isNotEmpty &&
-                                          widget.questionEntities[i].correct!
-                                                  .substring(widget
-                                                          .questionEntities[i]
-                                                          .correct!
-                                                          .length -
-                                                      1) ==
-                                              (index + 1).toString(),
-                                      answerText: widget.questionEntities[i]
+                                      isMultiple: currentQuestion.type !=
+                                          "single_choice",
+                                      isSelected: int.tryParse(
+                                              currentQuestionUserAnswer.correct
+                                                      ?.substring(1) ??
+                                                  "") ==
+                                          index + 1,
+                                      isCorrect:
+                                          currentQuestion.correct!.isNotEmpty &&
+                                              currentQuestion.correct!
+                                                      .substring(1) ==
+                                                  (index + 1).toString(),
+                                      answerText: currentQuestion
                                           .answers![index].answer
                                           .toString());
                                 })

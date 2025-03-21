@@ -18,6 +18,7 @@ class IsarStorageServiceCashedQuestionEntityImpl
 
   @override
   Future<void> write(CashedQuestions cashedQuestions) async {
+    print("Coming Subject Name ${cashedQuestions.subjectName}");
     var currentEntity = await findBy(cashedQuestions.subjectName!);
     if (currentEntity != null) {
       currentEntity.updateEntityWith(cashedQuestions);

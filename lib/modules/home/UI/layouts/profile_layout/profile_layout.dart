@@ -9,14 +9,6 @@ class ProfileLayout extends StatefulWidget {
 }
 
 class _ProfileLayoutState extends State<ProfileLayout> {
-
-  @override
-  void initState() {
-    super.initState();
-    print("In Profile");
-    print("${authEntity.token} & ${authEntity.user?.email}");
-  }
-
   @override
   Widget build(BuildContext context) {
     return const Placeholder(

@@ -1,6 +1,6 @@
-import 'dart:developer';
-
+import 'package:exam_app_group2/core/assets/assets_paths.dart';
 import 'package:exam_app_group2/core/bases/base_stateful_widget_state.dart';
+import 'package:exam_app_group2/core/colors/app_colors.dart';
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/core/routing/defined_routes.dart';
 import 'package:exam_app_group2/core/themes/app_themes.dart';
@@ -32,7 +32,7 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Results",
+        title: appLocalizations.results,
         showLeadingIcon: false,
       ),
       body: BlocProvider(
@@ -51,7 +51,7 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
                 var questionsList = state.cachedQuestions ?? [];
                 if (questionsList.isEmpty) {
                   return Center(
-                      child: Text("No results available",
+                      child: Text(appLocalizations.noResultsAvailable,
                           style: theme.textTheme.labelMedium));
                 } else {
                   return Column(
@@ -70,12 +70,14 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    subject.subjectName ?? "Unknown Subject",
+                                    subject.subjectName ??
+                                        appLocalizations.unknownSubject,
                                     style: AppThemes.styles18w500black15,
                                   ),
                                   ListView.builder(
                                     shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     itemCount: 1,
                                     itemBuilder: (context, qIndex) {
                                       final question =
@@ -96,14 +98,13 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
                                               vertical: 16.h, horizontal: 4.w),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: const Color.fromRGBO(
-                                                  249, 249, 249, 1),
+                                              color: AppColors.white,
                                               borderRadius:
                                                   BorderRadius.circular(12.r),
                                               boxShadow: const [
                                                 BoxShadow(
-                                                  color: Color.fromRGBO(
-                                                      42, 41, 41, 0.25),
+                                                  color: AppColors
+                                                      .placeHolderColor,
                                                   blurRadius: 1,
                                                   spreadRadius: 1,
                                                 )
@@ -113,31 +114,32 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
                                               children: [
                                                 SizedBox(width: 24.w),
                                                 Image.asset(
-                                                    "assets/images/Profit.png",
+                                                    AssetsPaths.profitImage,
                                                     width: 60.sp,
                                                     height: 71.sp),
                                                 SizedBox(width: 16.w),
                                                 SizedBox(
-                                                  width:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.644,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
                                                     children: [
-                                                      SizedBox(height: 16.h),
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
                                                                 .spaceBetween,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
                                                             question.exam
                                                                     ?.title ??
-                                                                "no title",
+                                                                appLocalizations
+                                                                    .noTitle,
                                                             style: AppThemes
                                                                 .styles16w500black15,
                                                             overflow:
@@ -145,9 +147,16 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
                                                                     .ellipsis,
                                                           ),
                                                           Text(
-                                                            question.exam?.duration != null?
-                                                            "${question.exam!.duration} minutes":
-                                                             "no duration",
+                                                            question.exam
+                                                                        ?.duration !=
+                                                                    null
+                                                                ? appLocalizations
+                                                                    .durationInMinutes(question
+                                                                        .exam!
+                                                                        .duration
+                                                                        .toString())
+                                                                : appLocalizations
+                                                                    .noDuration,
                                                             style: AppThemes
                                                                 .styles13w400black15,
                                                           ),
@@ -155,18 +164,24 @@ class _ResultLayoutState extends BaseStatefulWidgetState<ResultLayout> {
                                                       ),
                                                       SizedBox(height: 4.h),
                                                       Text(
-                                                        question.exam?.numberOfQuestions != null?
-                                                        "${question.exam?.numberOfQuestions} Question":
-                                                        "",
+                                                        question.exam
+                                                                    ?.numberOfQuestions !=
+                                                                null
+                                                            ? appLocalizations
+                                                                .questionsNumber(
+                                                                    question.exam
+                                                                            ?.numberOfQuestions ??
+                                                                        0)
+                                                            : "",
                                                         style: AppThemes
                                                             .styles13w400black15,
                                                       ),
-                                                      SizedBox(height: 12.h),
-                                                      Text(
-                                                        "test test test ",
-                                                        style: AppThemes
-                                                            .styles12w500blue,
-                                                      ),
+                                                      // SizedBox(height: 12.h),
+                                                      // Text(
+                                                      //   "test test test ",
+                                                      //   style: AppThemes
+                                                      //       .styles12w500blue,
+                                                      // ),
                                                     ],
                                                   ),
                                                 ),

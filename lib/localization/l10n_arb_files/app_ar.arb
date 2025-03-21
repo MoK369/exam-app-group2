@@ -73,6 +73,18 @@
   "inCorrect": "خاطئ",
   "showResult": "اظهار النتيجة",
   "startAgain": "بدء مرة اخرى",
-  "yourScore": "نتيجتك"
-
+  "start": "ابدأ",
+  "questionOfTotalQuestions": "السؤال {number} من {totalNumber}",
+  "yourScore": "درجتك",
+  "next": "التالي",
+  "back": "العودة",
+  "results": "النتائج",
+  "noResultsAvailable": "لا توجد نتائج متاحة",
+  "unknownSubject": "موضوع غير معروف",
+  "noTitle": "بدون عنوان",
+  "durationInMinutes": "{duration} دقائق",
+  "noDuration": "بدون مدة",
+  "questionsNumber": "{number} أسئلة",
+  "answers": "الإجابات",
+  "formTo": "من: 1:00 إلى: 6:00"
 }

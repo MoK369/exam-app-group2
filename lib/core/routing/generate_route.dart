@@ -1,7 +1,6 @@
 import 'package:exam_app_group2/core/di/injectable_initializer.dart';
 import 'package:exam_app_group2/modules/authentication/ui/sign_up/sign_up_screen.dart';
 import 'package:exam_app_group2/modules/home/UI/layouts/explore_layout/view_model/exam_score/exam_score_cubit.dart';
-import 'package:exam_app_group2/modules/home/data/models/all_questions_response/answer.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/question_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/subject_entity.dart';
@@ -44,8 +43,9 @@ class GenerateRoute {
         );
       case DefinedRoutes.examScore:
         args as List<dynamic>;
-        final examEntity = args[1] as ExamEntity;
         final checkedAnswers = args[0] as List<Answers>;
+        final examEntity = args[1] as ExamEntity;
+        final questionsList = args[2] as List<QuestionEntity>;
 
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
@@ -53,6 +53,7 @@ class GenerateRoute {
             child: ExamScore(
               answers: checkedAnswers,
               examEntity: examEntity,
+              questionsList: questionsList,
             ),
           ),
         );

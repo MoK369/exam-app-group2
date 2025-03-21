@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
@@ -9,6 +7,7 @@ import 'package:exam_app_group2/modules/home/domain/use_cases/check_questions.da
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_questions.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_cashed_question.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/save_questions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../../../../core/api/api_result/api_result.dart';
@@ -50,6 +49,8 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   }
 
   int currentQuestion = 1;
+  int selectedAnswerIndex = 0;
+
   List<Answers>? checkedAnswers = [];
   List<QuestionEntity>? questions = [];
 
@@ -62,7 +63,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
     answersMap.forEach((key, value) {
       checkedAnswers?.add(Answers(
-        questionId: key,
+        questionId: key?.split("_")[0],
         correct: value,
       ));
     });
@@ -72,16 +73,12 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   }
 
   Future<void> _cashQuestionsAndAnswers() async {
-    print("Caching the exam ${questions?[0].exam?.title}=======");
     await saveQuestionsUseCase.execute(CashedQuestions(
       questions: questions,
       answers: checkedAnswers,
       examEntity: questions![0].exam,
       subjectName: questions![0].subject?.name,
     ));
-    log('cash questions and answers');
-    var getResult = await _getCashedQuestionsAndAnswers();
-    // log(getResult![0].subjectName!);
   }
 
   Future<List<CashedQuestions>?> _getCashedQuestionsAndAnswers() {
@@ -137,9 +134,21 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   }
 
   void _nextQuestion() {
+    print(answersMap);
     if (_isLastQuestion()) return;
+    var questionFound = false;
     currentQuestion++;
-
+    answersMap.forEach(
+      (key, value) {
+        if (int.parse(key?.split("_")[1] ?? "") == currentQuestion) {
+          selectedAnswerIndex = int.parse(value.substring(1)) - 1;
+          questionFound = true;
+        }
+      },
+    );
+    if (!questionFound) {
+      selectedAnswerIndex = 0;
+    }
     emit(state.copyWith(
       questionsStatus: QuestionsStatus.nextQuestion,
       currentQuestion: currentQuestion,
@@ -148,6 +157,13 @@ class QuestionsCubit extends Cubit<QuestionsState> {
 
   void _previousQuestion() {
     if (currentQuestion > 1) currentQuestion--;
+    answersMap.forEach(
+      (key, value) {
+        if (int.parse(key?.split("_")[1] ?? "") == currentQuestion) {
+          selectedAnswerIndex = int.parse(value.substring(1)) - 1;
+        }
+      },
+    );
     emit(state.copyWith(
       questionsStatus: QuestionsStatus.previousQuestion,
       currentQuestion: currentQuestion,
