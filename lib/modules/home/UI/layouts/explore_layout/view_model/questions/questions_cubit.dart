@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/cahed_questions/cashed_questions_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/check_questions_response_entity.dart';
@@ -6,6 +8,7 @@ import 'package:exam_app_group2/modules/home/domain/use_cases/check_questions.da
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_all_questions.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/get_cashed_question.dart';
 import 'package:exam_app_group2/modules/home/domain/use_cases/save_questions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -28,7 +31,7 @@ class QuestionsCubit extends Cubit<QuestionsState> {
   SaveQuestionsUseCase saveQuestionsUseCase;
   GetCashedQuestionUseCase getCashedQuestionUseCase;
 
-  void doIntent(QuestionsIntent intent) {
+  T? doIntent<T>(QuestionsIntent intent) {
     switch (intent) {
       case GetAllQuestionsIntent():
         _getAllQuestions(examId: intent.examId);
@@ -44,20 +47,30 @@ class QuestionsCubit extends Cubit<QuestionsState> {
         _getCashedQuestionsAndAnswers();
       case SaveCashedQuestionIntent():
         _cashQuestionsAndAnswers();
+      case StartTimer():
+        _startTimer(intent.numberOfMinutes);
+        break;
+      case GetMinutesSecondsTimeFormat():
+        return _getMinutesSecondsTimeFormat(intent.numberOfSeconds) as T;
     }
+    return null;
   }
 
   int currentQuestion = 1;
   int selectedAnswerIndex = 0;
 
-  List<Answers>? checkedAnswers = [];
+  List<Answers> checkedAnswers = [];
   List<QuestionEntity>? questions = [];
 
   Map<String?, String> answersMap = {};
 
+  ValueNotifier<int> examTimeValueNotifier = ValueNotifier<int>(-1);
+  int secondsCounter = 0;
+  Timer? _examTimer;
+
   void _getCheckedAnswers() {
     answersMap.forEach((key, value) {
-      checkedAnswers?.add(Answers(
+      checkedAnswers.add(Answers(
         questionId: key?.split("_")[0],
         correct: value,
       ));
@@ -97,6 +110,33 @@ class QuestionsCubit extends Cubit<QuestionsState> {
           ),
         );
     }
+  }
+
+  void _startTimer(int durationInMeniutes) {
+
+    if (_examTimer?.isActive ?? false) {
+      return;
+    }
+    examTimeValueNotifier.value = durationInMeniutes * 60;
+    _examTimer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (examTimeValueNotifier.value >= 1) {
+          examTimeValueNotifier.value -= 1;
+        } else {
+          _examTimer?.cancel();
+        }
+      },
+    );
+  }
+
+  String _getMinutesSecondsTimeFormat(int seconds) {
+    if (seconds >= 0) {
+      int minutes = seconds ~/ 60;
+      seconds = seconds % 60;
+      return "${minutes > 9 ? minutes : "0$minutes"}:${seconds > 9 ? seconds : "0$seconds"}";
+    }
+    return "00:00";
   }
 
   Future<void> _checkQuestions() async {
@@ -191,3 +231,14 @@ class GetAnswersList extends QuestionsIntent {}
 class GetCashedQuestionIntent extends QuestionsIntent {}
 
 class SaveCashedQuestionIntent extends QuestionsIntent {}
+
+class StartTimer extends QuestionsIntent {
+  int numberOfMinutes;
+
+  StartTimer(this.numberOfMinutes);
+}
+
+class GetMinutesSecondsTimeFormat extends QuestionsIntent {
+  int numberOfSeconds;
+  GetMinutesSecondsTimeFormat(this.numberOfSeconds);
+}

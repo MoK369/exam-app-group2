@@ -122,10 +122,10 @@ class VerifyEmailCubit extends Cubit<VerifyEmailState> {
   }
 
   void _startTimer({required int numberOfSeconds}) {
-    timeRemaining.value = numberOfSeconds;
     if (_timer?.isActive == true) {
       return;
     }
+    timeRemaining.value = numberOfSeconds;
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (timeRemaining.value > 0) {
         timeRemaining.value -= 1;

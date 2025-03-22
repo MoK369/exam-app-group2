@@ -5,11 +5,12 @@ import 'package:exam_app_group2/core/utils/app_strings.dart';
 import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
+import 'package:exam_app_group2/modules/home/data/models/check_questions/answers.dart';
+import 'package:exam_app_group2/modules/home/domain/entities/answer_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../../../../../core/routing/defined_routes.dart';
@@ -30,7 +31,6 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
   late List<QuestionEntity> questionsList;
   late QuestionEntity? questionEntity;
   final ScrollController scrollController = ScrollController();
-
   @override
   void initState() {
     cubit.doIntent(GetAllQuestionsIntent(examId: widget.examEntity.id!));
@@ -39,107 +39,53 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: appLocalizations.exam,
-        actions: [
-          Row(
-            children: [
-              Image.asset(
-                AppStrings.clockIcon,
-                height: 30.h,
-                width: 24.w,
-              ),
-              SizedBox(
-                width: 8.w,
-              ),
-              TimerCountdown(
-                format: CountDownTimerFormat.minutesSeconds,
-                endTime: DateTime.now().add(
-                  Duration(
-                    minutes: widget.examEntity.duration!.toInt(),
-                  ),
+    return BlocProvider(
+      create: (context) => cubit,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: appLocalizations.exam,
+          actions: [
+            Row(
+              children: [
+                Image.asset(
+                  AppStrings.clockIcon,
+                  height: 30.h,
+                  width: 24.w,
                 ),
-                enableDescriptions: false,
-                spacerWidth: 3.w,
-                timeTextStyle: theme.textTheme.bodySmall?.copyWith(
-                  color: AppColors.green,
-                  fontSize: 20.sp,
+                SizedBox(
+                  width: 8.w,
                 ),
-                onEnd: () {
-                  if (!cubit.isEndExam) {
-                    showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: SizedBox(
-                          height: 200.h,
-                          width: 290.w,
-                          child: Padding(
-                            padding: REdgeInsets.symmetric(
-                              horizontal: 24,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Image.asset(
-                                      AppStrings.timeOverIcon,
-                                      height: 86.h,
-                                      width: 45.w,
-                                    ),
-                                    SizedBox(
-                                      width: 4.w,
-                                    ),
-                                    Text(
-                                      appLocalizations.examTimeOut,
-                                      style:
-                                          theme.textTheme.titleSmall?.copyWith(
-                                        fontSize: 32.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 24.h,
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacementNamed(
-                                      context,
-                                      DefinedRoutes.examScore,
-                                    );
-                                  },
-                                  child: Text(
-                                    appLocalizations.viewScore,
-                                    style:
-                                        theme.textTheme.labelMedium?.copyWith(
-                                      color: AppColors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                ValueListenableBuilder(
+                  valueListenable: cubit.examTimeValueNotifier,
+                  builder: (context, valueInSeconds, child) {
+                    if (valueInSeconds == 0) {
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (timeStamp) {
+                          whenTimerEnds();
+                        },
+                      );
+                    }
+                    return Text(
+                      cubit.doIntent<String>(
+                              GetMinutesSecondsTimeFormat(valueInSeconds)) ??
+                          "",
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: (valueInSeconds ~/ 60) < 15
+                            ? AppColors.red
+                            : AppColors.green,
+                        fontSize: 20.sp,
                       ),
                     );
-                  }
-                },
-              ),
-              SizedBox(
-                width: 16.w,
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: BlocProvider(
-        create: (context) => cubit,
-        child: Padding(
+                  },
+                ),
+                SizedBox(
+                  width: 16.w,
+                ),
+              ],
+            ),
+          ],
+        ),
+        body: Padding(
           padding: REdgeInsets.symmetric(
             vertical: 8,
             horizontal: 16,
@@ -168,6 +114,11 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
               } else if (state.isSuccess) {
                 questionsList = state.questions ?? [];
                 questionEntity = state.questions?[state.currentQuestion - 1];
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (timeStamp) {
+                    cubit.doIntent(StartTimer(1));
+                  },
+                );
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -286,45 +237,6 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
     );
   }
 
-  // Widget buildChoice({required QuestionEntity question}) {
-  //   return SizedBox(
-  //     height: 257.h,
-  //     child: ListView.separated(
-  //       itemCount: question.answers!.length,
-  //       itemBuilder: (context, index) {
-  //         return ListTile(
-  //           onTap: () {
-  //             setState(() {
-  //               cubit.selectedAnswerIndex = index;
-  //               addAnswerInAnswersMap();
-  //             });
-  //           },
-  //           titleTextStyle: theme.textTheme.bodySmall?.copyWith(
-  //             fontSize: 14.sp,
-  //           ),
-  //           selected: cubit.selectedAnswerIndex == index,
-  //           title: Text(
-  //             question.answers?[index].answer ?? '',
-  //           ),
-  //           leading: Radio<int>(
-  //             activeColor: AppColors.blue,
-  //             value: index,
-  //             groupValue: cubit.selectedAnswerIndex,
-  //             onChanged: (int? value) {
-  //               setState(() {
-  //                 cubit.selectedAnswerIndex = value ?? 0;
-  //                 addAnswerInAnswersMap();
-  //               });
-  //             },
-  //           ),
-  //         );
-  //       },
-  //       separatorBuilder: (BuildContext context, int index) => SizedBox(
-  //         height: 16.h,
-  //       ),
-  //     ),
-  //   );
-  // }
   Widget buildChoice({required QuestionEntity question}) {
     return Scrollbar(
       controller: scrollController,
@@ -377,5 +289,85 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
       cubit.answersMap["${questionEntity!.id!}_${cubit.currentQuestion}"] =
           "A${cubit.selectedAnswerIndex + 1}";
     }
+  }
+
+  void whenTimerEnds() {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => AlertDialog(
+        title: SizedBox(
+          height: 200.h,
+          width: 290.w,
+          child: Padding(
+            padding: REdgeInsets.symmetric(
+              horizontal: 24,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      AppStrings.timeOverIcon,
+                      height: 86.h,
+                      width: 45.w,
+                    ),
+                    SizedBox(
+                      width: 4.w,
+                    ),
+                    Text(
+                      appLocalizations.examTimeOut,
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.red,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    cubit.doIntent(GetAnswersList());
+                    if ((cubit.checkedAnswers).length < questionsList.length) {
+                      for (int i = 0; i < questionsList.length; i++) {
+                        if (cubit.checkedAnswers
+                                .elementAtOrNull(i)
+                                ?.questionId !=
+                            questionsList[i].id) {
+                          cubit.checkedAnswers.insert(
+                              i,
+                              Answers(
+                                  questionId: questionsList[i].id,
+                                  correct: 'A'));
+                        }
+                      }
+                      debugPrint("${cubit.checkedAnswers}");
+                    }
+                    cubit.doIntent(SaveCashedQuestionIntent());
+                    hideAlertDialog();
+                    Navigator.pushReplacementNamed(
+                        context, DefinedRoutes.examScore, arguments: [
+                      cubit.checkedAnswers,
+                      widget.examEntity,
+                      questionsList
+                    ]);
+                  },
+                  child: Text(
+                    appLocalizations.viewScore,
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: AppColors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

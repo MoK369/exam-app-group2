@@ -53,6 +53,7 @@ class QuestionsState extends Equatable {
       {Status? getAllQuestionsStatus,
       Status? checkQuestionsStatus,
       List<QuestionEntity>? questions,
+      bool? startTimer,
       Object? error,
       QuestionsStatus? questionsStatus,
       int? currentQuestion,

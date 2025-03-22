@@ -33,11 +33,11 @@ class ExamScore extends StatefulWidget {
 }
 
 class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
-  var cubit = getIt.call<ExamScoreCubit>;
+  var cubit = getIt.call<ExamScoreCubit>();
 
   @override
   void initState() {
-    BlocProvider.of<ExamScoreCubit>(context).doIntent(
+    cubit.doIntent(
       GetCheckedAnswers(
         answers: widget.answers,
       ),
@@ -47,192 +47,194 @@ class _ExamScoreState extends BaseStatefulWidgetState<ExamScore> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: appLocalizations.examScore,
-      ),
-      body: BlocConsumer<ExamScoreCubit, ExamScoreState>(
-        listener: (context, state) {
-          if (state.isError) {
-            displayAlertDialog(
-                showOkButton: true,
-                title: ErrorStateWidget(error: state.error!));
-          }
-        },
-        builder: (context, state) {
-          if (state.isLoading) {
-            return const LoadingStateWidget();
-          } else if (state.isSuccess) {
-            state.checkQuestionsResponseEntity;
-            String score =
-                state.checkQuestionsResponseEntity!.total!.split('%')[0];
-            log(score);
-            int total = int.parse(double.parse(score).round().toString());
-            return Padding(
-              padding: REdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  Text(
-                    appLocalizations.yourScore,
-                    style: theme.textTheme.labelMedium?.copyWith(
-                      fontSize: 18.sp,
+    return BlocProvider(
+      create: (context) => cubit,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: appLocalizations.examScore,
+        ),
+        body: BlocConsumer<ExamScoreCubit, ExamScoreState>(
+          listener: (context, state) {
+            if (state.isError) {
+              displayAlertDialog(
+                  showOkButton: true,
+                  title: ErrorStateWidget(error: state.error!));
+            }
+          },
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const LoadingStateWidget();
+            } else if (state.isSuccess) {
+              state.checkQuestionsResponseEntity;
+              String score =
+                  state.checkQuestionsResponseEntity!.total!.split('%')[0];
+              int total = int.parse(double.parse(score).round().toString());
+              return Padding(
+                padding: REdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: 40.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  Row(
-                    children: [
-                      CircularPercentIndicator(
-                        radius: 60.r,
-                        lineWidth: 6.0,
-                        percent: total / 100,
-                        startAngle: 10,
-                        backgroundColor: AppColors.red,
-                        center: Text(
-                          '$total %',
-                          style: theme.textTheme.labelMedium?.copyWith(
-                            fontSize: 20.sp,
+                    Text(
+                      appLocalizations.yourScore,
+                      style: theme.textTheme.labelMedium?.copyWith(
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    Row(
+                      children: [
+                        CircularPercentIndicator(
+                          radius: 60.r,
+                          lineWidth: 6.0,
+                          percent: total / 100,
+                          startAngle: 10,
+                          backgroundColor: AppColors.red,
+                          center: Text(
+                            '$total %',
+                            style: theme.textTheme.labelMedium?.copyWith(
+                              fontSize: 20.sp,
+                            ),
                           ),
+                          progressColor: AppColors.blue,
                         ),
-                        progressColor: AppColors.blue,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  appLocalizations.correct,
-                                  style: theme.textTheme.labelMedium?.copyWith(
-                                    color: AppColors.blue,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  margin: REdgeInsets.only(
-                                    right: 18,
-                                  ),
-                                  width: 30.w,
-                                  height: 30.h,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.fromBorderSide(
-                                      BorderSide(
-                                        color: AppColors.blue,
-                                        width: 2.w,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    state.checkQuestionsResponseEntity!.correct
-                                        .toString(),
-                                    style:
-                                        theme.textTheme.labelMedium?.copyWith(
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    appLocalizations.correct,
+                                    style: theme.textTheme.labelMedium?.copyWith(
                                       color: AppColors.blue,
-                                      fontSize: 13.sp,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  appLocalizations.inCorrect,
-                                  style: theme.textTheme.labelMedium?.copyWith(
-                                    color: AppColors.red,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Container(
-                                  margin: REdgeInsets.only(
-                                    right: 18,
-                                  ),
-                                  width: 30.w,
-                                  height: 30.h,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.fromBorderSide(
-                                      BorderSide(
-                                        color: AppColors.red,
-                                        width: 2.w,
+                                  const Spacer(),
+                                  Container(
+                                    margin: REdgeInsets.only(
+                                      right: 18,
+                                    ),
+                                    width: 30.w,
+                                    height: 30.h,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.fromBorderSide(
+                                        BorderSide(
+                                          color: AppColors.blue,
+                                          width: 2.w,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  child: Text(
-                                    state.checkQuestionsResponseEntity!.wrong
-                                        .toString(),
-                                    style:
-                                        theme.textTheme.labelMedium?.copyWith(
+                                    child: Text(
+                                      state.checkQuestionsResponseEntity!.correct
+                                          .toString(),
+                                      style:
+                                          theme.textTheme.labelMedium?.copyWith(
+                                        color: AppColors.blue,
+                                        fontSize: 13.sp,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    appLocalizations.inCorrect,
+                                    style: theme.textTheme.labelMedium?.copyWith(
                                       color: AppColors.red,
-                                      fontSize: 13.sp,
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 80.h,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(
-                          context, DefinedRoutes.examAnswers,
-                          arguments: [widget.questionsList, widget.answers]);
-                    },
-                    child: Text(
-                      appLocalizations.showResult,
+                                  const Spacer(),
+                                  Container(
+                                    margin: REdgeInsets.only(
+                                      right: 18,
+                                    ),
+                                    width: 30.w,
+                                    height: 30.h,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.fromBorderSide(
+                                        BorderSide(
+                                          color: AppColors.red,
+                                          width: 2.w,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      state.checkQuestionsResponseEntity!.wrong
+                                          .toString(),
+                                      style:
+                                          theme.textTheme.labelMedium?.copyWith(
+                                        color: AppColors.red,
+                                        fontSize: 13.sp,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: AppColors.blue,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      side: BorderSide(
-                        color: AppColors.blue,
-                        width: 1.w,
+                    SizedBox(
+                      height: 80.h,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, DefinedRoutes.examAnswers,
+                            arguments: [widget.questionsList, widget.answers]);
+                      },
+                      child: Text(
+                        appLocalizations.showResult,
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        DefinedRoutes.questions,
-                        arguments: widget.examEntity,
-                      );
-                    },
-                    child: Text(
-                      appLocalizations.startAgain,
+                    SizedBox(
+                      height: 24.h,
                     ),
-                  ),
-                ],
-              ),
-            );
-          }
-          return const SizedBox();
-        },
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent,
+                        foregroundColor: AppColors.blue,
+                        elevation: 0,
+                        shadowColor: Colors.transparent,
+                        side: BorderSide(
+                          color: AppColors.blue,
+                          width: 1.w,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          DefinedRoutes.questions,
+                          arguments: widget.examEntity,
+                        );
+                      },
+                      child: Text(
+                        appLocalizations.startAgain,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }
