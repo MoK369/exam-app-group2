@@ -6,7 +6,6 @@ import 'package:exam_app_group2/core/widgets/custom_app_bar.dart';
 import 'package:exam_app_group2/core/widgets/error_state_widget.dart';
 import 'package:exam_app_group2/core/widgets/loading_state_widget.dart';
 import 'package:exam_app_group2/modules/home/data/models/check_questions/answers.dart';
-import 'package:exam_app_group2/modules/home/domain/entities/answer_entity.dart';
 import 'package:exam_app_group2/modules/home/domain/entities/exam_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -116,7 +115,7 @@ class _QuestionsViewState extends BaseStatefulWidgetState<QuestionsView> {
                 questionEntity = state.questions?[state.currentQuestion - 1];
                 WidgetsBinding.instance.addPostFrameCallback(
                   (timeStamp) {
-                    cubit.doIntent(StartTimer(1));
+                    cubit.doIntent(StartTimer(widget.examEntity.duration ?? 0));
                   },
                 );
                 return Column(
