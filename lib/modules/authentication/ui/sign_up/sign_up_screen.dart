@@ -50,6 +50,10 @@ class _SignUpScreenState extends BaseStatefulWidgetState<SignUpScreen> {
                 hideAlertDialog();
                 displayAlertDialog(
                     showOkButton: true,
+                    onOkButtonClick: () {
+                      hideAlertDialog();
+                      hideAlertDialog();
+                    },
                     title: Text(
                       appLocalizations.successfullyRegistered,
                       style: theme.textTheme.labelMedium,
