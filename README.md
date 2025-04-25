@@ -6,4 +6,35 @@ A new Flutter project.
 
 https://drive.google.com/drive/folders/1xFJ-HxQaJmOku1QKLHZvn1fxYUwNlArJ?usp=share_link
 
+## Description
+Exam App is a comprehensive Flutter application designed to provide users with the ability to take exams in various fields of Computer Science (CS). The app covers a wide range of topics including HTML, JavaScript, Flutter development, Artificial Intelligence (AI), and more. It is an ideal tool for students, professionals, and anyone looking to test and improve their knowledge in these areas.
 
+Features:
+
+Diverse Exam Topics:
+
+Users can choose from multiple exam categories such as HTML, JavaScript, Flutter development, AI, and other CS-related fields.
+Each category contains a variety of questions tailored to assess the user's understanding and proficiency.
+User-Friendly Interface:
+
+The app features an intuitive and easy-to-navigate interface, making it simple for users to select and take exams.
+Clear instructions and prompts guide users through the exam-taking process.
+Real-Time Scoring:
+
+Upon completion of an exam, users receive their scores instantly.
+Detailed feedback is provided, highlighting areas of strength and those needing improvement.
+Data Persistence with Isar Database:
+
+Exam results and user data are securely stored using the Isar database.
+Users can track their progress over time and review past exam scores.
+Collaborative Development:
+
+The application was developed by a dedicated team of three members, including Mohammed Khalil.
+Each team member contributed their expertise to ensure the app's functionality, performance, and user experience.
+Technical Details:
+
+Flutter Framework: Utilized for building the app's cross-platform capabilities.
+Isar Database: Implemented for efficient and reliable data storage.
+State Management: Managed using Provider and Cubit for seamless user interactions.
+Design Patterns: Applied various design patterns such as MVVM and MVI to maintain clean and scalable code architecture.
+Conclusion: Exam App is a powerful tool for anyone looking to enhance their knowledge in Computer Science. With its diverse exam topics, real-time scoring, and robust data management, users can confidently assess their skills and track their progress. The collaborative effort of the development team ensures a high-quality and user-centric application.
