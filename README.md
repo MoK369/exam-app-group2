@@ -39,6 +39,7 @@ Technical Details:
 
 Conclusion: Exam App is a powerful tool for anyone looking to enhance their knowledge in Computer Science. With its diverse exam topics, real-time scoring, and robust data management, users can confidently assess their skills and track their progress. The collaborative effort of the development team ensures a high-quality and user-centric application.
 
+![WhatsApp Image 2025-07-17 at 8 54 08 PM](https://github.com/user-attachments/assets/3787fcad-ef64-4f12-8e48-86b1c3f362cb)
 
 ![WhatsApp Image 2025-04-25 at 17 38 08](https://github.com/user-attachments/assets/fc57a80d-b184-4285-b4e4-c89a8cc4febd)
 
