@@ -1,43 +1,73 @@
-# exam_app_group2
+Online Exam App 🎓📚📓
+Online Exam App is a Flutter-based mobile application that enables users to take online exams, track their results, and manage their progress efficiently. The app provides a seamless experience with features such as secure authentication, subject-wise exam selection, timer-based MCQ tests, and result tracking. Built using MVI architecture and Cubit for state management, the app ensures a structured, scalable, and maintainable codebase for future enhancements.
 
-A new Flutter project.
+Features ✨
+🔐 Authentication
+Login Screen: Users can log in to access their exams.
+Register Screen: New users can create an account.
+Forget Password Screen: Users can reset their password securely.
+📈 Home Screen
+Displays a list of subjects.
+Users can select a subject to view available exams.
+📖 Exam Flow
+Exam Selection: Choose an exam from a subject.
+Instruction Screen: Displays exam instructions, duration, and number of questions.
+Start Exam Button: Begins the exam.
+MCQ Exam Screen:
+Timer-based questions according to the exam's duration.
+Multiple-choice questions with 4 answer options.
+Users can navigate between questions.
+Result Screen: Shows the user's score after completing the exam.
+📊 Results Tab
+Displays results of completed exams categorized by subjects.
+Users can review past performance.
+👤 Profile Tab
+Displays user profile information.
+Users can update their password and manage account settings.
+Project Structure 📂
+The project follows a well-structured directory organization:
 
-## Record Of The Exam App:
+lib/
+│── api/          # API manager and services for fetching exam data
+│── auth/         # Login, Register, and Forget Password screens
+│── home/         # Main screens for Subjects, Exams, and Navigation
+│── exam/         # Exam process screens (Instructions, MCQ, Timer, Results)
+│── profile/      # User profile and settings
+│── results/      # Result tracking and performance history
+│── l10n/         # Localization support for multiple languages
+│── providers/    # ChangeNotifier classes for managing app state
+│── utils/        # Utility files like colors, constants, and helpers
+│── main.dart     # Entry point of the application
+Tech Stack 🛠️
+Flutter: For building the cross-platform mobile app.
+MVI Architecture: Ensures a structured and maintainable codebase.
+Cubit (flutter_bloc): For efficient state management.
+Injectable & GetIt: For dependency injection.
+Dio & Pretty Dio Logger: For API integration and debugging.
+Shared Preferences: For local data storage.
+Google Fonts: For elegant and customizable typography.
+Easy Localization: Supports multiple languages.
+Lottie: For animations.
+Flutter ScreenUtil: For responsive UI design.
+Flutter Spinkit: For loading animations.
+Connectivity Plus: For network connectivity checks.
+Syncfusion Flutter Charts: For visualizing results and performance.
+Flutter Timer Countdown: For handling exam timers.
+OTP Text Field: For OTP-based authentication.
+Installation & Usage ⚡
+Clone the repository:
 
-https://drive.google.com/drive/folders/1xFJ-HxQaJmOku1QKLHZvn1fxYUwNlArJ?usp=share_link
+git clone https://github.com/yourusername/online-exam-app.git
+Navigate to the project directory:
 
-## Description
-Exam App is a comprehensive Flutter application designed to provide users with the ability to take exams in various fields of Computer Science (CS). The app covers a wide range of topics including HTML, JavaScript, Flutter development, Artificial Intelligence (AI), and more. It is an ideal tool for students, professionals, and anyone looking to test and improve their knowledge in these areas.
+cd online-exam-app
+Install dependencies:
 
-Features:
+flutter pub get
+Run the app:
 
-1- Diverse Exam Topics:
-  - Users can choose from multiple exam categories such as HTML, JavaScript, Flutter development, AI, and other CS-related fields.
-  - Each category contains a variety of questions tailored to assess the user's understanding and proficiency.
+flutter run
 
-2- User-Friendly Interface:
-  - The app features an intuitive and easy-to-navigate interface, making it simple for users to select and take exams.
-  - Clear instructions and prompts guide users through the exam-taking process.
-
-3- Real-Time Scoring:
-  - Upon completion of an exam, users receive their scores instantly.
-  - Detailed feedback is provided, highlighting areas of strength and those needing improvement.
-
-4- Data Persistence with Isar Database:
-  - Exam results and user data are securely stored using the Isar database.
-  - Users can track their progress over time and review past exam scores.
-
-5- Collaborative Development:
-  - The application was developed by a dedicated team of three members, including Mohammed Khalil.
-  - Each team member contributed their expertise to ensure the app's functionality, performance, and user experience.
-  
-Technical Details:
- - Flutter Framework: Utilized for building the app's cross-platform capabilities.
- - Isar Database: Implemented for efficient and reliable data storage.
- - State Management: Managed using Provider and Cubit for seamless user interactions.
- - Design Patterns: Applied various design patterns such as MVVM and MVI to maintain clean and scalable code architecture.
-
-Conclusion: Exam App is a powerful tool for anyone looking to enhance their knowledge in Computer Science. With its diverse exam topics, real-time scoring, and robust data management, users can confidently assess their skills and track their progress. The collaborative effort of the development team ensures a high-quality and user-centric application.
 
 ![WhatsApp Image 2025-07-17 at 8 54 08 PM](https://github.com/user-attachments/assets/3787fcad-ef64-4f12-8e48-86b1c3f362cb)
 
