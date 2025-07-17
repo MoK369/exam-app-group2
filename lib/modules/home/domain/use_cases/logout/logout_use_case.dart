@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class LogoutUseCase {
-  LogoutRepository _logoutRepository;
+  final LogoutRepository _logoutRepository;
 
   LogoutUseCase(this._logoutRepository);
 

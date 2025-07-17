@@ -37,9 +37,8 @@ class ExploreApiManager {
 
   Future<GetAllQuestionsResponse> getAllQuestions(
       {required String examId}) async {
-    Response response = await _dio.get(
-      ApisEndpoints.getAllQuestions,
-    );
+    Response response = await _dio
+        .get(ApisEndpoints.getAllQuestions, queryParameters: {"exam": examId});
 
     return GetAllQuestionsResponse.fromJson(response.data);
   }
