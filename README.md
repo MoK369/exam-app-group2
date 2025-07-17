@@ -88,9 +88,10 @@ lib/
    flutter run
    ```
 
-# App Demo:
+# App Demo 🎥:
 https://drive.google.com/drive/folders/1xFJ-HxQaJmOku1QKLHZvn1fxYUwNlArJ?usp=sharing
 
+# Pictures:
 ![WhatsApp Image 2025-07-17 at 8 54 08 PM](https://github.com/user-attachments/assets/3787fcad-ef64-4f12-8e48-86b1c3f362cb)
 
 ![WhatsApp Image 2025-04-25 at 17 38 08](https://github.com/user-attachments/assets/fc57a80d-b184-4285-b4e4-c89a8cc4febd)
